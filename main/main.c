@@ -6,18 +6,18 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/09 18:56:53 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:40:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	char				*rdline_outp;
 
-    (void)ac;
-    (void)av;
+	(void)ac;
+	(void)av;
 	manage_signals();
 	while (1)
 	{
@@ -28,6 +28,6 @@ int main(int ac, char **av, char **env)
 		parse_rdline_outp(rdline_outp);
 		free(rdline_outp);
 	}
-    (void)env;
-    return (0);
+	(void)env;
+	return (0);
 }

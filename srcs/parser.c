@@ -6,13 +6,13 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:25:09 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/09 15:26:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:39:49 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int parse_rdline_outp(char *rdline_outp)
+int	parse_rdline_outp(char *rdline_outp)
 {
 	(void)rdline_outp;
 	return (0);
