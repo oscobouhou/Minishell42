@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/09 22:18:07 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/09 19:52:23 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/09 22:30:55 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+void	free_mshell_env(t_mshell *mshell)
 {
-	char				*rdline_outp;
-	t_mshell			*mshell;
+	t_env	*tmp;
 
-	(void)ac;
-	(void)av;
-	mshell = NULL;
-	manage_signals();
-	mshell = init_struct(env);
-	while (1)
+	while (mshell->env->next)
 	{
-		rdline_outp = readline("dkermarf@e42r42p42:~/42/minishell$ ");
-		if (!check_eof(rdline_outp))
-			return (write(1, "exit\n", 5), terminate(mshell), 0);
-		add_history(rdline_outp);
-		parse_rdline_outp(rdline_outp);
-		free(rdline_outp);
+		free(mshell->env->envar);
+		tmp = mshell->env;
+		mshell->env = mshell->env->next;
+		free(tmp);
 	}
-	(void)env;
-	return (0);
+	free(mshell->env->envar);
+	free(mshell->env);
 }
+
+void    terminate(t_mshell *mshell)
+{
+	free_mshell_env(mshell);
+	free(mshell);
+}
+
