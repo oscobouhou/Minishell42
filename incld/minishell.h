@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/09 22:31:47 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/09 22:54:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct	s_mshell
 	t_env		*env;
 }				t_mshell;
 // @ -------------------------- # init # ---------------------------- @ //
-void		obtain_envar_content(t_mshell *mshell, char **env, int i);
-void		dup_env(t_mshell *mshell, char **env);
+int			obtain_envar_content(t_mshell *mshell, char **env, int i);
+int			dup_env(t_mshell *mshell, char **env);
 t_mshell	*init_struct(char **env);
 // @ ------------------------ # builtins # -------------------------- @ //
 void	exec_env(t_mshell *shell);
