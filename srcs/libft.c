@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/09 18:56:53 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/09 11:45:41 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/09 15:08:03 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+int	ft_strlen(char *str)
 {
-	char				*rdline_outp;
+	int	i;
 
-    (void)ac;
-    (void)av;
-	manage_signals();
-	while (1)
-	{
-		rdline_outp = readline("dkermarf@e42r42p42:~/42/minishell$ ");
-		if (!check_eof(rdline_outp))
-			return (write(1, "exit\n", 5), 0);
-		add_history(rdline_outp);
-		parse_rdline_outp(rdline_outp);
-		free(rdline_outp);
-	}
-    (void)env;
-    return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putstr(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		ft_putchar(str[i]);
 }

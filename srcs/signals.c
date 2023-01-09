@@ -1,33 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/09 18:56:53 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/09 17:58:33 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/09 19:34:36 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+int	check_eof(char *rdline_outp)
 {
-	char				*rdline_outp;
+	if (rdline_outp == NULL)
+		return (0);
+	return (1);
+}
 
-    (void)ac;
-    (void)av;
-	manage_signals();
-	while (1)
+void    handle_sigint()
+{
+    write(1, "\n", 1);
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
+}
+
+void	sig_handler(int signum)
+{
+	if (signum == SIGINT)
 	{
-		rdline_outp = readline("dkermarf@e42r42p42:~/42/minishell$ ");
-		if (!check_eof(rdline_outp))
-			return (write(1, "exit\n", 5), 0);
-		add_history(rdline_outp);
-		parse_rdline_outp(rdline_outp);
-		free(rdline_outp);
+		handle_sigint();
 	}
-    (void)env;
-    return (0);
+}
+// write(1, (char *)'\n', 1);
+
+void	manage_signals(void)
+{
+	signal(SIGINT, &sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
