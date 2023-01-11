@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   treat_redir_r.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 19:48:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/09 20:03:25 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/11 16:02:25 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/11 16:05:17 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_env(t_mshell *mshell)
+int treat_redir_r(t_mshell *mshell, int *i)
 {
-	(void)mshell;
+    (void)i;
+    (void)mshell;
+    return (1);
 }

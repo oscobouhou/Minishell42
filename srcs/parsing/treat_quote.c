@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   treat_quotes.c                                     :+:      :+:    :+:   */
+/*   treat_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:46:21 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/11 01:10:53 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:09:04 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	extract_quote(t_mshell *mshell, int start, int len)
 {
+	// tokenizer(mshell, start, len);
 	(void)mshell;
 	(void)start;
 	(void)len;
-	return (0);
+	return (1);
 }
 
 int	search_next_quote(t_mshell *mshell, char quote, int *q)
@@ -30,27 +31,29 @@ int	search_next_quote(t_mshell *mshell, char quote, int *q)
 	return (0);
 }
 
-int	treat_quotes(t_mshell *mshell)
+int	treat_quote(t_mshell *mshell, int *i)
 {
-	int	tmp_q;
-	int	q;
+	int	tmp_i;
 
-	q = -1;
-    while (mshell->rdline_outp[++q])
+	if (mshell->rdline_outp[*i] == SINGLE_QUOTE)
 	{
-		if (mshell->rdline_outp[q] == SINGLE_QUOTE)
-		{
-			tmp_q = q;
-			if (!search_next_quote(mshell, SINGLE_QUOTE, &q))
-				return (dprintf(2, "error\n"), 0);											// syntax error - process errno
-			if (!extract_quote(mshell, tmp_q, q))
-				return (0);
-		}
-		else if (mshell->rdline_outp[q] == DOUBLE_QUOTE)
-		{
-			if (!search_next_quote(mshell, DOUBLE_QUOTE, &q))
-				return (dprintf(2, "error\n"), 0); 												// syntax error - process errno
-		}
+		tmp_i = *i;
+		if (!search_next_quote(mshell, SINGLE_QUOTE, i))
+			return (dprintf(2, "error\n"), 0);											// syntax error - process errno
+		if (!extract_quote(mshell, tmp_i, *i))
+			return (0);
+		++(*i);
+		return (1);
+	}
+	else if (mshell->rdline_outp[*i] == DOUBLE_QUOTE)
+	{
+		tmp_i = *i;
+		if (!search_next_quote(mshell, DOUBLE_QUOTE, i))
+			return (dprintf(2, "error\n"), 0); 											// syntax error - process errno
+		if (!extract_quote(mshell, tmp_i, *i))
+			return (0);
+		++(*i);
+		return (1);
 	}
     return (0);
 }

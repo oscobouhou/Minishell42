@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/10 22:47:55 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/11 19:34:01 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,20 @@ SRCS 			= main/main.c \
 				  srcs/free/free.c \
 				  srcs/libft/libft.c \
 				  srcs/parsing/parser.c \
+				  srcs/token/tokenizer.c \
 				  srcs/signals/signals.c \
-				  srcs/inits/init_tokens.c \
+				  srcs/inits/init_token.c \
 				  srcs/inits/init_mshell.c \
-				  srcs/builtins/builtins.c \
-				  srcs/inits/center_inits.c \
-				  srcs/parsing/treat_quotes.c \
-				  srcs/expand/center_expand.c 
+				  srcs/parsing/treat_pipe.c \
+				  srcs/parsing/treat_space.c \
+				  srcs/parsing/treat_quote.c \
+				  srcs/inits/init_env_exprt.c \
+				  srcs/parsing/treat_hyphen.c \
+				  srcs/expand/center_expand.c \
+				  srcs/parsing/treat_redir_r.c \
+				  srcs/parsing/treat_redir_l.c \
+				  srcs/parsing/treat_printable.c \
+				  srcs/builtins/center_builtins.c \
 
 SRCH_INCLDS 	= -Iincld
 

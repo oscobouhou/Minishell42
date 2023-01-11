@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   center_inits.c                                     :+:      :+:    :+:   */
+/*   treat_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 16:42:16 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/10 18:37:30 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/11 16:00:20 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/11 16:05:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	center_init(t_mshell *mshell)
+int treat_pipe(t_mshell *mshell, int *i)
 {
-	if (!mshell)
-		return (0);
-	mshell->tkn = init_tokens(mshell);
-	if (!mshell->tkn)
-		return (0);
-	return (1);
+    (void)i;
+    (void)mshell;
+    return (1);
 }

@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_tokens.c                                      :+:      :+:    :+:   */
+/*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 15:00:31 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/10 16:37:34 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/11 19:09:16 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/11 20:06:48 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tkn    *init_tokens(t_mshell *mshell)
+int init_t_token(t_mshell *mshell)
 {
-    t_tkn   *tkn;
-
-    tkn = malloc(sizeof(t_tkn));
-    if (!tkn)
-        return (NULL);
-    tkn->tkn = NULL;
-    return (tkn);
-    (void)mshell;
+	mshell->tkn = malloc(sizeof(t_tkn));
+	if (!mshell->tkn)
+		return (0);
+	mshell->tkn->type = -1;
+	mshell->tkn->tkn = NULL;
+	mshell->tkn->next = NULL;
+	return (1);
 }
