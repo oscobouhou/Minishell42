@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/09 20:29:31 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/10 22:47:55 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,16 @@ CC 				= gcc -g3 -Wall -Wextra -Werror
 OBJ				= $(SRCS:.c=.o)
 
 SRCS 			= main/main.c \
-				  srcs/init.c \
-				  srcs/libft.c \
-				  srcs/parser.c \
-				  srcs/signals.c \
-				  srcs/builtins.c \
-				  srcs/free.c \
+				  srcs/free/free.c \
+				  srcs/libft/libft.c \
+				  srcs/parsing/parser.c \
+				  srcs/signals/signals.c \
+				  srcs/inits/init_tokens.c \
+				  srcs/inits/init_mshell.c \
+				  srcs/builtins/builtins.c \
+				  srcs/inits/center_inits.c \
+				  srcs/parsing/treat_quotes.c \
+				  srcs/expand/center_expand.c 
 
 SRCH_INCLDS 	= -Iincld
 
