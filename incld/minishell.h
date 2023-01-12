@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/12 13:43:53 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:36:59 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 # define REDIR_L	60				//		defines: <
 # define REDIR_R 	62				//		defines: >
 # define EXPAND		36				//		defines: $
-# define HYPHEN		45				//		defines: -
 // @ ----------------------- # Includes # --------------------------- @ //
 # include <stdio.h>
-# include <stdlib.h> 
+# include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h>
 # include <signal.h>
@@ -58,18 +57,17 @@ typedef struct s_mshell
 // @ --------------------------- # enums # -------------------------- @ //
 enum e_tokens
 {
-	PIPE,
 	WORD,
-	HEREDOC,
-	STDINPUT,
-	STDOUTPUT,
-	APPEND,
-	DQ_WORD,
+	PIPE,
 	SQ_WORD,
-	WORD_ARG,
+	DQ_WORD,
 	RDIR_R,
 	RDIR_L,
-	BUILTIN
+	BUILTIN,
+	HEREDOC,
+	APPEND,
+	STDINPUT,
+	STDOUTPUT
 };
 
 enum e_parse
@@ -77,10 +75,8 @@ enum e_parse
 	TREAT_PRINTABLE,
 	TREAT_SPACE,
 	TREAT_PIPE,
-	TREAT_REDIR_R,
-	TREAT_REDIR_L,
-	TREAT_QUOTE,
-	TREAT_HYPHEN
+	TREAT_REDIR,
+	TREAT_QUOTE
 };
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
@@ -110,9 +106,8 @@ int					parse_output(t_mshell *mshell);
 int					treat_pipe(t_mshell *mshell, int *i);
 int					treat_quote(t_mshell *mshell, int *i);
 int					treat_space(t_mshell *mshell, int *i);
+int					treat_redir(t_mshell *mshell, int *i);
 int					treat_hyphen(t_mshell *mshell, int *i);
-int					treat_redir_r(t_mshell *mshell, int *i);
-int					treat_redir_l(t_mshell *mshell, int *i);
 int					treat_printable(t_mshell *mshell, int *i);
 int					search_next_quote(t_mshell *mshell, char quote, int *q);
 // @ -------------------------- # free # ---------------------------- @ //

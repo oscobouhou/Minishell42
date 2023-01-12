@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/11 19:34:01 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/12 17:35:21 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,11 @@ SRCS 			= main/main.c \
 				  srcs/inits/init_token.c \
 				  srcs/inits/init_mshell.c \
 				  srcs/parsing/treat_pipe.c \
+				  srcs/parsing/treat_redir.c \
 				  srcs/parsing/treat_space.c \
 				  srcs/parsing/treat_quote.c \
 				  srcs/inits/init_env_exprt.c \
-				  srcs/parsing/treat_hyphen.c \
 				  srcs/expand/center_expand.c \
-				  srcs/parsing/treat_redir_r.c \
-				  srcs/parsing/treat_redir_l.c \
 				  srcs/parsing/treat_printable.c \
 				  srcs/builtins/center_builtins.c \
 

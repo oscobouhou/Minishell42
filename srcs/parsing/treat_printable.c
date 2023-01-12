@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 15:39:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/12 13:32:49 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:29:35 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_printable(char print)
 		return (0);
 	if (print == REDIR_L || print == REDIR_R)
 		return (0);
-	if (print == EXPAND || print == HYPHEN)
+	if (print == EXPAND)
 		return (0);
 	if (print == PIPE_LINE)
 		return (0);
@@ -34,7 +34,7 @@ int	treat_printable(t_mshell *mshell, int *i)
 	tmp_i = *i;
 	while (mshell->rdline_outp[*i] && check_printable(mshell->rdline_outp[*i]))
 		++(*i);
-	mshell->tkn->type = 1;
+	mshell->tkn->type = 0;
 	if (!tokenizer(mshell, tmp_i, *i))
 		return (0);
 	return (1);
