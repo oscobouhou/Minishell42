@@ -6,15 +6,15 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:04:08 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/11 16:05:47 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:31:34 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int treat_space(t_mshell *mshell, int *i)
+int	treat_space(t_mshell *mshell, int *i)
 {
-    (void)i;
-    (void)mshell;
-    return (1);
+	while (mshell->rdline_outp[*i] == ' ')
+		++(*i);
+	return (1);
 }

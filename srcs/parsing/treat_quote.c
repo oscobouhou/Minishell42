@@ -6,20 +6,11 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:46:21 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/11 17:09:04 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:35:31 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	extract_quote(t_mshell *mshell, int start, int len)
-{
-	// tokenizer(mshell, start, len);
-	(void)mshell;
-	(void)start;
-	(void)len;
-	return (1);
-}
 
 int	search_next_quote(t_mshell *mshell, char quote, int *q)
 {
@@ -39,21 +30,23 @@ int	treat_quote(t_mshell *mshell, int *i)
 	{
 		tmp_i = *i;
 		if (!search_next_quote(mshell, SINGLE_QUOTE, i))
-			return (dprintf(2, "error\n"), 0);											// syntax error - process errno
-		if (!extract_quote(mshell, tmp_i, *i))
-			return (0);
+			return (dprintf(2, "error\n"), 0);
 		++(*i);
+		mshell->tkn->type = 7;
+		if (!tokenizer(mshell, tmp_i, *i))
+			return (0);
 		return (1);
 	}
 	else if (mshell->rdline_outp[*i] == DOUBLE_QUOTE)
 	{
 		tmp_i = *i;
 		if (!search_next_quote(mshell, DOUBLE_QUOTE, i))
-			return (dprintf(2, "error\n"), 0); 											// syntax error - process errno
-		if (!extract_quote(mshell, tmp_i, *i))
-			return (0);
+			return (dprintf(2, "error\n"), 0);
 		++(*i);
+		mshell->tkn->type = 6;
+		if (!tokenizer(mshell, tmp_i, *i))
+			return (0);
 		return (1);
 	}
-    return (0);
+	return (0);
 }
