@@ -6,13 +6,14 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:15:30 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/12 13:20:03 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:53:40 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	center_builtins(t_mshell *mshell)
+int	center_builtins(t_mshell *mshell)
 {
 	(void)mshell;
+	return (1);
 }

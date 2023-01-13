@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/12 17:36:59 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:59:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ typedef struct s_mshell
 	uint64_t		exprtc;
 	uint64_t		envc;
 	t_env			*env;
-	t_env			*exprt;
 	t_tkn			*tkn;
+	t_env			*exprt;
 	t_tkn			*head_tkn;
+	int				(*built[7])();
 }					t_mshell;
 // @ --------------------------- # enums # -------------------------- @ //
 enum e_tokens
@@ -66,8 +67,17 @@ enum e_tokens
 	BUILTIN,
 	HEREDOC,
 	APPEND,
-	STDINPUT,
-	STDOUTPUT
+};
+
+enum e_builtins
+{
+	CD,
+	PWD,
+	ENV,
+	ECHO,
+	EXIT,
+	UNSET,
+	EXPORT
 };
 
 enum e_parse
@@ -81,10 +91,19 @@ enum e_parse
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
 int					init_t_token(t_mshell *mshell);
+int					init_builtins(t_mshell *mshell);
+int					init_dependencies(t_mshell *mshell, char **env);
 int					obtain_env_content(t_env **lst, char *env);
 int					dup_env(t_env **lst, char **env, uint64_t *count);
 // @ ------------------------ # builtins # -------------------------- @ //
-void				center_builtins(t_mshell *mshell);
+int					center_builtins(t_mshell *mshell);
+int					do_cd(t_mshell *mshell);
+int					do_echo(t_mshell *mshell);
+int					do_env(t_mshell *mshell);
+int					do_exit(t_mshell *mshell);
+int					do_export(t_mshell *mshell);
+int					do_pwd(t_mshell *mshell);
+int					do_unset(t_mshell *mshell);
 // @ -------------------------- # token # --------------------------- @ //
 int					tokenizer(t_mshell *mshell, int strt, int end);
 int					make_new_token(t_mshell *mshell);
@@ -93,6 +112,8 @@ void				handle_sigint(void);
 void				manage_signals(void);
 void				sig_handler(int signum);
 int					check_eof(char *rdline_outp);
+// @ ------------------------- # compose # -------------------------- @ //
+int					compose_tkn(t_mshell *mhsell);
 // @ ------------------------- # libft # ---------------------------- @ //
 void				ft_putchar(char c);
 void				ft_putstr(char *str);
@@ -100,7 +121,7 @@ int					ft_strlen(char *str);
 int					ft_strequal_sign(char *str);
 // @ ------------------------- # expand # ---------------------------- @ //
 int					ft_expand(char *str, t_env *exprt);
-// @ ------------------------- # parser # --------------------------- @ //
+// @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
 int					parse_output(t_mshell *mshell);
 int					treat_pipe(t_mshell *mshell, int *i);
@@ -110,8 +131,8 @@ int					treat_redir(t_mshell *mshell, int *i);
 int					treat_hyphen(t_mshell *mshell, int *i);
 int					treat_printable(t_mshell *mshell, int *i);
 int					search_next_quote(t_mshell *mshell, char quote, int *q);
-// @ -------------------------- # free # ---------------------------- @ //
+// @ -------------------------- # free # ----------------------------- @ //
 void				terminate(t_mshell *mshell);
 void				free_t_env(t_mshell *mshell);
-// @ ---------------------------- ### ------------------------------- @ //
+// @ ---------------------------- ### -------------------------------- @ //
 #endif

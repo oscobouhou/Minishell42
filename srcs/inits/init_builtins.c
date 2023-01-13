@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   treat_redir.c                                      :+:      :+:    :+:   */
+/*   init_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 17:34:55 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/13 15:40:31 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/13 20:07:10 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/13 20:48:09 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	treat_redir(t_mshell *mshell, int *i)
+int	init_builtins(t_mshell *mshell)
 {
-	int	tmp_i;
-
-	tmp_i = *i;
-	if (mshell->rdline_outp[*i] == REDIR_R)
-	{
-		++(*i);
-		mshell->tkn->type = RDIR_R;
-		if (!tokenizer(mshell, tmp_i, *i))
-			return (0);
-		return (1);
-	}
-	++(*i);
-	mshell->tkn->type = RDIR_L;
-	if (!tokenizer(mshell, tmp_i, *i))
-		return (0);
+	mshell->built[CD] = do_cd;
+	mshell->built[PWD] = do_pwd;
+	mshell->built[ENV] = do_env;
+	mshell->built[ECHO] = do_echo;
+	mshell->built[EXIT] = do_exit;
+	mshell->built[UNSET] = do_unset;
+	mshell->built[EXPORT] = do_export;
 	return (1);
 }

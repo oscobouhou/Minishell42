@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:00:20 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/12 17:28:35 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:39:32 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	treat_pipe(t_mshell *mshell, int *i)
 
 	tmp_i = *i;
 	++(*i);
-	mshell->tkn->type = 1;
+	mshell->tkn->type = PIPE;
 	if (!tokenizer(mshell, tmp_i, *i))
 		return (0);
 	return (1);
