@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/13 20:59:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:42:36 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_expt
+{
+	char			*exptvar;
+	char			*value;
+	struct s_expt	*next;
+}					t_expt;
+
 typedef struct s_tkn
 {
 	int				type;
@@ -49,10 +56,10 @@ typedef struct s_mshell
 	char			*rdline_outp;
 	uint64_t		exprtc;
 	uint64_t		envc;
-	t_env			*env;
 	t_tkn			*tkn;
-	t_env			*exprt;
 	t_tkn			*head_tkn;
+	t_env			*env;
+	t_expt			*expt;
 	int				(*built[7])();
 }					t_mshell;
 // @ --------------------------- # enums # -------------------------- @ //
@@ -66,7 +73,7 @@ enum e_tokens
 	RDIR_L,
 	BUILTIN,
 	HEREDOC,
-	APPEND,
+	APPEND
 };
 
 enum e_builtins
@@ -92,9 +99,12 @@ enum e_parse
 t_mshell			*init_mshell(char **env);
 int					init_t_token(t_mshell *mshell);
 int					init_builtins(t_mshell *mshell);
-int					init_dependencies(t_mshell *mshell, char **env);
+int					new_node_export(t_mshell *mshell);
+int					init_sort_export(t_mshell *mshell);
 int					obtain_env_content(t_env **lst, char *env);
+int					init_dependencies(t_mshell *mshell, char **env);
 int					dup_env(t_env **lst, char **env, uint64_t *count);
+int					init_env_sorter(t_mshell *mshell, t_env **env_sorter);
 // @ ------------------------ # builtins # -------------------------- @ //
 int					center_builtins(t_mshell *mshell);
 int					do_cd(t_mshell *mshell);
@@ -119,10 +129,13 @@ void				ft_putchar(char c);
 void				ft_putstr(char *str);
 int					ft_strlen(char *str);
 int					ft_strequal_sign(char *str);
+int					ft_strcmp(char *s1, char *s2);
+int					search_lowest(char *val, t_env *env);
 // @ ------------------------- # expand # ---------------------------- @ //
 int					ft_expand(char *str, t_env *exprt);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
+int					sort_export(t_mshell *mshell);
 int					parse_output(t_mshell *mshell);
 int					treat_pipe(t_mshell *mshell, int *i);
 int					treat_quote(t_mshell *mshell, int *i);
@@ -130,9 +143,14 @@ int					treat_space(t_mshell *mshell, int *i);
 int					treat_redir(t_mshell *mshell, int *i);
 int					treat_hyphen(t_mshell *mshell, int *i);
 int					treat_printable(t_mshell *mshell, int *i);
+int					copy_env_content(t_env *dest, t_env *src);
+int					copy_env_sorter_content(t_expt *dest, t_env *src);
 int					search_next_quote(t_mshell *mshell, char quote, int *q);
+int					copy_and_suppress_env_node(t_mshell *mshell, t_env *env_sorter, t_env *actualise);
 // @ -------------------------- # free # ----------------------------- @ //
 void				terminate(t_mshell *mshell);
 void				free_t_env(t_mshell *mshell);
+void				free_actualise(t_env *actualise);
+void				free_env_sorter(t_env *env_sorter);
 // @ ---------------------------- ### -------------------------------- @ //
 #endif

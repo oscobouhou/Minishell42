@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   compose_tkn.c                                      :+:      :+:    :+:   */
+/*   free_sort_export.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 15:32:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/14 15:09:13 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/14 19:29:41 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/14 19:32:41 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	compose_tkn(t_mshell *mshell)
+void	free_actualise(t_env *actualise)
 {
-	mshell->tkn = mshell->head_tkn;
-	return (1);
+	free(actualise->value);
+	free(actualise->envar);
+	free(actualise->next);
+	free(actualise);
 }

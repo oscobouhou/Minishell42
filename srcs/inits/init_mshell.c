@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/13 20:37:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:27:36 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	init_dependencies(t_mshell *mshell, char **env)
 		return (0);
 	if (!dup_env(&mshell->env, env, &mshell->envc))
 		return (0);
-	if (!dup_env(&mshell->exprt, env, &mshell->exprtc))
+	if (!sort_export(mshell))
 		return (0);
 	return (1);
 }
@@ -32,9 +32,9 @@ t_mshell	*init_mshell(char **env)
 	mshell = malloc(sizeof(t_mshell));
 	if (!mshell)
 		return (NULL);
-	mshell->exprt = NULL;
 	mshell->env = NULL;
 	mshell->tkn = NULL;
+	mshell->expt = NULL;
 	if (!init_dependencies(mshell, env))
 		return (NULL);
 	return (mshell);

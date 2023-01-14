@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:43:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/13 15:41:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/14 15:12:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,33 @@ int	tokenizer(t_mshell *mshell, int strt, int end)
 		strt++;
 	}
 	mshell->tkn->tkn[++i] = '\0';
+	dprintf(2, "%s\n  type:  %d\n", mshell->tkn->tkn, mshell->tkn->type);
 	if (!make_new_token(mshell))
 		return (0);
 	return (1);
 }
-// dprintf(2, "%s\n  type:  %d\n", mshell->tkn->tkn, mshell->tkn->type);
+
+//string = input
+
+//parsing de la string
+
+//split au pipe
+
+//expand
+
+//split au espaces
+
+//ls | grep -e 'minishell' | cat
+
+/*
+	int i = 0;
+	while (list) {
+		if (i == 0 && list != redirection)
+			list = cmd;
+			i++;
+		else if (i != 0 && list !+ redirection)
+			list = option / arguments
+		else
+			list = redirection
+	}
+*/

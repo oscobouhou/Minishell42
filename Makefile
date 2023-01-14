@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/13 21:02:17 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/14 19:59:49 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,23 +17,25 @@ CC 				= gcc -g3 -Wall -Wextra -Werror
 OBJ				= $(SRCS:.c=.o)
 
 SRCS 			= main/main.c \
-				  srcs/free/free.c \
 				  srcs/libft/libft.c \
 				  srcs/token/tokenizer.c \
 				  srcs/signals/signals.c \
 				  srcs/expand/center_expand.c \
 				  srcs/compose/compose_tkn.c \
+				  srcs/free/free.c \
+				  srcs/free/free_sort_export.c \
+				  srcs/inits/init_env.c \
 				  srcs/inits/init_token.c \
+				  srcs/inits/init_export.c \
 				  srcs/inits/init_mshell.c \
 				  srcs/inits/init_builtins.c \
-				  srcs/inits/init_env_exprt.c \
+				  srcs/parsing/parser.c \
 				  srcs/parsing/treat_pipe.c \
 				  srcs/parsing/treat_redir.c \
 				  srcs/parsing/treat_space.c \
 				  srcs/parsing/treat_quote.c \
+				  srcs/parsing/treat_export.c \
 				  srcs/parsing/treat_printable.c \
-				  srcs/parsing/parser.c \
-				  srcs/builtins/center_builtins.c \
 				  srcs/builtins/do_cd.c \
 				  srcs/builtins/do_env.c \
 				  srcs/builtins/do_pwd.c \
@@ -41,6 +43,7 @@ SRCS 			= main/main.c \
 				  srcs/builtins/do_exit.c \
 				  srcs/builtins/do_unset.c \
 				  srcs/builtins/do_export.c \
+				  srcs/builtins/center_builtins.c \
 
 SRCH_INCLDS 	= -Iincld
 
