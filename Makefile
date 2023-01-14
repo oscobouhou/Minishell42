@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/14 19:59:49 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/14 23:45:51 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ SRCS 			= main/main.c \
 				  srcs/expand/center_expand.c \
 				  srcs/compose/compose_tkn.c \
 				  srcs/free/free.c \
-				  srcs/free/free_sort_export.c \
+				  srcs/free/free_env.c \
+				  srcs/free/free_token.c \
+				  srcs/free/free_export.c \
 				  srcs/inits/init_env.c \
 				  srcs/inits/init_token.c \
 				  srcs/inits/init_export.c \

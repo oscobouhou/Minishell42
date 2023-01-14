@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 19:52:23 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/14 23:45:10 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/14 23:44:54 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/14 23:45:15 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	terminate(t_mshell *mshell)
+void	free_tokens(t_mshell *mshell)
 {
-	free_t_env(mshell);
-	free_exprt(mshell);
-	// free_tokens(mshell);
-	free(mshell);
+	t_tkn	*tmp;
+
+	mshell->tkn = mshell->head_tkn;
+	while (mshell->tkn)
+	{
+		free(mshell->tkn->tkn);
+		tmp = mshell->tkn;
+		mshell->tkn = mshell->tkn->next;
+		free(tmp);
+	}
 }

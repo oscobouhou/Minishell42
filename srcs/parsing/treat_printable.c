@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 15:39:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/13 15:39:38 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/14 22:56:26 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	check_printable(char print)
 	if ((print >= 9 && print <= 13) || print == 32)
 		return (0);
 	if (print == REDIR_L || print == REDIR_R)
-		return (0);
-	if (print == EXPAND)
 		return (0);
 	if (print == PIPE_LINE)
 		return (0);

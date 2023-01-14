@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/14 19:42:36 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:42:15 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,8 @@ int					copy_and_suppress_env_node(t_mshell *mshell, t_env *env_sorter, t_env *a
 // @ -------------------------- # free # ----------------------------- @ //
 void				terminate(t_mshell *mshell);
 void				free_t_env(t_mshell *mshell);
+void				free_exprt(t_mshell *mshell);
+void				free_tokens(t_mshell *mshell);
 void				free_actualise(t_env *actualise);
 void				free_env_sorter(t_env *env_sorter);
 // @ ---------------------------- ### -------------------------------- @ //
