@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   center_expand.c                                    :+:      :+:    :+:   */
+/*   error_manager.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/15 17:23:29 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/15 16:18:22 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/15 16:19:02 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	center_expand(t_mshell *mshell)
+int error_manager(t_mshell *mshell)
 {
-	if (!check_expand_in_token(mshell))
-		return (0);
-	mshell->tkn = mshell->head_tkn;
-	return (1);
+    (void)mshell;
+    return (1);
 }

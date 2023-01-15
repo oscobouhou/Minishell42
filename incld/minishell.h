@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/14 23:42:15 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/15 16:37:31 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ typedef struct s_tkn
 	struct s_tkn	*next;
 }					t_tkn;
 
+typedef struct s_err
+{
+	int				(*parse_err[3])();
+}					t_err;
+
 typedef struct s_mshell
 {
 	char			*rdline_outp;
@@ -60,6 +65,7 @@ typedef struct s_mshell
 	t_tkn			*head_tkn;
 	t_env			*env;
 	t_expt			*expt;
+	t_err			*error;
 	int				(*built[7])();
 }					t_mshell;
 // @ --------------------------- # enums # -------------------------- @ //
@@ -74,6 +80,13 @@ enum e_tokens
 	BUILTIN,
 	HEREDOC,
 	APPEND
+};
+
+enum e_parserr
+{
+	PIPE_ERR,
+	QUOTE_ERR,
+	REDIR_ERR
 };
 
 enum e_builtins
@@ -132,7 +145,11 @@ int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
 // @ ------------------------- # expand # ---------------------------- @ //
-int					ft_expand(char *str, t_env *exprt);
+int					check_end_var_expand(int read);
+int					center_expand(t_mshell *mshell);
+int					check_expand_in_token(t_mshell *mshell);
+int					manage_expands(t_mshell *mshell, int *i);
+int 				export_seeker(t_mshell *mshell, char **expander);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
 int					sort_export(t_mshell *mshell);
