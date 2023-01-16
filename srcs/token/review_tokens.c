@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 13:16:37 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/16 17:33:50 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:33:08 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int review_tokens(t_mshell *mshell)
     (void)mshell;
     return (1);
 }
-
 
 /*
     if (mshell->tkn->type == WORD)
@@ -58,10 +57,6 @@ int review_tokens(t_mshell *mshell)
 	mshell->tkn = mshell->tkn->next
 	
 */
-
-
-
-
 
 /*
 
