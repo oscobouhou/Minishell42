@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:46:21 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/13 15:40:06 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:10:17 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,24 @@ int	treat_quote(t_mshell *mshell, int *i)
 {
 	int	tmp_i;
 
-	if (mshell->rdline_outp[*i] == SINGLE_QUOTE)
+
+	tmp_i = *i;
+	if (!search_next_quote(mshell, mshell->rdline_outp[*i], i))
+		return (dprintf(2, "error\n"), 0);
+	++(*i);
+	
+	
+	while (mshell->rdline_outp[*i] && check_printable_char(mshell->rdline_outp[*i]))
 	{
-		tmp_i = *i;
-		if (!search_next_quote(mshell, SINGLE_QUOTE, i))
-			return (dprintf(2, "error\n"), 0);
+		if (mshell->rdline_outp[*i]  == SINGLE_QUOTE || mshell->rdline_outp[*i]  == DOUBLE_QUOTE)
+			if (!search_next_quote(mshell, mshell->rdline_outp[*i], i))
+				return (dprintf(2, "errrrrorrraaaarr !"), 0);
 		++(*i);
-		mshell->tkn->type = SQ_WORD;
-		if (!tokenizer(mshell, tmp_i, *i))
-			return (0);
-		return (1);
 	}
-	else if (mshell->rdline_outp[*i] == DOUBLE_QUOTE)
-	{
-		tmp_i = *i;
-		if (!search_next_quote(mshell, DOUBLE_QUOTE, i))
-			return (dprintf(2, "error\n"), 0);
-		++(*i);
-		mshell->tkn->type = DQ_WORD;
-		if (!tokenizer(mshell, tmp_i, *i))
-			return (0);
-		return (1);
-	}
-	return (0);
+	
+	mshell->tkn->type = WORD;
+	if (!tokenizer(mshell, tmp_i, *i))
+		return (0);
+	return (1);
 }
+// dprintf(2, "%s\n", (char *)&mshell->rdline_outp[*i]);
