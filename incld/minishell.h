@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/15 16:37:31 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:17:32 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ enum e_tokens
 	RDIR_R,
 	RDIR_L,
 	BUILTIN,
-	HEREDOC,
-	APPEND
+	HEREDOC_R,
+	HEREDOC_L
 };
 
 enum e_parserr
@@ -128,8 +128,10 @@ int					do_export(t_mshell *mshell);
 int					do_pwd(t_mshell *mshell);
 int					do_unset(t_mshell *mshell);
 // @ -------------------------- # token # --------------------------- @ //
-int					tokenizer(t_mshell *mshell, int strt, int end);
+int					review_tokens(t_mshell *mshell);
 int					make_new_token(t_mshell *mshell);
+int					tokenize_heredoc(t_mshell *mshell);
+int					tokenizer(t_mshell *mshell, int strt, int end);
 // @ ------------------------ # signals # --------------------------- @ //
 void				handle_sigint(void);
 void				manage_signals(void);

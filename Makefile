@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/15 16:19:30 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/16 13:05:32 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,12 @@ OBJ				= $(SRCS:.c=.o)
 
 SRCS 			= main/main.c \
 				  srcs/libft/libft.c \
-				  srcs/token/tokenizer.c \
 				  srcs/signals/signals.c \
 				  srcs/error/error_manager.c \
 				  srcs/compose/compose_tkn.c \
+				  srcs/token/tokenizer.c \
+				  srcs/token/review_tokens.c \
+				  srcs/token/tokenize_heredoc.c \
 				  srcs/free/free.c \
 				  srcs/free/free_env.c \
 				  srcs/free/free_token.c \

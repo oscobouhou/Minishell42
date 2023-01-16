@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   center_expand.c                                    :+:      :+:    :+:   */
+/*   review_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/16 13:12:43 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/16 13:16:37 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/16 13:17:14 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	center_expand(t_mshell *mshell)
+int review_tokens(t_mshell *mshell)
 {
-	mshell->tkn = mshell->head_tkn;
-	if (!check_expand_in_token(mshell))
-		return (0);
-	mshell->tkn = mshell->head_tkn;
-	return (1);
+    (void)mshell;
+    return (1);
 }
