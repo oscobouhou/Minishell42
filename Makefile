@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/16 15:56:02 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/17 20:44:33 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,11 @@ SRCS 			= main/main.c \
 				  srcs/free/free_env.c \
 				  srcs/free/free_token.c \
 				  srcs/free/free_export.c \
-				  srcs/expand/check_expand.c \
-				  srcs/expand/export_seeker.c \
+				  srcs/expand/make_expand.c \
 				  srcs/expand/center_expand.c \
-				  srcs/expand/manage_expands.c \
+				  srcs/expand/suppress_expand.c \
+				  srcs/expand/check_valid_expand.c \
+				  srcs/expand/search_expand_in_expt.c \
 				  srcs/inits/init_env.c \
 				  srcs/inits/init_token.c \
 				  srcs/inits/init_export.c \

@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_expand.c                                     :+:      :+:    :+:   */
+/*   search_expand_in_export.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/15 13:10:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/15 17:06:22 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/17 20:40:25 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/17 20:40:48 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_expand_in_token(t_mshell *mshell)
+int	search_expand_in_export(t_mshell *mshell, char *expander)
 {
-	int	i;
+	t_expt	*head;
 
-	while (mshell->tkn->next)
+	head = mshell->expt;
+	while (mshell->expt->next)
 	{
-		i = -1;
-		if (mshell->tkn->type != SQ_WORD)
-			while (mshell->tkn->tkn[++i])
-				if (mshell->tkn->tkn[i] == EXPAND)
-					if (!manage_expands(mshell, &i))
-						break ;
-		mshell->tkn = mshell->tkn->next;
+		if (!ft_strcmp(mshell->expt->exptvar, expander))
+			return (mshell->expt = head, 1);
+		mshell->expt = mshell->expt->next;
 	}
-	mshell->tkn = mshell->head_tkn;
-	return (1);
+	return (mshell->expt = head, 0);
 }

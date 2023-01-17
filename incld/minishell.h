@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/16 19:11:07 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:45:40 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ enum e_tokens
 	APPEND,
 	HRDOC,
 	DLIM_HRDOC,
-	_FILE
+	_FILE,
+	_ARG,
+	_CMD
 };
 
 enum e_parserr
@@ -139,6 +141,7 @@ void				manage_signals(void);
 void				sig_handler(int signum);
 int					check_eof(char *rdline_outp);
 // @ ------------------------- # compose # -------------------------- @ //
+void				what_token(int token);
 int					compose_tkn(t_mshell *mhsell);
 // @ ------------------------- # libft # ---------------------------- @ //
 void				ft_putchar(char c);
@@ -148,11 +151,12 @@ int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
 // @ ------------------------- # expand # ---------------------------- @ //
-int					check_end_var_expand(int read);
+int					is_expand(t_mshell*mshell);
 int					center_expand(t_mshell *mshell);
-int					check_expand_in_token(t_mshell *mshell);
-int					manage_expands(t_mshell *mshell, int *i);
-int 				export_seeker(t_mshell *mshell, char **expander);
+int					check_valid_expand(t_mshell *mshell, int *i);
+int					suppress_expand(t_mshell *mshell, int start, int len);
+int					make_expand(t_mshell *mshell, char *expander, int len);
+int					search_expand_in_export(t_mshell *mshell, char *expander);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
 int					sort_export(t_mshell *mshell);
@@ -162,7 +166,6 @@ int					treat_pipe(t_mshell *mshell, int *i);
 int					treat_quote(t_mshell *mshell, int *i);
 int					treat_space(t_mshell *mshell, int *i);
 int					treat_redir(t_mshell *mshell, int *i);
-int					treat_hyphen(t_mshell *mshell, int *i);
 int					treat_printable(t_mshell *mshell, int *i);
 int					copy_env_content(t_env *dest, t_env *src);
 int					copy_env_sorter_content(t_expt *dest, t_env *src);

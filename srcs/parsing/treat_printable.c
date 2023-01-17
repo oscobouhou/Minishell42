@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 15:39:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/16 20:31:11 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:54:06 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	treat_printable(t_mshell *mshell, int *i)
 	{
 		if (mshell->rdline_outp[*i]  == SINGLE_QUOTE || mshell->rdline_outp[*i]  == DOUBLE_QUOTE)
 			if (!search_next_quote(mshell, mshell->rdline_outp[*i], i))
-				return (dprintf(2, "errrrrorrrrr !"), 0);
+				return (dprintf(2, "error!"), 0);
 		++(*i);
 	}
 	mshell->tkn->type = WORD;
