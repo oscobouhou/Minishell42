@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:38:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/17 21:05:28 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:31:22 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	suppress_expand(t_mshell *mshell, int start, int len)
 		new_token[++i] = mshell->tkn->tkn[r];
 	while (mshell->tkn->tkn[++j])
 		new_token[++i] = mshell->tkn->tkn[j];
+	new_token[++i] = '\0';
 	free(mshell->tkn->tkn);
 	mshell->tkn->tkn = new_token;
 	return (1);

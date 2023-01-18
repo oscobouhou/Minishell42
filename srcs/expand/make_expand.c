@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:37:17 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/17 20:55:02 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:48:53 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	make_expand(t_mshell *mshell, char *expander, int len)
 	while (mshell->tkn->tkn[++i] && mshell->tkn->tkn[i] != EXPAND)
 		new_token[i] = mshell->tkn->tkn[i];
 	i -= 1;
-	j = 0;
+	j = -1;
 	temp_i = (i + (ft_strlen(expander) + 1));
 	while (mshell->expt->value[++j])
 		new_token[++i] = mshell->expt->value[j];

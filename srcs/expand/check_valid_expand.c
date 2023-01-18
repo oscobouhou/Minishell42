@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:44:09 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/17 20:59:46 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:32:35 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ int	check_valid_expand(t_mshell *mshell, int *i)
 	while (++(*i) < tmp_i[1])
 		expander[++j] = mshell->tkn->tkn[*i];
 	expander[++j] = '\0';
+	dprintf(2, "%s\n", expander);
 	if (!search_expand_in_export(mshell, expander))
-		return (*i = tmp_i[0], suppress_expand(mshell, tmp_i[0], ((tmp_i[1] - tmp_i[0]))), 1);
+		return (*i = tmp_i[0], free(expander), suppress_expand(mshell, tmp_i[0], ((tmp_i[1] - tmp_i[0]))), 1);
 	make_expand(mshell, expander, ((tmp_i[1] - tmp_i[0])));
 	free(expander);
 	return (1);

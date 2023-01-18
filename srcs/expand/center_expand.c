@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/17 20:46:47 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:10:12 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	is_expand(t_mshell*mshell)
 	i = -1;
 	in_quote = 0;
 	if (mshell->tkn->type == DLIM_HRDOC)
-		return (0);
+		return (treat_expd_hrdoc(mshell), 0);
 	while (mshell->tkn->tkn[++i])
 	{
-		if (mshell->tkn->tkn[i] == SINGLE_QUOTE)
+		if (mshell->tkn->tkn[i] == SINGLE_QUOTE || mshell->tkn->tkn[i] == DOUBLE_QUOTE)
 			in_quote += 1;
 		else if (mshell->tkn->tkn[i] == EXPAND && in_quote % 2 == 0)
 		{

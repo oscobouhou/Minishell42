@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/17 20:44:33 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/18 14:13:40 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,17 +19,24 @@ OBJ				= $(SRCS:.c=.o)
 SRCS 			= main/main.c \
 				  srcs/libft/libft.c \
 				  srcs/signals/signals.c \
-				  srcs/error/error_manager.c \
+				  srcs/printer/print_tokens.c \
 				  srcs/compose/compose_tkn.c \
 				  srcs/token/tokenizer.c \
-				  srcs/token/review_tokens.c \
+				  srcs/token/word_review.c \
+				  srcs/token/pipe_review.c \
+				  srcs/token/hrdoc_review.c \
+				  srcs/token/redirs_review.c \
+				  srcs/token/center_review.c \
 				  srcs/free/free.c \
 				  srcs/free/free_env.c \
 				  srcs/free/free_token.c \
 				  srcs/free/free_export.c \
+				  srcs/error/syntax_error.c \
+				  srcs/error/error_manager.c \
 				  srcs/expand/make_expand.c \
 				  srcs/expand/center_expand.c \
 				  srcs/expand/suppress_expand.c \
+				  srcs/expand/expand_in_hrdoc.c \
 				  srcs/expand/check_valid_expand.c \
 				  srcs/expand/search_expand_in_expt.c \
 				  srcs/inits/init_env.c \

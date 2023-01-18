@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   compose_tkn.c                                      :+:      :+:    :+:   */
+/*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 15:32:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 16:29:42 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/18 13:59:17 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/18 13:59:38 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	compose_tkn(t_mshell *mshell)
+void syntax_error(void)
 {
-	mshell->tkn = mshell->head_tkn;
-	if (!center_review(mshell))
-		return (0);
-	if (!center_expand(mshell))
-		return (0);
-	// if (!remove_quotes(mshell))
-	// 	return (0);
-	print_tokens(mshell);
-	return (1);
+	dprintf(2, "errpr\n");
 }

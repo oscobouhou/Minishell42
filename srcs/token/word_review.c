@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   compose_tkn.c                                      :+:      :+:    :+:   */
+/*   word_review.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 15:32:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 16:29:42 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/18 14:02:28 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/18 17:47:38 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	compose_tkn(t_mshell *mshell)
+void	word_review(t_mshell *mshell, int *cmd_cnt)
 {
-	mshell->tkn = mshell->head_tkn;
-	if (!center_review(mshell))
-		return (0);
-	if (!center_expand(mshell))
-		return (0);
-	// if (!remove_quotes(mshell))
-	// 	return (0);
-	print_tokens(mshell);
-	return (1);
+	if (mshell->tkn->type == WORD)
+	{
+		if (mshell->tkn == mshell->head_tkn || *cmd_cnt == 0)
+		{
+			mshell->tkn->type = _CMD;
+			*cmd_cnt = 1;
+		}
+		else
+			mshell->tkn->type = _ARG;
+	}
 }

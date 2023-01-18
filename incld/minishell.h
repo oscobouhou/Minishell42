@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/17 20:45:40 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:47:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,13 @@ int					do_export(t_mshell *mshell);
 int					do_pwd(t_mshell *mshell);
 int					do_unset(t_mshell *mshell);
 // @ -------------------------- # token # --------------------------- @ //
-int					review_tokens(t_mshell *mshell);
+int					redirs_review(t_mshell *mshell);
+int					center_review(t_mshell *mshell);
 int					make_new_token(t_mshell *mshell);
+int					type_next_token(t_tkn *tkn, int type);
+void				word_review(t_mshell *mshell, int *cmd_cnt);
+int					pipe_review(t_mshell *mshell, int *cmd_cnt);
+int					hrdoc_review(t_mshell *mshell, int *cmd_cnt);
 int					tokenizer(t_mshell *mshell, int strt, int end);
 // @ ------------------------ # signals # --------------------------- @ //
 void				handle_sigint(void);
@@ -153,6 +158,7 @@ int					search_lowest(char *val, t_env *env);
 // @ ------------------------- # expand # ---------------------------- @ //
 int					is_expand(t_mshell*mshell);
 int					center_expand(t_mshell *mshell);
+int					treat_expd_hrdoc(t_mshell *mshell);
 int					check_valid_expand(t_mshell *mshell, int *i);
 int					suppress_expand(t_mshell *mshell, int start, int len);
 int					make_expand(t_mshell *mshell, char *expander, int len);
@@ -171,6 +177,9 @@ int					copy_env_content(t_env *dest, t_env *src);
 int					copy_env_sorter_content(t_expt *dest, t_env *src);
 int					search_next_quote(t_mshell *mshell, char quote, int *q);
 int					copy_and_suppress_env_node(t_mshell *mshell, t_env *env_sorter, t_env *actualise);
+// @ ------------------------- # printer # --------------------------- @ //
+void				what_token(int token);
+void				print_tokens(t_mshell *mshell);
 // @ -------------------------- # free # ----------------------------- @ //
 void				terminate(t_mshell *mshell);
 void				free_t_env(t_mshell *mshell);
@@ -178,5 +187,8 @@ void				free_exprt(t_mshell *mshell);
 void				free_tokens(t_mshell *mshell);
 void				free_actualise(t_env *actualise);
 void				free_env_sorter(t_env *env_sorter);
+// @ -------------------------- # error # ---------------------------- @ //
+int					error_manager(t_mshell *mshell);
+void				syntax_error(void);
 // @ ---------------------------- ### -------------------------------- @ //
 #endif
