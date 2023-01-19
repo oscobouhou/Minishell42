@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:59:17 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 13:59:38 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:28:08 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void syntax_error(void)
 {
-	dprintf(2, "errpr\n");
+	dprintf(2, "error\n");
 }

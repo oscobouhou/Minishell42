@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:00:19 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 18:57:25 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:41:19 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	pipe_review(t_mshell *mshell, int *cmd_cnt)
 		if (mshell->tkn->next->tkn == NULL)
 			return (syntax_error(), 0);
 		if (mshell->tkn == mshell->head_tkn)
+			return (syntax_error(), 0);
+		if (mshell->tkn->next->type == PIPE)
 			return (syntax_error(), 0);
 		if (mshell->tkn->next->type == RDIR_L \
 		|| mshell->tkn->next->type == RDIR_R \
