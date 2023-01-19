@@ -6,32 +6,67 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 19:10:12 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/19 03:13:53 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_expand(t_mshell*mshell)
+int	expansion_of_expander_out_qut(t_mshell *mshell, int *i)
 {
-	int	in_quote;
-	int	i;
+	(void)mshell;
+	(void)*i;
+	return (1);	
+}
 
-	i = -1;
-	in_quote = 0;
-	if (mshell->tkn->type == DLIM_HRDOC)
-		return (treat_expd_hrdoc(mshell), 0);
-	while (mshell->tkn->tkn[++i])
+int	expansion_of_expander_in_s_qut(t_mshell *mshell, int *i)
+{
+	(void)mshell;
+	(void)*i;
+	return (1);	
+}
+
+int	expansion_of_expander_in_d_qut(t_mshell *mshell, int *i)
+{
+	(void)mshell;
+	(void)*i;
+	return (1);	
+}
+
+int	expand_checker(t_mshell *mshell)
+{
+	int		qut[2];
+	int     i[2];
+
+	i[1] = 0;
+	i[0] = -1;
+	qut[0] = 0;
+	qut[1] = 0;
+	while (mshell->tkn->tkn[++i[0]])
 	{
-		if (mshell->tkn->tkn[i] == SINGLE_QUOTE || mshell->tkn->tkn[i] == DOUBLE_QUOTE)
-			in_quote += 1;
-		else if (mshell->tkn->tkn[i] == EXPAND && in_quote % 2 == 0)
+		if (mshell->tkn->tkn[i[0]] == SINGLE_QUOTE)
+			qut[0] += 1;
+		if (mshell->tkn->tkn[i[0]] == DOUBLE_QUOTE)
+			qut[1] += 1;
+		if (qut[1] % 2 == 0 && qut[0] % 2 != 0)
 		{
-			if (!check_valid_expand(mshell, &i))
-				return (0);
+			dprintf(2, "COUCOU\n");
+			expansion_of_expander_in_s_qut(mshell, i);
+		}
+		else if ((qut[1] % 2 != 0) && (qut[0] % 2 == 0))
+		{
+			dprintf(2, "COUCOU1\n");
+			expansion_of_expander_in_d_qut(mshell, i);
+		}
+		else if ((qut[1] % 2 == 0) && (qut[0] % 2 == 0) && !mshell->tkn->tkn[i[0] + 1])
+			break ;
+		else if ((qut[1] % 2 == 0) && (qut[0] % 2 == 0))
+		{
+			dprintf(2, "COUCOU2\n");
+			expansion_of_expander_out_qut(mshell, i);
 		}
 	}
-	return (0);
+	return (1);
 }
 
 int	center_expand(t_mshell *mshell)
@@ -39,9 +74,9 @@ int	center_expand(t_mshell *mshell)
 	mshell->tkn = mshell->head_tkn;
 	while (mshell->tkn->next)
 	{
-		is_expand(mshell);
+		if (mshell->tkn->type == _CMD || mshell->tkn->type == _ARG || mshell->tkn->type == _FILE)
+			expand_checker(mshell);
 		mshell->tkn = mshell->tkn->next;
 	}
-	(void)mshell;
 	return (1);
 }
