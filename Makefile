@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/18 14:13:40 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/20 12:38:42 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS 			= main/main.c \
 				  srcs/inits/init_export.c \
 				  srcs/inits/init_mshell.c \
 				  srcs/inits/init_builtins.c \
+				  srcs/inits/init_expansion.c \
 				  srcs/parsing/parser.c \
 				  srcs/parsing/treat_pipe.c \
 				  srcs/parsing/treat_redir.c \

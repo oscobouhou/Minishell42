@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 20:47:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:03:40 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_expd
+{
+	int				old_expd_len;
+	int				new_expd_len;
+	int				n_types;
+	char			**types;
+	char			*expander;
+	char			*update_tkn;
+}					t_expd;
+
 typedef struct s_expt
 {
 	char			*exptvar;
@@ -65,6 +75,7 @@ typedef struct s_mshell
 	t_tkn			*head_tkn;
 	t_env			*env;
 	t_expt			*expt;
+	t_expd			*expd;
 	t_err			*error;
 	int				(*built[7])();
 }					t_mshell;
@@ -116,6 +127,7 @@ enum e_parse
 t_mshell			*init_mshell(char **env);
 int					init_t_token(t_mshell *mshell);
 int					init_builtins(t_mshell *mshell);
+int					init_expansion(t_mshell *mshell);
 int					new_node_export(t_mshell *mshell);
 int					init_sort_export(t_mshell *mshell);
 int					obtain_env_content(t_env **lst, char *env);

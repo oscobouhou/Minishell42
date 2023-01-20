@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/14 23:37:24 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/20 12:03:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	init_dependencies(t_mshell *mshell, char **env)
 	if (!dup_env(&mshell->env, env, &mshell->envc))
 		return (0);
 	if (!sort_export(mshell))
+		return (0);
+	if (!init_expansion(mshell))
 		return (0);
 	return (1);
 }
