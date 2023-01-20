@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/20 20:21:34 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/20 21:05:07 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ int	cut_expander(t_mshell *mshell, int n_tp, int i)
 	j = 0;
 	i += 1;
 	tmp_i = i;
-	while (mshell->expd->types[n_tp][i] != SINGLE_QUOTE && mshell->expd->types[n_tp][i] != DOUBLE_QUOTE && mshell->expd->types[n_tp][i] != EXPAND)
+	while (mshell->expd->types[n_tp][i] && mshell->expd->types[n_tp][i] != SINGLE_QUOTE && mshell->expd->types[n_tp][i] != DOUBLE_QUOTE && mshell->expd->types[n_tp][i] != EXPAND)
 		i++;
 	mshell->expd->expander = malloc(sizeof(char) * ((i - tmp_i) + 1));
 	i = tmp_i;
-	while (mshell->expd->types[n_tp][i] != SINGLE_QUOTE && mshell->expd->types[n_tp][i] != DOUBLE_QUOTE && mshell->expd->types[n_tp][i] != EXPAND)
+	while (mshell->expd->types[n_tp][i] && mshell->expd->types[n_tp][i] != SINGLE_QUOTE && mshell->expd->types[n_tp][i] != DOUBLE_QUOTE && mshell->expd->types[n_tp][i] != EXPAND)
 	{
 		mshell->expd->expander[j] = mshell->expd->types[n_tp][i];
 		j++;
@@ -143,9 +143,29 @@ int	manage_expands_in_sq(t_mshell *mshell, int n_tp)
 	return (1);
 }
 
+int	remove_closing_quotes_dq(t_mshell *mshell, int n_tp)
+{
+	char	*quote_remover;
+	int		i0;
+	int		i1;
+	
+	i0 = 1;
+	i1 = 0;
+	quote_remover = malloc(sizeof(char) * ft_strlen(mshell->expd->types[n_tp]) + 1);
+	while (mshell->expd->types[n_tp][i0] != DOUBLE_QUOTE)
+	{
+		quote_remover[i1] = mshell->expd->types[n_tp][i0];
+		i1++;
+		i0++;
+	}
+	quote_remover[i1] = '\0';
+	free(mshell->expd->types[n_tp]);
+	mshell->expd->types[n_tp] = quote_remover;
+	return (1);
+}
+
 int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 {
-	int	tmp_i;
 	int	i;
 
 	i = 1;
@@ -166,26 +186,27 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		}
 		i++;
 	}
-	(void)tmp_i;
+	remove_closing_quotes_dq(mshell, n_tp);
 	return (1);
 }
 
 int	manage_expands_oq(t_mshell *mshell, int n_tp)
 {
-	// int		i;
+	int		i;
 
-	// i = 0;
-	// while (mshell->expd->types[n_tp][i])
-	// {
-	// 	if (mshell->expd->types[n_tp][i] == EXPAND)
-	// 	{
-	// 		cut_expander(mshell, n_tp, i);
-	// 		check_expander(mshell);
-	// 		update_type(mshell, &i, n_tp);
-	// 		i -= 1;
-	// 	}
-	// }
-	// return (1);
+	i = 0;
+	while (mshell->expd->types[n_tp][i])
+	{
+		if (mshell->expd->types[n_tp][i] == EXPAND)
+		{
+			cut_expander(mshell, n_tp, i);
+			check_expander(mshell);
+			update_type(mshell, &i, n_tp);
+			i -= 1;
+		}
+		i++;
+	}
+	return (1);
 }
 
 int	manage_expands_in_types(t_mshell *mshell)
@@ -197,9 +218,9 @@ int	manage_expands_in_types(t_mshell *mshell)
 	{
 		if (mshell->expd->types[n_tp][0] == SINGLE_QUOTE)
 			manage_expands_in_sq(mshell, n_tp);
-		if (mshell->expd->types[n_tp][0] == DOUBLE_QUOTE)
+		else if (mshell->expd->types[n_tp][0] == DOUBLE_QUOTE)
 			manage_expands_in_dq(mshell, n_tp);
-		if (mshell->expd->types[n_tp][0] != SINGLE_QUOTE && mshell->expd->types[n_tp][0] != DOUBLE_QUOTE)
+		else if (mshell->expd->types[n_tp][0] != SINGLE_QUOTE && mshell->expd->types[n_tp][0] != DOUBLE_QUOTE)
 			manage_expands_oq(mshell, n_tp);
 		n_tp++;
 	}
@@ -319,6 +340,45 @@ int	find_types_len_expd(t_mshell *mshell)
 	return (cuts);
 }
 
+int join_types_expanded(t_mshell *mshell)
+{
+	char	*new_token;
+	int		n_tp;
+	int		i0;
+	int		i1;
+
+	n_tp = 0;
+	i1 = 0;
+	while (mshell->expd->types[n_tp])
+	{
+		i0 = 0;
+		while (mshell->expd->types[n_tp][i0])
+			i0++;
+		i1 += i0;
+		n_tp++;
+	}
+	n_tp = 0;
+	new_token = malloc(sizeof(char) * (i1 + 1));
+	if (!new_token)
+		return (0);
+	i1 = 0;
+	while (mshell->expd->types[n_tp])
+	{
+		i0 = 0;
+		while (mshell->expd->types[n_tp][i0])
+		{
+			new_token[i1] = mshell->expd->types[n_tp][i0];
+			i0++;
+			i1++;
+		}
+		n_tp++;
+	}
+	new_token[i1] = '\0';
+	free(mshell->tkn->tkn);
+	mshell->tkn->tkn = new_token;
+	return (1);
+}
+
 int	center_expand(t_mshell *mshell)
 {
 	mshell->tkn = mshell->head_tkn;
@@ -329,7 +389,7 @@ int	center_expand(t_mshell *mshell)
 			mshell->expd->n_types = find_types_len_expd(mshell);
 			cut_types_expd(mshell);
 			manage_expands_in_types(mshell);
-			// join_types_expanded(mshell);
+			join_types_expanded(mshell);
 		}
 		mshell->tkn = mshell->tkn->next;
 	}
