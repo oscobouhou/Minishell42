@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/20 12:38:42 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/21 00:56:35 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,12 +33,16 @@ SRCS 			= main/main.c \
 				  srcs/free/free_export.c \
 				  srcs/error/syntax_error.c \
 				  srcs/error/error_manager.c \
-				  srcs/expand/make_expand.c \
-				  srcs/expand/center_expand.c \
-				  srcs/expand/suppress_expand.c \
-				  srcs/expand/expand_in_hrdoc.c \
-				  srcs/expand/check_valid_expand.c \
-				  srcs/expand/search_expand_in_expt.c \
+				  srcs/expand/expd_tools/remove_quotes.c \
+				  srcs/expand/expand_len/expand_len_types.c \
+				  srcs/expand/expand_cut/expand_cut_types.c \
+				  srcs/expand/expand_join/expand_join_types.c \
+				  srcs/expand/expand_hrdoc/expand_in_hrdoc.c \
+				  srcs/expand/expand_center/center_expand.c \
+				  srcs/expand/expand_manage/expand_cut.c \
+				  srcs/expand/expand_manage/expand_checker.c \
+				  srcs/expand/expand_manage/expand_expansion.c \
+				  srcs/expand/expand_manage/expand_manage_types.c \
 				  srcs/inits/init_env.c \
 				  srcs/inits/init_token.c \
 				  srcs/inits/init_export.c \

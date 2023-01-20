@@ -1,35 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   suppress_expand.c                                  :+:      :+:    :+:   */
+/*   expand_join_types.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/17 20:38:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 22:31:22 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/21 00:51:34 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/21 00:56:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	suppress_expand(t_mshell *mshell, int start, int len)
+int join_types_expanded(t_mshell *mshell)
 {
 	char	*new_token;
-	int		i;
-	int		j;
-	int		r;
+	int		n_tp;
+	int		i0;
+	int		i1;
 
-	new_token = malloc(sizeof(char) * ((ft_strlen(mshell->tkn->tkn) - len) + 1));
+	n_tp = 0;
+	i1 = 0;
+	while (mshell->expd->types[n_tp])
+	{
+		i0 = 0;
+		while (mshell->expd->types[n_tp][i0])
+			i0++;
+		i1 += i0;
+		n_tp++;
+	}
+	n_tp = 0;
+	new_token = malloc(sizeof(char) * (i1 + 1));
 	if (!new_token)
 		return (0);
-	i = -1;
-	r = -1;
-	j = ((start + len) - 1);
-	while (mshell->tkn->tkn[++r] && mshell->tkn->tkn[r] != EXPAND)
-		new_token[++i] = mshell->tkn->tkn[r];
-	while (mshell->tkn->tkn[++j])
-		new_token[++i] = mshell->tkn->tkn[j];
-	new_token[++i] = '\0';
+	i1 = 0;
+	while (mshell->expd->types[n_tp])
+	{
+		i0 = 0;
+		while (mshell->expd->types[n_tp][i0])
+		{
+			new_token[i1] = mshell->expd->types[n_tp][i0];
+			i0++;
+			i1++;
+		}
+		n_tp++;
+	}
+	new_token[i1] = '\0';
 	free(mshell->tkn->tkn);
 	mshell->tkn->tkn = new_token;
 	return (1);

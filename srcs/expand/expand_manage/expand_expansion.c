@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_token.c                                       :+:      :+:    :+:   */
+/*   expand_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 19:09:16 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/20 22:06:45 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/21 00:48:52 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/21 00:49:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_t_token(t_mshell *mshell)
+int	make_expansion(t_mshell *mshell, char *input)
 {
-	mshell->tkn = malloc(sizeof(t_tkn));
-	if (!mshell->tkn)
+	int	i;
+
+	i = 0;
+	free(mshell->expd->expander);
+	mshell->expd->expander = malloc(sizeof(char) * (ft_strlen(input) + 1));
+	if (!mshell->expd->expander)
 		return (0);
-	mshell->tkn->type = -1;
-	mshell->tkn->tkn = NULL;
-	mshell->tkn->next = NULL;
-	mshell->head_tkn = mshell->tkn;
-	return (1);
+	while (input[i])
+	{
+		mshell->expd->expander[i] = input[i];
+		i++;
+	}
+	mshell->expd->expander[i] = '\0';
+	return (1);	
 }

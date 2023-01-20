@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/20 18:03:40 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:34:41 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define REDIR_L	60				//		defines: <
 # define REDIR_R 	62				//		defines: >
 # define EXPAND		36				//		defines: $
+# define BACKSLSH	92
 // @ ----------------------- # Includes # --------------------------- @ //
 # include <stdio.h>
 # include <stdlib.h>
@@ -168,13 +169,20 @@ int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
 // @ ------------------------- # expand # ---------------------------- @ //
-int					is_expand(t_mshell*mshell);
 int					center_expand(t_mshell *mshell);
+int					check_expander(t_mshell *mshell);
+int					cut_types_expd(t_mshell *mshell);
 int					treat_expd_hrdoc(t_mshell *mshell);
-int					check_valid_expand(t_mshell *mshell, int *i);
-int					suppress_expand(t_mshell *mshell, int start, int len);
-int					make_expand(t_mshell *mshell, char *expander, int len);
-int					search_expand_in_export(t_mshell *mshell, char *expander);
+int					find_types_len_expd(t_mshell *mshell);
+int					join_types_expanded(t_mshell *mshell);
+int					manage_expands_in_types(t_mshell *mshell);
+int					make_expansion(t_mshell *mshell, char *input);
+int					manage_expands_oq(t_mshell *mshell, int n_tp);
+int					update_type(t_mshell *mshell, int *i, int n_tp);
+int					cut_expander(t_mshell *mshell, int n_tp, int i);
+int					manage_expands_in_sq(t_mshell *mshell, int n_tp);
+int					manage_expands_in_dq(t_mshell *mshell, int n_tp);
+int					remove_closing_quotes_dq(t_mshell *mshell, int n_tp);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
 int					sort_export(t_mshell *mshell);
