@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 00:52:39 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:32:14 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	center_expand(t_mshell *mshell)
 	{
 		if (mshell->tkn->type == _CMD || mshell->tkn->type == _ARG || mshell->tkn->type == _FILE)
 		{
-			dprintf(2, "%s\n", mshell->tkn->tkn);
 			mshell->expd->n_types = find_types_len_expd(mshell);
 			cut_types_expd(mshell);
 			manage_expands_in_types(mshell);

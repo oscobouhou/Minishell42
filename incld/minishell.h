@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 00:34:41 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:31:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,9 @@ int					ft_strlen(char *str);
 int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
-// @ ------------------------- # expand # ---------------------------- @ //
+// @ -------------------------- # exec # ---------------------------- @ //
+int					center_exec(t_mshell *mshell);
+// @ ------------------------- # expand # --------------------------- @ //
 int					center_expand(t_mshell *mshell);
 int					check_expander(t_mshell *mshell);
 int					cut_types_expd(t_mshell *mshell);
@@ -183,6 +185,7 @@ int					cut_expander(t_mshell *mshell, int n_tp, int i);
 int					manage_expands_in_sq(t_mshell *mshell, int n_tp);
 int					manage_expands_in_dq(t_mshell *mshell, int n_tp);
 int					remove_closing_quotes_dq(t_mshell *mshell, int n_tp);
+int					alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
 int					sort_export(t_mshell *mshell);
