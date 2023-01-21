@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/21 00:56:35 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/21 20:15:02 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,9 @@ OBJ				= $(SRCS:.c=.o)
 SRCS 			= main/main.c \
 				  srcs/libft/libft.c \
 				  srcs/signals/signals.c \
-				  srcs/printer/print_tokens.c \
 				  srcs/compose/compose_tkn.c \
+				  srcs/printer/print_tokens.c \
+				  srcs/exec/exec_center/center_exec.c \
 				  srcs/token/tokenizer.c \
 				  srcs/token/word_review.c \
 				  srcs/token/pipe_review.c \
@@ -44,6 +45,7 @@ SRCS 			= main/main.c \
 				  srcs/expand/expand_manage/expand_expansion.c \
 				  srcs/expand/expand_manage/expand_manage_types.c \
 				  srcs/inits/init_env.c \
+				  srcs/inits/init_exec.c \
 				  srcs/inits/init_token.c \
 				  srcs/inits/init_export.c \
 				  srcs/inits/init_mshell.c \

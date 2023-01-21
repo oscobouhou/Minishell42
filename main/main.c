@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 15:38:21 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/01/21 23:33:24 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ int	main(int ac, char **av, char **env)
 		add_history(mshell->rdline_outp);
 		if (!init_t_token(mshell))
 			return (0);
-		if (!parse_output(mshell))
-			return (write(2, "parsing error\n", 14), 1);
-		if (!compose_tkn(mshell))
-			return (1);
+		parse_output(mshell);
+		compose_tkn(mshell);
+		center_exec(mshell);
 		free(mshell->rdline_outp);
-		free_tokens(mshell);
+		// free_tokens(mshell);
 	}
 	return (0);
 }

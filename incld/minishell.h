@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 13:31:50 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 20:50:09 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_expd
 	char			*update_tkn;
 }					t_expd;
 
+
 typedef struct s_expt
 {
 	char			*exptvar;
@@ -62,6 +63,22 @@ typedef struct s_tkn
 	struct s_tkn	*next;
 }					t_tkn;
 
+typedef struct s_exec
+{
+	int				pipe_fd[2];
+	int				*fd;
+	t_tkn			*start_exec;
+	struct s_exec	*next;
+}					t_exec;
+
+typedef struct s_execve
+{
+	char				*cmd;
+	char				**paths;
+	char				**cmd_args;
+	struct s_execve		*next;
+}						t_execve;
+
 typedef struct s_err
 {
 	int				(*parse_err[3])();
@@ -74,9 +91,12 @@ typedef struct s_mshell
 	uint64_t		envc;
 	t_tkn			*tkn;
 	t_tkn			*head_tkn;
+	t_exec			*exec;
+	t_exec 			*head_exec;
 	t_env			*env;
 	t_expt			*expt;
 	t_expd			*expd;
+	t_execve		*execve;
 	t_err			*error;
 	int				(*built[7])();
 }					t_mshell;
@@ -126,6 +146,7 @@ enum e_parse
 };
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
+int					init_exec(t_mshell *mshell);
 int					init_t_token(t_mshell *mshell);
 int					init_builtins(t_mshell *mshell);
 int					init_expansion(t_mshell *mshell);

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 13:33:00 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 20:03:21 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_mshell	*init_mshell(char **env)
 	mshell->tkn = NULL;
 	mshell->expt = NULL;
 	mshell->expd = NULL;
+	mshell->exec = NULL;
 	if (!init_dependencies(mshell, env))
 		return (NULL);
 	return (mshell);
