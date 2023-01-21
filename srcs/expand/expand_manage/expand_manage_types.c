@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 16:08:32 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:16:24 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 					mshell->expd->old_expd_len = 1;
 					mshell->expd->new_expd_len = 1;
 					mshell->expd->expander = "$";
-					dprintf(2, "%s\n", &mshell->expd->types[n_tp][i]);
 				}
 			}
 			update_type(mshell, &i, n_tp);
