@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 13:32:14 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:13:12 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 	i2 = 0;
 	while (i1 != (*i + mshell->expd->new_expd_len))
 		i1++;
+	dprintf(2, "%s\n", &mshell->expd->types[n_tp][*i]);
 	while (mshell->expd->types[n_tp][i2 + *i + mshell->expd->old_expd_len])
 		i2++;
+	dprintf(2, "%d\n", i1 + i2);
 	update = malloc(sizeof(char) + (i1 + i2));
 	if (!update)
 		return (0);
@@ -55,6 +57,8 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 	free(mshell->expd->types[n_tp]);
 	mshell->expd->types[n_tp] = update;
 	*i += mshell->expd->new_expd_len;
+	if (mshell->expd->types[n_tp][*i + 1] == DOUBLE_QUOTE)
+		*i += 1;
 	return (1);
 }
 
