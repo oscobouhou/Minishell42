@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   center_review.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 13:16:37 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 15:55:11 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 15:36:36 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 int type_next_token(t_tkn *tkn, int type)
 {
 	if (tkn->tkn == NULL)
-		return (0);
+		return (syntax_error(), 0);
 	else if (tkn->next->type == WORD)
 	{
 		tkn = tkn->next;
 		tkn->type = type;
 		return (1);
 	}
-	return (0);
+	return (syntax_error(), 0);
 }
 
 int center_review(t_mshell *mshell)

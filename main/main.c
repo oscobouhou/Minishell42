@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/16 13:03:31 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 15:38:21 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av, char **env)
 		if (!parse_output(mshell))
 			return (write(2, "parsing error\n", 14), 1);
 		if (!compose_tkn(mshell))
-			return (write(2, "token composer failed\n", 23), 1);
+			return (1);
 		free(mshell->rdline_outp);
 		free_tokens(mshell);
 	}

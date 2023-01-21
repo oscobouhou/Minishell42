@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_review.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:00:19 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/19 16:41:19 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/21 15:36:23 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	pipe_review(t_mshell *mshell, int *cmd_cnt)
 		{
 			mshell->tkn = mshell->tkn->next;
 			if (!type_next_token(mshell->tkn, _FILE))
-				return (syntax_error(), 0);
+				return (0);
 			mshell->tkn = mshell->tkn->next;
 		}
 		*cmd_cnt = 0;
