@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 12:43:32 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:58:16 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_execve
 	char				*cmd;
 	char				**paths;
 	char				**cmd_args;
-	struct s_execve		*next;
 }						t_execve;
 
 typedef struct s_err
@@ -148,6 +147,7 @@ enum e_parse
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
 int					init_exec(t_mshell *mshell);
+int					init_execve(t_mshell *mshell);
 int					init_t_token(t_mshell *mshell);
 int					init_builtins(t_mshell *mshell);
 int					init_expansion(t_mshell *mshell);
@@ -192,11 +192,15 @@ int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
 // @ -------------------------- # exec # ---------------------------- @ //
 int					center_exec(t_mshell *mshell);
+int					make_new_exec(t_mshell *mshell);
+int					search_next_pipe(t_mshell *mshell);
+int					treat_hrdoc_delim(t_mshell *mshell);
+int					build_commands_chains(t_mshell *mshell);
+int					set_end_of_command_chain(t_mshell *mshell);
 // @ ------------------------- # expand # --------------------------- @ //
 int					center_expand(t_mshell *mshell);
 int					check_expander(t_mshell *mshell);
 int					cut_types_expd(t_mshell *mshell);
-int					treat_expd_hrdoc(t_mshell *mshell);
 int					find_types_len_expd(t_mshell *mshell);
 int					join_types_expanded(t_mshell *mshell);
 int					manage_expands_in_types(t_mshell *mshell);
@@ -210,6 +214,7 @@ int					remove_closing_quotes_dq(t_mshell *mshell, int n_tp);
 int					alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
+int					parse_paths(t_mshell *mshell);
 int					sort_export(t_mshell *mshell);
 int					parse_output(t_mshell *mshell);
 int					check_printable_char(char print);

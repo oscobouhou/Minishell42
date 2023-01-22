@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/22 12:43:10 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/22 16:59:29 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRCS 			= main/main.c \
 				  srcs/libft/libft.c \
 				  srcs/signals/signals.c \
 				  srcs/compose/compose_tkn.c \
+				  srcs/exec/exec_build/build_commands.c \
+				  srcs/exec/exec_hrdoc/treat_hrdoc_delim.c \
 				  srcs/exec/exec_center/center_exec.c \
 				  srcs/printer/print_tokens.c \
 				  srcs/printer/print_exec_chains.c \
@@ -39,7 +41,6 @@ SRCS 			= main/main.c \
 				  srcs/expand/expand_len/expand_len_types.c \
 				  srcs/expand/expand_cut/expand_cut_types.c \
 				  srcs/expand/expand_join/expand_join_types.c \
-				  srcs/expand/expand_hrdoc/expand_in_hrdoc.c \
 				  srcs/expand/expand_center/center_expand.c \
 				  srcs/expand/expand_manage/expand_cut.c \
 				  srcs/expand/expand_manage/expand_checker.c \
@@ -48,11 +49,13 @@ SRCS 			= main/main.c \
 				  srcs/inits/init_env.c \
 				  srcs/inits/init_exec.c \
 				  srcs/inits/init_token.c \
+				  srcs/inits/init_execve.c \
 				  srcs/inits/init_export.c \
 				  srcs/inits/init_mshell.c \
 				  srcs/inits/init_builtins.c \
 				  srcs/inits/init_expansion.c \
 				  srcs/parsing/parser.c \
+				  srcs/parsing/parse_paths.c \
 				  srcs/parsing/treat_pipe.c \
 				  srcs/parsing/treat_redir.c \
 				  srcs/parsing/treat_space.c \

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 23:33:24 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:10:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **env)
 		return (write(2, "couldn't init struct, process aborted\n", 39), 1);
 	while (1)
 	{
-		mshell->rdline_outp = readline("dkermarf@e42r42p42:~/42/minishell$ ");
+		mshell->rdline_outp = readline("dkermarf@e42r42p42:~/42/minishell==============$ ");
 		if (!check_eof(mshell->rdline_outp))
 			return (write(2, "exit\n", 5), terminate(mshell), 0);
 		add_history(mshell->rdline_outp);

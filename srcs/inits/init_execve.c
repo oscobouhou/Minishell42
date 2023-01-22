@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   center_exec.c                                      :+:      :+:    :+:   */
+/*   init_execve.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 11:53:47 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 14:47:55 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/22 13:59:17 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/22 14:03:19 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int center_exec(t_mshell *mshell)
+int	init_execve(t_mshell *mshell)
 {
-    if (!init_exec(mshell))
+	mshell->execve = malloc(sizeof(t_execve));
+	if (!mshell->execve)
 		return (0);
-	if (!build_commands_chains(mshell))
-		return (0);
-	print_exec_chains(mshell);
-    return (1);
+	mshell->execve->cmd = NULL;
+	mshell->execve->cmd_args = NULL;
+	mshell->execve->paths = NULL;
+    parse_paths(mshell);
+	return (1);
 }

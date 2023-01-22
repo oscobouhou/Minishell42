@@ -6,28 +6,14 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 18:51:32 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 12:39:53 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/22 14:01:14 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_execve(t_mshell *mshell)
-{
-	mshell->execve = malloc(sizeof(t_execve));
-	if (!mshell->execve)
-		return (0);
-	mshell->execve->cmd = NULL;
-	mshell->execve->cmd_args = NULL;
-	mshell->execve->paths = NULL;
-	mshell->execve->next = NULL;
-	return (1);
-}
-
 int	init_exec(t_mshell *mshell)
 {
-	if (!init_execve(mshell))
-		return (0);
 	mshell->exec = malloc(sizeof(t_exec));
 	if (!mshell->exec)
 		return (0);
@@ -40,5 +26,3 @@ int	init_exec(t_mshell *mshell)
 	mshell->exec->next = NULL;
 	return (1);
 }
-
-// dprintf(2, "%d\n", (int)sizeof(i) / (int)sizeof(int));
