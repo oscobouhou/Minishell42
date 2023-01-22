@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/21 20:15:02 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/22 12:43:10 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ SRCS 			= main/main.c \
 				  srcs/libft/libft.c \
 				  srcs/signals/signals.c \
 				  srcs/compose/compose_tkn.c \
-				  srcs/printer/print_tokens.c \
 				  srcs/exec/exec_center/center_exec.c \
+				  srcs/printer/print_tokens.c \
+				  srcs/printer/print_exec_chains.c \
 				  srcs/token/tokenizer.c \
 				  srcs/token/word_review.c \
 				  srcs/token/pipe_review.c \

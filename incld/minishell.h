@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 20:50:09 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/22 12:43:32 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_exec
 {
 	int				pipe_fd[2];
 	int				*fd;
+	t_tkn			*start_exec_head;
 	t_tkn			*start_exec;
 	struct s_exec	*next;
 }					t_exec;
@@ -224,6 +225,7 @@ int					copy_and_suppress_env_node(t_mshell *mshell, t_env *env_sorter, t_env *a
 // @ ------------------------- # printer # --------------------------- @ //
 void				what_token(int token);
 void				print_tokens(t_mshell *mshell);
+int					print_exec_chains(t_mshell *mshell);
 // @ -------------------------- # free # ----------------------------- @ //
 void				terminate(t_mshell *mshell);
 void				free_t_env(t_mshell *mshell);
