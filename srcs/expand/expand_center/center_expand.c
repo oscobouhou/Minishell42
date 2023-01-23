@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   center_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 16:25:02 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:33:18 by oscobou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 	i2 = 0;
 	while (i1 != (*i + mshell->expd->new_expd_len))
 		i1++;
-	dprintf(2, "%s\n", &mshell->expd->types[n_tp][*i]);
 	while (mshell->expd->types[n_tp][i2 + *i + mshell->expd->old_expd_len])
 		i2++;
-	dprintf(2, "%d\n", i1 + i2);
 	update = malloc(sizeof(char) + (i1 + i2));
 	if (!update)
 		return (0);

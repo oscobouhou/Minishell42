@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_manage_types.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 16:46:07 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:01:15 by oscobou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,34 @@ int	manage_expands_oq(t_mshell *mshell, int n_tp)
 	return (1);
 }
 
+
+int	get_all_content_from_string(t_mshell *mshell, int n_tp)
+{
+	char 	*new_type;
+	int		i;
+
+	i = ft_strlen(mshell->expd->types[n_tp]);
+	new_type = malloc(sizeof(char) * (i + 1));
+	if (!new_type)
+		return (0);
+	i = 0;
+	while (mshell->expd->types[n_tp][i])
+	{
+		new_type[i] = mshell->expd->types[n_tp][i];
+		i++;	
+	}
+	new_type[i] = '\0';
+	free(mshell->expd->types[n_tp]);
+	mshell->expd->types[n_tp] = new_type;
+	return (1);
+}
+
 int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 {
 	int	i;
 
 	i = 1;
-	if (mshell->expd->types[n_tp][i + 1] == DOUBLE_QUOTE)
+	if (mshell->expd->types[n_tp][i] == EXPAND && mshell->expd->types[n_tp][i + 1] == DOUBLE_QUOTE)
 	{
 		free(mshell->expd->types[n_tp]);
 		mshell->expd->types[n_tp] = "$\0";
@@ -77,21 +99,15 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 			check_expander(mshell);
 			if (mshell->expd->types[n_tp][i + 1] == SINGLE_QUOTE || mshell->expd->types[n_tp][i + 1] == DOUBLE_QUOTE)
 			{
-				mshell->expd->old_expd_len = 1;
-				mshell->expd->new_expd_len = 1;
-				mshell->expd->expander = "$'";
-				if (mshell->expd->types[n_tp][i + 1] == DOUBLE_QUOTE)
-				{
-					mshell->expd->old_expd_len = 1;
-					mshell->expd->new_expd_len = 1;
-					mshell->expd->expander = "$";
-				}
+				get_all_content_from_string(mshell, n_tp);
+				break ;
 			}
 			update_type(mshell, &i, n_tp);
 			i -= 1;
 		}
 		i++;
 	}
+	dprintf(2, "%s\n", mshell->expd->types[n_tp]);
 	remove_closing_quotes_dq(mshell, n_tp);
 	return (1);
 }

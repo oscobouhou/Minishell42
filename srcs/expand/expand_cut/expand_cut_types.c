@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_cut_types.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:45:27 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 00:46:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:01:15 by oscobou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	cut_types_expd(t_mshell *mshell)
 	int j;
 
 	mshell->expd->types = malloc(sizeof(char *) * (mshell->expd->n_types + 1));
-	mshell->expd->types[mshell->expd->n_types] = '\0';
+	mshell->expd->types[mshell->expd->n_types] = NULL;
 	if (!mshell->expd->types)
 		return (0);
 	i = 0;
