@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
+#    By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/22 16:59:29 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/23 22:11:52 by oscobou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= minishell
 
-CC 				= gcc -g3 -Wall -Wextra -Werror
+CC 				= gcc -g3 -Wall -Wextra -Werror -MMD
 
 OBJ				= $(SRCS:.c=.o)
 
@@ -78,7 +78,7 @@ RM				= rm -rf
 all:        $(NAME)
 
 %.o: %.c
-			$(CC) $(SRCH_INCLDS) -Iusr/local/include -c $< -o $@
+			$(CC) $(SRCH_INCLDS) -c $< -o $@
 
 $(NAME):	$(OBJ)
 			$(CC) $(OBJ) -lreadline -o $(NAME)

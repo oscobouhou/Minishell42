@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 16:58:16 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:45:20 by oscobou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,9 +194,9 @@ int					search_lowest(char *val, t_env *env);
 int					center_exec(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
 int					search_next_pipe(t_mshell *mshell);
-int					treat_hrdoc_delim(t_mshell *mshell);
 int					build_commands_chains(t_mshell *mshell);
 int					set_end_of_command_chain(t_mshell *mshell);
+int					center_hrdoc_delim_treatment(t_mshell *mshell);
 // @ ------------------------- # expand # --------------------------- @ //
 int					center_expand(t_mshell *mshell);
 int					check_expander(t_mshell *mshell);

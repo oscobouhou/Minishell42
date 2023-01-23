@@ -6,7 +6,7 @@
 /*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:48:15 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/23 15:44:31 by oscobou          ###   ########.fr       */
+/*   Updated: 2023/01/23 22:11:30 by oscobou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	manage_hrdoc_delim_oq(t_mshell *mshell, int n_tp)
 	while (mshell->expd->types[n_tp][i])
 	{
 		if (mshell->expd->types[n_tp][i] == EXPAND)	
-			if (mshell->expd->types[n_tp + 1][i] && (mshell->expd->types[n_tp + 1][0] == SINGLE_QUOTE || mshell->expd->types[n_tp + 1][0] == DOUBLE_QUOTE))
+			if (mshell->expd->types[n_tp + 1] && (mshell->expd->types[n_tp + 1][0] == SINGLE_QUOTE || mshell->expd->types[n_tp + 1][0] == DOUBLE_QUOTE))
 				j++;
 		i++;
 	}
@@ -59,7 +59,7 @@ int	manage_hrdoc_delim_oq(t_mshell *mshell, int n_tp)
 	while (mshell->expd->types[n_tp][i])
 	{
 		if (mshell->expd->types[n_tp][i] == EXPAND)	
-			if (mshell->expd->types[n_tp + 1][i] && (mshell->expd->types[n_tp + 1][0] == SINGLE_QUOTE || mshell->expd->types[n_tp + 1][0] == DOUBLE_QUOTE))
+			if (mshell->expd->types[n_tp + 1] && (mshell->expd->types[n_tp + 1][0] == SINGLE_QUOTE || mshell->expd->types[n_tp + 1][0] == DOUBLE_QUOTE))
 				i++;
 		new_type[j] = mshell->expd->types[n_tp][i];
 		j++;
