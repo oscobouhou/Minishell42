@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 20:39:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 02:09:36 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 12:55:42 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 int	content_size_file(int fd, char *buf, int *i)
 {
 	fd = open("/tmp/tmp_file.txt", O_RDONLY, 777);
+    if (fd < 0)
+    {
+        return (0);
+    }
     while (read(fd, buf, 1))
 	{
         i[0]++;
@@ -44,6 +48,10 @@ char *recover_heredoc_content(int fd)
 	if (!content)
 		return (NULL);
     fd = open("/tmp/tmp_file.txt", O_RDONLY, 777);
+    if (fd < 0)
+    {
+        return (0);
+    }
 	i[0] = 0;
 	while (read(fd, buf, 1))
 	{
