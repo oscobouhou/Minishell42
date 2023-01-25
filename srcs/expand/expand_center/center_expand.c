@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 03:31:08 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:32:56 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ int	center_expand(t_mshell *mshell)
 		}
 		mshell->tkn = mshell->tkn->next;
 	}
+	 mshell->tkn = mshell->head_tkn;
 	return (1);
 }

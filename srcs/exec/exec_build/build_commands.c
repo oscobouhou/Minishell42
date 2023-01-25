@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:34:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 13:41:38 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:45:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int build_commands_chains(t_mshell *mshell)
 		else
 			mshell->tkn = mshell->tkn->next;
 	}
+	mshell->exec->next = NULL;
 	mshell->exec = mshell->head_exec;
 	return (1);
 }

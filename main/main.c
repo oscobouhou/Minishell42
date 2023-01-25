@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 16:10:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:03:11 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	main(int ac, char **av, char **env)
 		compose_tkn(mshell);
 		center_exec(mshell);
 		free(mshell->rdline_outp);
-		// free_tokens(mshell);
 	}
 	return (0);
 }
