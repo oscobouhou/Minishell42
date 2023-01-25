@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_hrdoc_delim.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:48:15 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/23 22:11:30 by oscobou          ###   ########.fr       */
+/*   Updated: 2023/01/25 02:19:59 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	manage_hrdoc_delim_oq(t_mshell *mshell, int n_tp)
 	j = 0;
 	while (mshell->expd->types[n_tp][i])
 	{
-		if (mshell->expd->types[n_tp][i] == EXPAND)	
+		if (mshell->expd->types[n_tp][i] == EXPAND)
 			if (mshell->expd->types[n_tp + 1] && (mshell->expd->types[n_tp + 1][0] == SINGLE_QUOTE || mshell->expd->types[n_tp + 1][0] == DOUBLE_QUOTE))
 				i++;
 		new_type[j] = mshell->expd->types[n_tp][i];
@@ -72,7 +72,7 @@ int	manage_hrdoc_delim_oq(t_mshell *mshell, int n_tp)
 }
 
 
-int	center_hrdoc_delim_treatment(t_mshell *mshell)
+int	center_hrdoc_delim_treatment(t_mshell *mshell, int *expander)
 {
 	int	n_tp;
 
@@ -82,7 +82,10 @@ int	center_hrdoc_delim_treatment(t_mshell *mshell)
 	while (mshell->expd->types[n_tp])
 	{
 		if (mshell->expd->types[n_tp][0] == DOUBLE_QUOTE || mshell->expd->types[n_tp][0] == SINGLE_QUOTE)
+		{
 			manage_hrdoc_delim_in_q(mshell, n_tp);
+			*expander = 42;
+		}
 		else
 			manage_hrdoc_delim_oq(mshell, n_tp);
 		n_tp++;

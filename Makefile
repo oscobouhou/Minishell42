@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+         #
+#    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/23 22:11:52 by oscobou          ###   ########.fr        #
+#    Updated: 2023/01/24 20:40:49 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS 			= main/main.c \
 				  srcs/signals/signals.c \
 				  srcs/compose/compose_tkn.c \
 				  srcs/exec/exec_build/build_commands.c \
+				  srcs/exec/exec_hrdoc/execute_hrdoc.c \
 				  srcs/exec/exec_hrdoc/treat_hrdoc_delim.c \
 				  srcs/exec/exec_center/center_exec.c \
 				  srcs/printer/print_tokens.c \

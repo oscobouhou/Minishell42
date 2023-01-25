@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/23 15:45:20 by oscobou          ###   ########.fr       */
+/*   Updated: 2023/01/25 02:25:16 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 # define EXPAND		36				//		defines: $
 # define BACKSLSH	92
 // @ ----------------------- # Includes # --------------------------- @ //
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <readline/history.h>
@@ -192,11 +194,13 @@ int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
 // @ -------------------------- # exec # ---------------------------- @ //
 int					center_exec(t_mshell *mshell);
+int					execute_hrdoc(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
 int					search_next_pipe(t_mshell *mshell);
+int					make_expand_in_hrdoc(t_mshell *mshell);
 int					build_commands_chains(t_mshell *mshell);
 int					set_end_of_command_chain(t_mshell *mshell);
-int					center_hrdoc_delim_treatment(t_mshell *mshell);
+int					center_hrdoc_delim_treatment(t_mshell *mshell, int *expander);
 // @ ------------------------- # expand # --------------------------- @ //
 int					center_expand(t_mshell *mshell);
 int					check_expander(t_mshell *mshell);

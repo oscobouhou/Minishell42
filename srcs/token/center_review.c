@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   center_review.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 13:16:37 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 15:36:36 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/01/25 02:16:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int center_review(t_mshell *mshell)
 
 	cmd_cnt = 0;
 	mshell->tkn = mshell->head_tkn;
-	while (mshell->tkn)
+	while (mshell->tkn->next)
 	{
 		word_review(mshell, &cmd_cnt);
 		if (!redirs_review(mshell))
@@ -41,6 +41,8 @@ int center_review(t_mshell *mshell)
 		if (!pipe_review(mshell, &cmd_cnt))
 			return (0);
 		mshell->tkn = mshell->tkn->next;
+		if (!mshell->tkn->next)
+			mshell->tkn->type = -1;
 	}
 	mshell->tkn = mshell->head_tkn;
 	return (1);

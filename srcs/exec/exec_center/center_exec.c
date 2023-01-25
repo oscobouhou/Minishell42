@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 11:53:47 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 14:47:55 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 01:38:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ int center_exec(t_mshell *mshell)
 		return (0);
 	if (!build_commands_chains(mshell))
 		return (0);
-	print_exec_chains(mshell);
+	// print_exec_chains(mshell);
     return (1);
 }
