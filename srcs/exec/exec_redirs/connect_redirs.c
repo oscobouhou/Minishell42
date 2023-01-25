@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 23:29:13 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 23:55:30 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	enable_redirections(t_mshell *mshell)
             mshell->exec->fd[fd] = open(mshell->exec->start_exec->next->tkn, O_RDONLY);
             if (!mshell->exec->fd[fd])
                 return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
-            fd++;
             dup2(mshell->exec->fd[fd], STDIN_FILENO);
+            fd++;
         }
 		else if (mshell->exec->start_exec->type == APPEND)
 		{
