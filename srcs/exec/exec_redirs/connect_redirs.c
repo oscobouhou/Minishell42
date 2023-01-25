@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 16:39:12 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 23:29:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	enable_redirections(t_mshell *mshell)
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
     while (mshell->exec->start_exec)
 	{
-        dprintf(2, "%s\n", mshell->exec->start_exec->tkn);
 		if (mshell->exec->start_exec->type == RDIR_R)
 		{
 			mshell->exec->fd[fd] = open(mshell->exec->start_exec->next->tkn, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (mshell->exec->fd[fd] == -1)
 				return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
+            dup2(mshell->exec->fd[fd], STDOUT_FILENO);
             fd++;
 		}
         else if (mshell->exec->start_exec->type == RDIR_L)
@@ -54,12 +54,14 @@ int	enable_redirections(t_mshell *mshell)
             if (!mshell->exec->fd[fd])
                 return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
             fd++;
+            dup2(mshell->exec->fd[fd], STDIN_FILENO);
         }
 		else if (mshell->exec->start_exec->type == APPEND)
 		{
-			mshell->exec->fd[fd] = open(mshell->exec->start_exec->next->tkn, O_APPEND);
+			mshell->exec->fd[fd] = open(mshell->exec->start_exec->next->tkn, O_CREAT | O_RDWR | O_APPEND, 0644);
             if (!mshell->exec->fd[fd])
                 return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
+            dup2(mshell->exec->fd[fd], STDOUT_FILENO);
 			fd++;
 		}
         if (!mshell->exec->start_exec->next)

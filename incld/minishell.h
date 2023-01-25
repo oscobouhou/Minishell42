@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 02:25:16 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 22:53:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,12 +193,13 @@ int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
 // @ -------------------------- # exec # ---------------------------- @ //
-int					center_exec(t_mshell *mshell);
 int					execute_hrdoc(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
 int					search_next_pipe(t_mshell *mshell);
+int					enable_redirections(t_mshell *mshell);
 int					make_expand_in_hrdoc(t_mshell *mshell);
 int					build_commands_chains(t_mshell *mshell);
+int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
 int					center_hrdoc_delim_treatment(t_mshell *mshell, int *expander);
 // @ ------------------------- # expand # --------------------------- @ //

@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/24 20:40:49 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/25 21:57:32 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS 			= main/main.c \
 				  srcs/exec/exec_build/build_commands.c \
 				  srcs/exec/exec_hrdoc/execute_hrdoc.c \
 				  srcs/exec/exec_hrdoc/treat_hrdoc_delim.c \
+				  srcs/exec/exec_redirs/connect_redirs.c \
 				  srcs/exec/exec_center/center_exec.c \
 				  srcs/printer/print_tokens.c \
 				  srcs/printer/print_exec_chains.c \

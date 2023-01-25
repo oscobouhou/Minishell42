@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:51:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 14:45:29 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/25 22:04:15 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	cut_paths(t_mshell *mshell, int start, int *end, int *n_pth)
 	int	i;
 
 	i = 0;
-	mshell->execve->paths[*n_pth] = malloc(sizeof(char) * ((*end - start) + 1));
+	mshell->execve->paths[*n_pth] = malloc(sizeof(char) * ((*end - start) + 2));
 	if (!mshell->execve->paths[*n_pth])
 		return (0);
 	while (mshell->env->value[start] && mshell->env->value[start] != ':')
@@ -27,9 +27,10 @@ int	cut_paths(t_mshell *mshell, int start, int *end, int *n_pth)
 		start++;
 		i++;
 	}
-	mshell->execve->paths[*n_pth][i] = '\0';
+	mshell->execve->paths[*n_pth][i] = '/';
+	mshell->execve->paths[*n_pth][i + 1] = '\0';
 	(*n_pth)++;
-	(*end) += 2;
+	(*end) += 1;
 	return (1);
 }
 
