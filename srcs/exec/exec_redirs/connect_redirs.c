@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 23:55:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:45:59 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	enable_redirections(t_mshell *mshell)
 	{
 		if (mshell->exec->start_exec->type == RDIR_R)
 		{
-			mshell->exec->fd[fd] = open(mshell->exec->start_exec->next->tkn, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			mshell->exec->fd[fd] = open(mshell->exec->start_exec->next->tkn, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (mshell->exec->fd[fd] == -1)
 				return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
             dup2(mshell->exec->fd[fd], STDOUT_FILENO);
@@ -68,5 +68,10 @@ int	enable_redirections(t_mshell *mshell)
 			break ;
         mshell->exec->start_exec = mshell->exec->start_exec->next;
 	}
+    if (fd == 0)
+    {
+        free(mshell->exec->fd);
+        mshell->exec->fd = NULL;
+    }
 	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/25 21:57:32 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/26 16:55:33 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ SRCS 			= main/main.c \
 				  srcs/builtins/do_echo.c \
 				  srcs/builtins/do_exit.c \
 				  srcs/builtins/do_unset.c \
-				  srcs/builtins/do_export.c \
+				  srcs/builtins/do_exprt.c \
 				  srcs/builtins/center_builtins.c \
 
 SRCH_INCLDS 	= -Iincld

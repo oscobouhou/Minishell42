@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_export.c                                        :+:      :+:    :+:   */
+/*   do_exprt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:12 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/13 20:55:54 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:40:11 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int do_export(t_mshell *mshell)
+int do_exprt(t_mshell *mshell)
 {
     (void)mshell;
     return (1);

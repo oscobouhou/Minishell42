@@ -6,13 +6,11 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 22:55:49 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:50:48 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 int	main(int ac, char **av, char **env)
 {

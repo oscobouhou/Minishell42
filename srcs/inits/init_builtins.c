@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:07:10 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/13 20:48:09 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:34:56 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int	init_builtins(t_mshell *mshell)
 	mshell->built[ECHO] = do_echo;
 	mshell->built[EXIT] = do_exit;
 	mshell->built[UNSET] = do_unset;
-	mshell->built[EXPORT] = do_export;
+	mshell->built[EXPRT] = do_exprt;
 	return (1);
 }

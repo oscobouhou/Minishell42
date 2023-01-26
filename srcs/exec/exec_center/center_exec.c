@@ -5,13 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 11:53:47 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 23:22:18 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/26 19:01:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_close(t_mshell *mshell)
+{
+	int	fd;
+
+	fd = 0;
+	while (mshell->exec->fd[fd])
+	{
+		close(mshell->exec->fd[fd]);
+		fd++;
+	}
+	return (1);
+}
 
 int	join_cmd_for_access(t_mshell *mshell, int *i)
 {
@@ -138,16 +150,37 @@ int	seek_cmd_args(t_mshell *mshell)
 
 int execmd(t_mshell *mshell, char **env)
 {
-	int	pid;
+	pid_t	pid;
 
+	if (mshell->exec->next)
+	{
+		close(STDOUT_FILENO);
+		pipe(mshell->pipe_fd);
+		dup2(mshell->pipe_fd[0], STDOUT_FILENO);
+		close(mshell->pipe_fd[1]);
+	}
+	if (!mshell->exec->next)
+	{
+		close(STDIN_FILENO);
+		dup2(mshell->pipe_fd[1], STDIN_FILENO);
+		close(mshell->pipe_fd[0]);
+	}
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	if (find_access(mshell))
-		dprintf(2, "\n --- ACCESS FOUND --- \n\n");
-	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	seek_cmd_args(mshell);
-	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	execve(mshell->execve->cmd, mshell->execve->cmd_args, env);
-	(void)pid;
+	pid = fork();
+	if (pid == -1)
+		return (dprintf(2, "%s\n"," Couldn't manage to fork for exec !"));
+	if (pid == 0)
+	{
+		if (find_access(mshell))
+			dprintf(2, "\n --- ACCESS FOUND --- \n\n");
+		mshell->exec->start_exec = mshell->exec->start_exec_head;
+		seek_cmd_args(mshell);
+		mshell->exec->start_exec = mshell->exec->start_exec_head;
+		enable_redirections(mshell);
+		mshell->exec->start_exec = mshell->exec->start_exec_head;
+		execve(mshell->execve->cmd, mshell->execve->cmd_args, env);
+	}
+	waitpid(pid, NULL, 0);
 	return (1);
 }
 
@@ -171,15 +204,16 @@ int center_exec(t_mshell *mshell, char **env)
 		return (0);
 	if (!build_commands_chains(mshell))
 		return (0);
-	print_exec_chains(mshell);
-	mshell->exec = mshell->head_exec;
-	if (mshell->exec->next)
-		open_pipes(mshell);
+	// print_exec_chains(mshell);
+	// mshell->exec = mshell->head_exec;
+	// if (mshell->exec->next)
+	// 	open_pipes(mshell);
 	mshell->exec = mshell->head_exec;
 	while (mshell->exec)
 	{
-		enable_redirections(mshell);
 		execmd(mshell, env);
+		if (!mshell->exec->next)
+			break ;
 		mshell->exec = mshell->exec->next;
 	}
     return (1);

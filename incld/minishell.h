@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 22:53:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:39:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_err
 
 typedef struct s_mshell
 {
+	int				pipe_fd[2];
 	char			*rdline_outp;
 	uint64_t		exprtc;
 	uint64_t		envc;
@@ -135,7 +136,7 @@ enum e_builtins
 	ECHO,
 	EXIT,
 	UNSET,
-	EXPORT
+	EXPRT
 };
 
 enum e_parse
@@ -160,14 +161,14 @@ int					init_dependencies(t_mshell *mshell, char **env);
 int					dup_env(t_env **lst, char **env, uint64_t *count);
 int					init_env_sorter(t_mshell *mshell, t_env **env_sorter);
 // @ ------------------------ # builtins # -------------------------- @ //
-int					center_builtins(t_mshell *mshell);
 int					do_cd(t_mshell *mshell);
-int					do_echo(t_mshell *mshell);
 int					do_env(t_mshell *mshell);
-int					do_exit(t_mshell *mshell);
-int					do_export(t_mshell *mshell);
 int					do_pwd(t_mshell *mshell);
+int					do_echo(t_mshell *mshell);
+int					do_exit(t_mshell *mshell);
 int					do_unset(t_mshell *mshell);
+int					do_exprt(t_mshell *mshell);
+int					center_builtins(t_mshell *mshell, int type);
 // @ -------------------------- # token # --------------------------- @ //
 int					redirs_review(t_mshell *mshell);
 int					center_review(t_mshell *mshell);
