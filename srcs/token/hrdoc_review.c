@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 12:51:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/27 15:23:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 	int		expander;
 	t_tkn	*tmp;
 
-
 	expander = -42;
 	if (mshell->tkn->type == HRDOC)
 	{
@@ -58,12 +57,12 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 		execute_hrdoc(mshell);
 		mshell->tkn = tmp;
 		gather_content_from_delim(mshell);
+		tmp = mshell->tkn->next->next;
 		// if (expander == -42)
 		// 	make_expand_in_hrdoc(mshell);
-		tmp = mshell->tkn->next->next;
 		free(mshell->tkn->next);
 		mshell->tkn->next = tmp;
-		mshell->tkn->type = RDIR_L;
+		mshell->tkn->type = HRDOC_RDIR;
 		if (mshell->tkn->next->tkn && mshell->tkn->next->type == WORD && *cmd_cnt == 0)
 			return (mshell->tkn->next->type = _CMD, *cmd_cnt += 1, 1);
 	}

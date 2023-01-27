@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/26 18:39:05 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:23:22 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define EXPAND		36				//		defines: $
 # define BACKSLSH	92
 // @ ----------------------- # Includes # --------------------------- @ //
+# include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -67,8 +68,12 @@ typedef struct s_tkn
 
 typedef struct s_exec
 {
-	int				pipe_fd[2];
 	int				*fd;
+	int				fd_in;
+	int				fd_out;
+	int				fd_p[2];
+	int				fd_p_listen;
+	pid_t			pid;
 	t_tkn			*start_exec_head;
 	t_tkn			*start_exec;
 	struct s_exec	*next;
@@ -118,7 +123,8 @@ enum e_tokens
 	DLIM_HRDOC,
 	_FILE,
 	_ARG,
-	_CMD
+	_CMD,
+	HRDOC_RDIR
 };
 
 enum e_parserr
@@ -194,14 +200,20 @@ int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
 // @ -------------------------- # exec # ---------------------------- @ //
-int					execute_hrdoc(t_mshell *mshell);
+int					find_access(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
+int					seek_cmd_args(t_mshell *mshell);
+int					execute_hrdoc(t_mshell *mshell);
+int					set_pos_to_cmd(t_mshell *mshell);
 int					search_next_pipe(t_mshell *mshell);
 int					enable_redirections(t_mshell *mshell);
+int					copy_cmd_arg(t_mshell *mshell, int *i);
 int					make_expand_in_hrdoc(t_mshell *mshell);
 int					build_commands_chains(t_mshell *mshell);
 int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
+int					copy_first_cmd_arg(t_mshell *mshell, int *i);
+int					join_cmd_for_access(t_mshell *mshell, int *i);
 int					center_hrdoc_delim_treatment(t_mshell *mshell, int *expander);
 // @ ------------------------- # expand # --------------------------- @ //
 int					center_expand(t_mshell *mshell);

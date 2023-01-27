@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/26 18:45:59 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:05:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,21 @@ int	enable_redirections(t_mshell *mshell)
 			if (mshell->exec->fd[fd] == -1)
 				return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
             dup2(mshell->exec->fd[fd], STDOUT_FILENO);
+            mshell->exec->fd_out = mshell->exec->fd[fd];
             fd++;
 		}
         else if (mshell->exec->start_exec->type == RDIR_L)
         {
+            if (access(mshell->exec->start_exec->next->tkn, F_OK) < 0)
+            {
+                dprintf(2, "minishell: %s: %s\n", mshell->exec->start_exec->next->tkn, strerror(errno));
+                exit(1);
+            }
             mshell->exec->fd[fd] = open(mshell->exec->start_exec->next->tkn, O_RDONLY);
             if (!mshell->exec->fd[fd])
                 return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
             dup2(mshell->exec->fd[fd], STDIN_FILENO);
+            mshell->exec->fd_in = mshell->exec->fd[fd];
             fd++;
         }
 		else if (mshell->exec->start_exec->type == APPEND)
@@ -62,8 +69,14 @@ int	enable_redirections(t_mshell *mshell)
             if (!mshell->exec->fd[fd])
                 return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
             dup2(mshell->exec->fd[fd], STDOUT_FILENO);
+            mshell->exec->fd_out = mshell->exec->fd[fd];
 			fd++;
 		}
+		else if (mshell->exec->start_exec->type == HRDOC_RDIR)
+        {
+            dup2(mshell->pipe_fd[0], STDIN_FILENO);
+            close(mshell->pipe_fd[1]);
+        }
         if (!mshell->exec->start_exec->next)
 			break ;
         mshell->exec->start_exec = mshell->exec->start_exec->next;

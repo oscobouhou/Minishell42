@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 20:39:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 12:55:42 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:26:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,36 +66,29 @@ char *recover_heredoc_content(int fd)
 int execute_hrdoc(t_mshell *mshell)
 {
     char    *usr_input;
-    pid_t   pid;
-    int     fd;
+    int     line;
 
-    pid = fork();
-    if (pid == -1)
-        return (dprintf(2, "couldn't fork process for hrdoc!"), 0);
-    if (pid == 0)
+    line = 0;
+    pipe(mshell->pipe_fd);
+    while (1)
     {
-        fd = open("/tmp/tmp_file.txt", O_CREAT | O_WRONLY, 777);
-        if (!fd)
-            return (dprintf(2, "couldn't open hrdoc file!"), 0);
-        while (1)
+        usr_input = readline("> ");
+        if (!check_eof(usr_input))
         {
-            usr_input = readline("> ");
-            if (!ft_strcmp(usr_input, mshell->tkn->tkn))
-            {
-                close(fd);
-				if (usr_input)
-					free(usr_input);
-                exit(0);
-            }
-            write(fd, usr_input, ft_strlen(usr_input));
-			write(fd, "\n", 1);
-            free(usr_input);
+            close(mshell->pipe_fd[1]);
+			return (dprintf(STDERR_FILENO, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", line, mshell->tkn->tkn), 1);
         }
+        if (!ft_strcmp(usr_input, mshell->tkn->tkn))
+        {
+            if (usr_input)
+                free(usr_input);
+            close(mshell->pipe_fd[1]);
+            break ;
+        }
+        write(mshell->pipe_fd[1], usr_input, ft_strlen(usr_input));
+        write(mshell->pipe_fd[1], "\n", 1);
+        line++;
+        free(usr_input);
     }
-	waitpid(pid, NULL, 0);
-    fd = -42;
-    usr_input = recover_heredoc_content(fd);
-    gather_usr_input(usr_input, mshell);
-    unlink("/tmp/tmp_file.txt");
     return (1);
 }

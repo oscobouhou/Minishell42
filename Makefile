@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/26 16:55:33 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/27 13:05:08 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ SRCS 			= main/main.c \
 				  srcs/exec/exec_hrdoc/treat_hrdoc_delim.c \
 				  srcs/exec/exec_redirs/connect_redirs.c \
 				  srcs/exec/exec_center/center_exec.c \
+				  srcs/exec/exec_center/arg_seeker.c \
+				  srcs/exec/exec_center/find_access.c \
 				  srcs/printer/print_tokens.c \
 				  srcs/printer/print_exec_chains.c \
 				  srcs/token/tokenizer.c \

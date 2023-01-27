@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:34:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 16:45:10 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:51:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@ int	make_new_exec(t_mshell *mshell)
 	if (!mshell->exec->next)
 		return (0);
 	mshell->exec = mshell->exec->next;
-	mshell->exec->start_exec = NULL;
+	mshell->exec->fd = NULL;
+	mshell->exec->pid = -42;
+	mshell->exec->fd_in = -42;
+	mshell->exec->fd_out = -42;
+	mshell->exec->fd_p[0] = -42;
+	mshell->exec->fd_p[1] = -42;
 	mshell->exec->next = NULL;
+	mshell->exec->start_exec = NULL;
 	return (1);
 }
 
