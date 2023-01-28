@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/27 17:05:05 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/28 03:18:30 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int number_redirs_in_start_exec(t_mshell *mshell)
 
 int	enable_redirections(t_mshell *mshell)
 {
-    int fd;
+    /* int fd;
 
 	fd = number_redirs_in_start_exec(mshell);
     mshell->exec->fd = malloc(sizeof(int) * fd);
@@ -85,6 +85,7 @@ int	enable_redirections(t_mshell *mshell)
     {
         free(mshell->exec->fd);
         mshell->exec->fd = NULL;
-    }
+    } */
+    (void)mshell;
 	return (1);
 }
