@@ -6,27 +6,21 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/28 06:27:27 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 02:54:31 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	close_pipes_forking(t_mshell *mshell)
+int	close_pipe_fds(t_mshell *mshell)
 {
-	int	i;
-
-	i = 0;
-	mshell->exec = mshell->head_exec;
-	if (mshell->pipe_fd)
+	while (mshell->exec->next)
 	{
-		while (mshell->exec->next)
-		{
-			// close(mshell->pipe_fd[i][0]);
-			// close(mshell->pipe_fd[i][1]);
-			mshell->exec = mshell->exec->next;
-			i++;
-		}
+		if (mshell->exec->fd_out != 1)
+			close(mshell->exec->fd_out);
+		if (mshell->exec->fd_in != 0)
+			close(mshell->exec->fd_in);
+		mshell->exec = mshell->exec->next;
 	}
 	mshell->exec = mshell->head_exec;
 	return (1);
@@ -34,35 +28,34 @@ int	close_pipes_forking(t_mshell *mshell)
 
 int	manage_pipe(t_mshell *mshell, int *_pipe)
 {
-	if (mshell->pipe_fd)
+	if (mshell->pipe_fd[0] != -42)
 	{
+		// first command //
 		if (!*_pipe)
 		{
-			// close(mshell->pipe_fd[*_pipe][0]);
-			dup2(mshell->pipe_fd[*_pipe][1], STDOUT_FILENO);
-			close(mshell->pipe_fd[*_pipe][1]);
-			close(mshell->pipe_fd[*_pipe][0]);
+			// dprintf(2, "first cmd: %s  --- fdin: %d    fdout: %d\n", mshell->exec->start_exec->tkn, mshell->exec->fd_in, mshell->exec->fd_out);
+			dup2(mshell->exec->fd_out, STDOUT_FILENO);
+			close(mshell->exec->fd_out);
 		}
+		// last command //
 		else if (*_pipe && !mshell->exec->next)
 		{
-			// close(mshell->pipe_fd[*_pipe - 1][1]);
-			dup2(mshell->pipe_fd[*_pipe - 1][0], STDIN_FILENO);
-			close(mshell->pipe_fd[*_pipe - 1][0]);
-			close(mshell->pipe_fd[*_pipe - 1][1]);
+			// dprintf(2, "last cmd: %s  --- fdin: %d    fdout: %d\n", mshell->exec->start_exec->tkn, mshell->exec->fd_in, mshell->exec->fd_out);
+			dup2(mshell->exec->fd_in, STDIN_FILENO);
+			close(mshell->exec->fd_in);
 		}
+		// matchmaker command
 		else
 		{
-			close(mshell->pipe_fd[*_pipe - 1][1]);
-			dup2(mshell->pipe_fd[*_pipe - 1][0], STDIN_FILENO);
-			close(mshell->pipe_fd[*_pipe - 1][0]);
-			close(mshell->pipe_fd[*_pipe][0]);
-			dup2(mshell->pipe_fd[*_pipe][1], STDOUT_FILENO);
-			// close(mshell->pipe_fd[*_pipe][1]);
+			// dprintf(2, "matchmaker: %s  --- fdin: %d    fdout: %d\n", mshell->exec->start_exec->tkn, mshell->exec->fd_in, mshell->exec->fd_out);
+			dup2(mshell->exec->fd_in, STDIN_FILENO);
+			close(mshell->exec->fd_in);
+			dup2(mshell->exec->fd_out, STDOUT_FILENO);
+			close(mshell->exec->fd_out);
 		}
 	}
 	return (1);
 }
-
 
 int	ft_close(t_mshell *mshell)
 {
@@ -99,113 +92,84 @@ int execmd(t_mshell *mshell, char **env, int *_pipe)
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	enable_redirections(mshell);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	manage_pipe(mshell, _pipe);
-	// mshell->exec->start_exec = mshell->exec->start_exec_head;
-	// close_pipes_forking(mshell);
+	//manage_pipe(mshell, _pipe);
+	if (mshell->exec->fd_in != 0)
+	{
+		// dprintf(2, "out %s  ---   %d    $PID: %d\n", mshell->exec->start_exec->tkn, *_pipe, mshell->exec->pid);
+		dup2(  mshell->exec->fd_in , STDIN_FILENO );
+		close( mshell->exec->fd_in );
+	}
+	if (mshell->exec->fd_out != 1)
+	{
+		// dprintf(2, "out %s  ---   %d    $PID: %d\n", mshell->exec->start_exec->tkn, *_pipe, mshell->exec->pid);
+		dup2(  mshell->exec->fd_out , STDOUT_FILENO );
+		close( mshell->exec->fd_out );
+	}
+	if (mshell->exec->next) 
+	{
+		close( mshell->exec->next->fd_in );
+	}
 	check = execve(mshell->execve->cmd, mshell->execve->cmd_args, env);
 	if (check == -1)
 		return (dprintf(2, "%s\n", strerror(errno)), exit(errno), 1);
-	return (1);
-}
-
-int	wait_pids(t_mshell *mshell)
-{
-	// while (mshell->exec->next)
-	// {
-	// 	waitpid(mshell->exec->pid, NULL, 0);
-	// 	if (mshell->exec->next)
-	// 		break ;
-	// 	mshell->exec = mshell->exec->next;
-	// }
-	// mshell->exec = mshell->head_exec;
-	(void)mshell;
-	return (1);
-}
-
-int	open_pipes_fds(t_mshell *mshell){
-	int	i;
-	int p;
-
-	i = 0;
-	while (mshell->exec->next)
-	{
-		mshell->exec = mshell->exec->next;
-		i++;
-	}
-	mshell->pipe_fd = malloc(sizeof(int *) * (i + 1));
-	if (!mshell->pipe_fd)
-		return (dprintf(2, "\tmalloc: failure"), 0);
-	i = 0;
-	mshell->exec = mshell->head_exec;
-	while (mshell->exec->next)
-	{
-		mshell->pipe_fd[i] = malloc(sizeof(int) * 2);
-		if (!mshell->pipe_fd[i])
-			return (dprintf(2, "\tmalloc: failure"), 0);
-		mshell->pipe_fd[i][0] = -42;
-		mshell->pipe_fd[i][1] = -42;
-		p = pipe(mshell->pipe_fd[i]);
-		if (p == -1)
-			return (dprintf(2, "\tpipe: creation failure\n"));
-		mshell->exec = mshell->exec->next;
-		i++;
-	}
-	mshell->exec = mshell->head_exec;
-	return (1);
-}
-
-int	close_pipes(t_mshell *mshell)
-{
-	int	i;
-	
-	i = 0;
-	mshell->exec = mshell->head_exec;
-	while (mshell->exec->next)
-	{
-		close(mshell->pipe_fd[i][0]);
-		close(mshell->pipe_fd[i][1]);
-		free(mshell->pipe_fd[i]);
-		mshell->exec = mshell->exec->next;
-		i++;
-	}
-	free(mshell->pipe_fd);
-	mshell->exec = mshell->head_exec;
+	(void)_pipe;
 	return (1);
 }
 
 int center_exec(t_mshell *mshell, char **env)
 {
-	int 	_pipe;
+		//		--- exec start ---		//
+	int _pipe;
 
 	_pipe = 0;
+	mshell->pipe_fd[0] = -42;
     if (!init_exec(mshell))
 		return (0);
 	if (!build_commands_chains(mshell))
 		return (0);
 	mshell->exec = mshell->head_exec;
-	if (mshell->exec->next)
-		open_pipes_fds(mshell);
-	else
-		mshell->pipe_fd = NULL; 
-	mshell->exec = mshell->head_exec;
 	while (mshell->exec)
 	{
+		// pipe opening for the child //
+		if (mshell->exec->next)
+		{
+			if (pipe(mshell->pipe_fd) == -1)
+				return (dprintf(2, "\tpipe: open failure\n"));
+			mshell->exec->next->fd_in = mshell->pipe_fd[0];
+			mshell->exec->fd_out = mshell->pipe_fd[1];
+		}
+			// fork child //
 		mshell->exec->pid = fork();
 		if (mshell->exec->pid == -1)
-			return (dprintf(2, "\tfork: failed for child %d\n", _pipe + 1));
+			return (dprintf(2, "\tfork: child %d failure\n", _pipe));
+		// child executes command //
 		if (mshell->exec->pid == 0)
 			execmd(mshell, env, &_pipe);
+	// Close pipe extremities in the parent //
+		if (mshell->exec->fd_in != 0)
+			close(mshell->exec->fd_in);
+		if (mshell->exec->fd_out != 1)
+			close(mshell->exec->fd_out);
+			// Break loop to avoid segfualt
 		if (!mshell->exec->next)
 			break ;
+		 // parent goes to next cmd //
 		mshell->exec = mshell->exec->next;
 		_pipe++;
 	}
-	waitpid(mshell->exec->pid, NULL, 0);
+	// close all fd's opened for piping //
 	mshell->exec = mshell->head_exec;
-	// wait_pids(mshell);
+	close_pipe_fds(mshell);
+//	after launching all childs parent waits their return //
 	mshell->exec = mshell->head_exec;
-	close_pipes(mshell);
+	while (mshell->exec)
+	{
+		waitpid(mshell->exec->pid, NULL, 0);
+		if (!mshell->exec->next)
+			break ;
+		mshell->exec = mshell->exec->next;
+	}
 	mshell->exec = mshell->head_exec;
+		//		--- end exec ---		//
 	return (1);
-
 }

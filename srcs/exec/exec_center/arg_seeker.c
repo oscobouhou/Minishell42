@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 13:02:44 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/28 04:34:35 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 02:52:16 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	copy_cmd_arg(t_mshell *mshell, int *i)
 		return (0);
 	while (mshell->exec->start_exec->tkn[i1])
 	{
-		mshell->execve->cmd_args[*i][i1] = mshell->execve->cmd[i1];
+		mshell->execve->cmd_args[*i][i1] = mshell->exec->start_exec->tkn[i1];
 		i1++;
 	}
 	mshell->execve->cmd_args[*i][i1] = '\0';
@@ -71,8 +71,15 @@ int	seek_cmd_args(t_mshell *mshell)
 	while (mshell->exec->start_exec)
 	{
 		if (mshell->exec->start_exec->type == _ARG)
+		{
 			copy_cmd_arg(mshell, &i);
+		}
 		mshell->exec->start_exec = mshell->exec->start_exec->next;
 	}
+	 i = 0;
+    while (mshell->execve->cmd_args[i])
+    {
+        i++;
+    }
 	return (1);
 }

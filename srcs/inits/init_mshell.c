@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/28 03:19:04 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:05:47 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ t_mshell	*init_mshell(char **env)
 	mshell->expd = NULL;
 	mshell->exec = NULL;
 	mshell->execve = NULL;
-	mshell->pipe_fd = NULL;
+	mshell->pipe_fd[0] = -42;
+	mshell->pipe_fd[1] = -42;
 	if (!init_dependencies(mshell, env))
 		return (NULL);
 	return (mshell);

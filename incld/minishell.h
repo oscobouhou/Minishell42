@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/28 04:37:39 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:13:42 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_exec
 	int				*fd;
 	int				fd_in;
 	int				fd_out;
+	int				p_listener;
 	pid_t			pid;
 	t_tkn			*start_exec_head;
 	t_tkn			*start_exec;
@@ -91,7 +92,7 @@ typedef struct s_err
 
 typedef struct s_mshell
 {
-	int				**pipe_fd;
+	int				pipe_fd[2];
 	int 			pipe_fd_hrdoc[2];
 	char			*rdline_outp;
 	uint64_t		exprtc;
