@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:45:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/20 16:08:03 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 03:42:37 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ int	ft_strlen(char *str)
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
+}
+
+int	set_pos_to_cmd(t_mshell *mshell)
+{
+	while (mshell->exec->start_exec->type != _CMD)
+		mshell->exec->start_exec = mshell->exec->start_exec->next;
+	return (1);
 }
 
 int search_lowest(char *val, t_env *env)

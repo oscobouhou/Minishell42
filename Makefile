@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/27 13:05:08 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/29 03:39:51 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS 			= main/main.c \
 				  srcs/exec/exec_center/center_exec.c \
 				  srcs/exec/exec_center/arg_seeker.c \
 				  srcs/exec/exec_center/find_access.c \
+				  srcs/exec/exec_center/pipe_handler.c \
 				  srcs/printer/print_tokens.c \
 				  srcs/printer/print_exec_chains.c \
 				  srcs/token/tokenizer.c \
