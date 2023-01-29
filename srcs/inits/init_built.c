@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_exec.c                                        :+:      :+:    :+:   */
+/*   init_built.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 18:51:32 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 22:45:26 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/01/29 20:43:51 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/01/29 22:34:04 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_exec(t_mshell *mshell)
+int init_built(t_mshell *mshell)
 {
-	mshell->exec = malloc(sizeof(t_exec));
-	if (!mshell->exec)
-		return (0);
-	mshell->exec->fd = NULL;
-	mshell->exec->fd_in = 0;
-	mshell->exec->fd_out = 1;
-	mshell->exec->no_cmd = 0;
-	mshell->exec->p_listener = -42;
-	mshell->exec->start_exec = NULL;
-	mshell->exec->start_exec_head = NULL;
-	mshell->head_exec = mshell->exec;
-	mshell->exec->next = NULL;
-	return (1);
+    mshell->built = malloc(sizeof(t_built));
+    if (!mshell->built)
+        return (0);
+    mshell->built->cd_arg = NULL;
+    mshell->built->cd_chdir = NULL;
+    return (1);
 }

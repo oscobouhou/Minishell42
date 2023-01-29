@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:36:30 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 17:28:14 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 22:50:34 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int scan_builtin(t_mshell *mshell)
 {
-    set_pos_to_cmd(mshell);
+    if (mshell->exec->start_exec->type == -1)
+        return (1);
+    if (!set_pos_to_cmd(mshell))
+        return (0);
     if (!ft_strcmp(mshell->exec->start_exec->tkn, "cd"))
         return (do_cd(mshell), 1);
     else if (!ft_strcmp(mshell->exec->start_exec->tkn, "echo"))

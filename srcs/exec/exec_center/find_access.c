@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 13:04:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 15:21:17 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 22:55:40 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	find_access(t_mshell *mshell)
 	int		a;
 
 	i = 0;
+	if (mshell->exec->no_cmd == -42)
+		return (1);
 	set_pos_to_cmd(mshell);
 	while (mshell->execve->paths[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 21:05:06 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 22:44:51 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_exec
 	int				*fd;
 	int				fd_in;
 	int				fd_out;
+	int				no_cmd;
 	int				p_listener;
 	pid_t			pid;
 	t_tkn			*start_exec_head;

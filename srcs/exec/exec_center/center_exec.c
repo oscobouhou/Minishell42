@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 19:31:00 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 23:33:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,18 @@ int execmd(t_mshell *mshell, char **env)
 	handle_tube(mshell);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	enable_redirections(mshell);
+	if (mshell->exec->no_cmd == -42)
+		return (close_file_fd(mshell), exit(1), 1);
 	check = execve(mshell->execve->cmd, mshell->execve->cmd_args, env);
 	if (check == -1)
 		return (dprintf(2, "%s\n", strerror(errno)), exit(errno), 1);
 	return (1);
 }
 
+/* int	no_cmd_to_exec(t_mshell *mshell)
+{
+	
+} */
 
 int center_exec(t_mshell *mshell, char **env)
 {
@@ -70,6 +76,13 @@ int center_exec(t_mshell *mshell, char **env)
 	mshell->exec = mshell->head_exec;
 	if (!mshell->exec->next && scan_builtin(mshell))
 		return (1);
+	if (!mshell->exec->next && mshell->exec && mshell->exec->no_cmd == -42)
+	{
+		enable_redirections(mshell);
+		close_file_fd(mshell);
+		return (1);
+	}
+	mshell->exec->start_exec = mshell->exec->start_exec;
 	mshell->exec = mshell->head_exec;
 	while (mshell->exec)
 	{
