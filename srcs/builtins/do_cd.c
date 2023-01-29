@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 19:02:07 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 19:06:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,16 @@ int do_cd(t_mshell *mshell)
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	bckup_stdin_out(backup);
 	enable_redirections(mshell);
-	close_file_fd(mshell);
 	path = NULL;
     path = getcwd(path, 0);
 	if (!path)
-		return (dprintf(2, "%s\n", strerror(errno)), 1);
+		return (dprintf(2, "%s\n", strerror(errno)), re_establish_stdin_out(backup), 1);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	if (!cd_args_checker(mshell))
-		return (dprintf(2, "minishell: cd: too many arguments\n"), 1);
-	if (check_absolute(mshell))
-	{
-		
-		return (1);
-	}
+		return (dprintf(2, "minishell: cd: too many arguments\n"), re_establish_stdin_out(backup), 1);
+	if (absolute_path(mshell))
+		return (re_establish_stdin_out());
+	close_file_fd(mshell);
 	re_establish_stdin_out(backup);
 	return (1);
 }
