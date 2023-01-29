@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 03:42:24 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 05:14:27 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ int	close_file_fd(t_mshell *mshell)
 		}
 	}
 	return (1);
+}
+
+
+int	cd(t_mshell *mshell)
+{
+	chdir();
 }
 
 int	wait_pids(t_mshell *mshell)
