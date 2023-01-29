@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/29 15:40:06 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/01/29 20:50:48 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,11 +54,11 @@ SRCS 			= main/main.c \
 				  srcs/expand/expand_manage/expand_manage_types.c \
 				  srcs/inits/init_env.c \
 				  srcs/inits/init_exec.c \
+				  srcs/inits/init_built.c \
 				  srcs/inits/init_token.c \
 				  srcs/inits/init_execve.c \
 				  srcs/inits/init_export.c \
 				  srcs/inits/init_mshell.c \
-				  srcs/inits/init_builtins.c \
 				  srcs/inits/init_expansion.c \
 				  srcs/parsing/parser.c \
 				  srcs/parsing/parse_paths.c \

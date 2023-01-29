@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:45:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 17:27:59 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 21:41:28 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ void	ft_putchar(char c)
 
 int	set_pos_to_cmd(t_mshell *mshell)
 {
-	while (mshell->exec->start_exec->type != _CMD)
-		mshell->exec->start_exec = mshell->exec->start_exec->next;
+	if (mshell->exec->start_exec)
+	{
+		while (mshell->exec->start_exec->type != _CMD)
+			mshell->exec->start_exec = mshell->exec->start_exec->next;
+	}
 	return (1);
 }
 
