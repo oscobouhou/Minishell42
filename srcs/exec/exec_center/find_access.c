@@ -6,11 +6,31 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 13:04:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/28 03:12:00 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/29 15:21:17 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int rewind_cmd(t_mshell *mshell)
+{
+	int	i;
+
+	i = 0;
+	while (mshell->exec->start_exec->tkn[i])
+		i++;
+	mshell->execve->cmd = malloc(sizeof(char) * (i + 1));
+	if (!mshell->execve->cmd)
+		return (0);
+	i = 0;
+	while (mshell->exec->start_exec->tkn[i])
+	{
+		mshell->execve->cmd[i] = mshell->exec->start_exec->tkn[i];
+		i++;
+	}
+	mshell->execve->cmd[i] = '\0';
+	return (1);
+}
 
 int	join_cmd_for_access(t_mshell *mshell, int *i)
 {
@@ -60,5 +80,6 @@ int	find_access(t_mshell *mshell)
 		mshell->execve->cmd = NULL;
 		i++;
 	}
+	rewind_cmd(mshell);
 	return (0);
 }
