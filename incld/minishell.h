@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/30 02:17:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/30 22:14:51 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_execve
 
 typedef struct s_mshell
 {
+	int				old_expd__hrdoc;
 	int				pipe_fd[2];
 	int 			pipe_fd_hrdoc[2];
 	char			*rdline_outp;
@@ -205,7 +206,6 @@ int					scan_builtin(t_mshell *mshell);
 int					close_file_fd(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
 int					seek_cmd_args(t_mshell *mshell);
-int					execute_hrdoc(t_mshell *mshell);
 int					close_pipe_fds(t_mshell *mshell);
 int					set_pos_to_cmd(t_mshell *mshell);
 int					search_next_pipe(t_mshell *mshell);
@@ -218,6 +218,7 @@ int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
 int					copy_first_cmd_arg(t_mshell *mshell, int *i);
 int					join_cmd_for_access(t_mshell *mshell, int *i);
+int					execute_hrdoc(t_mshell *mshell, int expander);
 int					center_hrdoc_delim_treatment(t_mshell *mshell, int *expander);
 // @ ------------------------- # expand # --------------------------- @ //
 int					center_expand(t_mshell *mshell);
@@ -233,6 +234,7 @@ int					cut_expander(t_mshell *mshell, int n_tp, int i);
 int					manage_expands_in_sq(t_mshell *mshell, int n_tp);
 int					manage_expands_in_dq(t_mshell *mshell, int n_tp);
 int					remove_closing_quotes_dq(t_mshell *mshell, int n_tp);
+int					alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1);
 int					alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);

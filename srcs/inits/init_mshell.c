@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 20:51:08 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/30 15:48:03 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_mshell	*init_mshell(char **env)
 	mshell->execve = NULL;
 	mshell->pipe_fd[0] = -42;
 	mshell->pipe_fd[1] = -42;
+	mshell->old_expd__hrdoc = -42;
 	if (!init_dependencies(mshell, env))
 		return (NULL);
 	return (mshell);

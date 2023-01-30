@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/27 15:23:33 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/30 22:14:02 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,10 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 			return (0);
 		mshell->tkn = mshell->tkn->next;
 		center_hrdoc_delim_treatment(mshell, &expander);
-		execute_hrdoc(mshell);
+		execute_hrdoc(mshell, expander);
 		mshell->tkn = tmp;
 		gather_content_from_delim(mshell);
 		tmp = mshell->tkn->next->next;
-		// if (expander == -42)
-		// 	make_expand_in_hrdoc(mshell);
 		free(mshell->tkn->next);
 		mshell->tkn->next = tmp;
 		mshell->tkn->type = HRDOC_RDIR;

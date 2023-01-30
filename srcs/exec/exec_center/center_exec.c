@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/30 00:51:04 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/30 14:52:15 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,9 @@ int execmd(t_mshell *mshell, char **env)
 
 int	no_cmd_no_pipe(t_mshell *mshell, int *backup)
 {
-	bckup_stdin_out(backup);
 	enable_redirections(mshell);
 	close_file_fd(mshell);
-	re_establish_stdin_out(backup);
+	(void)backup;
 	return (1);
 }
 
