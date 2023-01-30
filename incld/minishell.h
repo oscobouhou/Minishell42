@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 22:44:51 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/30 02:17:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_built
 {
 	char			*cd_arg;
 	char			*cd_chdir;
+	char			**echo_arg;
+	int				echo_flag;
 }					t_built;
 
 typedef struct s_expt
@@ -195,6 +197,7 @@ int					ft_strcmp(char *s1, char *s2);
 int					search_lowest(char *val, t_env *env);
 // @ -------------------------- # exec # ---------------------------- @ //
 int					popen_tube(t_mshell *mshell);
+int					bckup_stdin_out(int *backup);
 int					pclose_tube(t_mshell *mshell);
 int					handle_tube(t_mshell *mshell);
 int					find_access(t_mshell *mshell);
@@ -206,6 +209,7 @@ int					execute_hrdoc(t_mshell *mshell);
 int					close_pipe_fds(t_mshell *mshell);
 int					set_pos_to_cmd(t_mshell *mshell);
 int					search_next_pipe(t_mshell *mshell);
+int					re_establish_stdin_out(int *backup);
 int					enable_redirections(t_mshell *mshell);
 int					copy_cmd_arg(t_mshell *mshell, int *i);
 int					make_expand_in_hrdoc(t_mshell *mshell);

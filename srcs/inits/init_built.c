@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:43:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 22:34:04 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/30 02:20:09 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@ int init_built(t_mshell *mshell)
         return (0);
     mshell->built->cd_arg = NULL;
     mshell->built->cd_chdir = NULL;
+    mshell->built->echo_arg = NULL;
+    mshell->built->echo_flag = -42;
     return (1);
 }

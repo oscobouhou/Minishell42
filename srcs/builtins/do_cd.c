@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 21:33:31 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:46:35 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,6 @@ int do_cd(t_mshell *mshell)
 	if (absolute_path(mshell, backup))
 		return (exit_builtin(mshell, backup), 1);
 	join_pwd_to_directory(mshell, path);
-	// if (access(mshell->exec->start_exec->tkn, F_OK) == -1)
-	// 	return (dprintf(2, "minishell: cd: %s: No such file or directory\n", mshell->exec->start_exec->tkn));
 	if (chdir(mshell->built->cd_chdir) == -1)
 		return (dprintf(2, "%s\n", strerror(errno)), exit_builtin(mshell, backup), 0);
 	exit_builtin(mshell, backup);

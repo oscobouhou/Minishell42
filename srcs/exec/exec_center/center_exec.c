@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 23:33:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:51:04 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,19 @@ int execmd(t_mshell *mshell, char **env)
 	return (1);
 }
 
-/* int	no_cmd_to_exec(t_mshell *mshell)
+int	no_cmd_no_pipe(t_mshell *mshell, int *backup)
 {
-	
-} */
+	bckup_stdin_out(backup);
+	enable_redirections(mshell);
+	close_file_fd(mshell);
+	re_establish_stdin_out(backup);
+	return (1);
+}
 
 int center_exec(t_mshell *mshell, char **env)
 {
+	int	backup[2];
+
 	mshell->pipe_fd[0] = -42;
     if (!init_exec(mshell))
 		return (0);
@@ -77,11 +83,7 @@ int center_exec(t_mshell *mshell, char **env)
 	if (!mshell->exec->next && scan_builtin(mshell))
 		return (1);
 	if (!mshell->exec->next && mshell->exec && mshell->exec->no_cmd == -42)
-	{
-		enable_redirections(mshell);
-		close_file_fd(mshell);
-		return (1);
-	}
+		return (no_cmd_no_pipe(mshell, backup), 1);
 	mshell->exec->start_exec = mshell->exec->start_exec;
 	mshell->exec = mshell->head_exec;
 	while (mshell->exec)
