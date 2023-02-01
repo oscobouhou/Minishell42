@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_manage_types.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/23 15:01:15 by oscobou          ###   ########.fr       */
+/*   Updated: 2023/01/31 12:07:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		}
 		i++;
 	}
-	dprintf(2, "%s\n", mshell->expd->types[n_tp]);
 	remove_closing_quotes_dq(mshell, n_tp);
 	return (1);
 }

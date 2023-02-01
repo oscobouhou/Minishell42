@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_join_types.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscobou <oscobou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:51:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/23 15:22:09 by oscobou          ###   ########.fr       */
+/*   Updated: 2023/01/31 12:46:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,12 @@ int join_types_expanded(t_mshell *mshell)
 			i0++;
 			i1++;
 		}
+		free(mshell->expd->types[n_tp]);
 		n_tp++;
 	}
 	new_token[i1] = '\0';
+	free(mshell->expd->types);
+	mshell->expd->types = NULL;
 	free(mshell->tkn->tkn);
 	mshell->tkn->tkn = new_token;
 	return (1);

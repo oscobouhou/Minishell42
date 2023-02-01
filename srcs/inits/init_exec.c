@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 18:51:32 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 22:45:26 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 03:39:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	init_exec(t_mshell *mshell)
 		return (0);
 	mshell->exec->fd = NULL;
 	mshell->exec->fd_in = 0;
+	mshell->exec->n_fd = -42;
 	mshell->exec->fd_out = 1;
-	mshell->exec->no_cmd = 0;
+	mshell->exec->no_cmd = -42;
 	mshell->exec->p_listener = -42;
 	mshell->exec->start_exec = NULL;
 	mshell->exec->start_exec_head = NULL;

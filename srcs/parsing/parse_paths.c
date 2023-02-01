@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:51:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 22:04:15 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:32:23 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	manage_cut_paths(t_mshell *mshell, int *n_pth)
 		while (mshell->env->value[i] && mshell->env->value[i] != ':')
 			i++;
 		cut_paths(mshell, tmp_i, &i, n_pth);
+		if (i > ft_strlen(mshell->env->value))
+			break ;
 	}
 	return (1);
 }
@@ -84,7 +86,6 @@ int	parse_paths(t_mshell *mshell)
 	}
 	count_n_pths(mshell, &n_pth);
 	manage_cut_paths(mshell, &n_pth);
-	n_pth = 0;
 	mshell->env = head;
 	return (1);	
 }

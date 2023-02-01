@@ -6,40 +6,11 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:46:21 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/18 16:29:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:05:56 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* void	quote_remover(t_mshell *mshell)
-{
-	char	quote;
-	int		mask;
-	int		i;
-
-	i = 0;
-	mask = 0;
-	quote = 0;
-	while (mshell->tkn->tkn[i])
-	{
-		if (mshell->tkn->tkn[i] == SINGLE_QUOTE || mshell->tkn->tkn[i] == DOUBLE_QUOTE)
-			quote = mshell->tkn->tkn[i];
-		while (mshell->tkn->tkn[i])
-	}
-} */
-
-int	remove_quotes(t_mshell *mshell)
-{
-	while (mshell->tkn)
-	{
-		// quote_remover();
-		// mask = 0;
-		// quote = 0;
-		mshell->tkn = mshell->tkn->next;
-	}	
-	return (1);
-}
 
 int	search_next_quote(t_mshell *mshell, char quote, int *q)
 {

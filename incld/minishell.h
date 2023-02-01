@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/30 22:14:51 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 03:38:59 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ typedef struct s_expd
 
 typedef struct s_built
 {
+	int				builtin_p;
+	int				echo_flag;
 	char			*cd_arg;
 	char			*cd_chdir;
 	char			**echo_arg;
-	int				echo_flag;
 }					t_built;
 
 typedef struct s_expt
@@ -76,6 +77,7 @@ typedef struct s_tkn
 typedef struct s_exec
 {
 	int				*fd;
+	int				n_fd;
 	int				fd_in;
 	int				fd_out;
 	int				no_cmd;
@@ -95,6 +97,7 @@ typedef struct s_execve
 
 typedef struct s_mshell
 {
+	int				exit_status;
 	int				old_expd__hrdoc;
 	int				pipe_fd[2];
 	int 			pipe_fd_hrdoc[2];
@@ -188,7 +191,7 @@ void				sig_handler(int signum);
 int					check_eof(char *rdline_outp);
 // @ ------------------------- # compose # -------------------------- @ //
 void				what_token(int token);
-int					compose_tkn(t_mshell *mhsell);
+int					compose_and_launch_command(t_mshell *mhsell, char **env);
 // @ ------------------------- # libft # ---------------------------- @ //
 void				ft_putchar(char c);
 void				ft_putstr(char *str);

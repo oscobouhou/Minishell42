@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/26 22:30:29 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 01:25:49 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	main(int ac, char **av, char **env)
 		add_history(mshell->rdline_outp);
 		if (!init_t_token(mshell))
 			return (0);
-		parse_output(mshell);
-		compose_tkn(mshell);
-		center_exec(mshell, env);
+		if (ft_strlen(mshell->rdline_outp))
+			if (!compose_and_launch_command(mshell, env))
+				dprintf(2, "minishell: error in: 'compose_and_launch_command()'\n");
 		free(mshell->rdline_outp);
 	}
 	return (0);

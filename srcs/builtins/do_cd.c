@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/30 13:53:53 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/31 22:22:41 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,11 @@ int do_cd(t_mshell *mshell)
 	int		backup[2];
 
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	bckup_stdin_out(backup);
-	enable_redirections(mshell);
+	if (mshell->built->builtin_p == -42)
+	{
+		bckup_stdin_out(backup);
+		enable_redirections(mshell);
+	}
 	path = NULL;
     path = getcwd(path, 0);
 	if (!path)

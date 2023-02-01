@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 16:32:56 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:05:29 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 	free(mshell->expd->types[n_tp]);
 	mshell->expd->types[n_tp] = update;
 	*i += mshell->expd->new_expd_len;
-	// if (mshell->expd->types[n_tp][*i + 1] == DOUBLE_QUOTE)
-	// 	*i += 1;
 	return (1);
 }
 
@@ -74,6 +72,6 @@ int	center_expand(t_mshell *mshell)
 		}
 		mshell->tkn = mshell->tkn->next;
 	}
-	 mshell->tkn = mshell->head_tkn;
+	mshell->tkn = mshell->head_tkn;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 13:04:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 22:55:40 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 03:16:21 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,21 @@ int	find_access(t_mshell *mshell)
 	int		a;
 
 	i = 0;
-	if (mshell->exec->no_cmd == -42)
+	dprintf(2, "%s --- %d\n", mshell->exec->start_exec->tkn, mshell->exec->start_exec->type);
+	if (!mshell->exec->start_exec->tkn || mshell->exec->no_cmd == 42)
 		return (1);
 	set_pos_to_cmd(mshell);
 	while (mshell->execve->paths[i])
 	{
 		join_cmd_for_access(mshell, &i);
-		a = access(mshell->execve->cmd, X_OK);
+		a = access(mshell->execve->cmd, X_OK | F_OK);
 		if (!a)
-			return (1);
+			return (mshell->exec->start_exec = mshell->exec->start_exec_head, 1);
 		free(mshell->execve->cmd);
 		mshell->execve->cmd = NULL;
 		i++;
 	}
 	rewind_cmd(mshell);
+	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	return (0);
 }

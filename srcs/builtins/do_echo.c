@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/30 02:26:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:35:32 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,12 @@ int scan_echo_args(t_mshell *mshell)
     return (1);
 }
 
+void builtin_fork_exit(t_mshell *mshell)
+{
+    if (mshell->built->builtin_p == 42)
+        exit(0);
+}
+
 int do_echo(t_mshell *mshell)
 {
     int i;
@@ -122,5 +128,8 @@ int do_echo(t_mshell *mshell)
         return (0);
     scan_echo_args(mshell);
     print_echo_args(mshell);
+    mshell->built->echo_flag = -42;
+    builtin_fork_exit(mshell);
+    mshell->exit_status = 0;
     return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/30 14:44:35 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 03:44:59 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int hrdoc_rdir(t_mshell *mshell)
 int append(t_mshell *mshell, int *fd)
 {
     mshell->exec->fd[*fd] = open(mshell->exec->start_exec->next->tkn, O_CREAT | O_RDWR | O_APPEND, 0644);
-    if (!mshell->exec->fd[*fd])
+    if (mshell->exec->fd[*fd] == -1)
         return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
     dup2(mshell->exec->fd[*fd], STDOUT_FILENO);
     mshell->exec->fd_out = mshell->exec->fd[*fd];
@@ -91,22 +91,36 @@ int	enable_redirections(t_mshell *mshell)
 {
     int fd;
 
+	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	fd = number_redirs_in_start_exec(mshell);
     mshell->exec->fd = malloc(sizeof(int) * fd);
     if (!mshell->exec->fd)
         return (0);
+    mshell->exec->n_fd = fd;
     fd = 0;
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
     while (mshell->exec->start_exec)
 	{
 		if (mshell->exec->start_exec->type == RDIR_R)
-			rdir_r(mshell, &fd);
+        {
+			if (!rdir_r(mshell, &fd))
+				return (0);
+        }
         else if (mshell->exec->start_exec->type == RDIR_L)
-            rdir_l(mshell, &fd);
+        {
+            if (!rdir_l(mshell, &fd))
+				return (0);
+        }
 		else if (mshell->exec->start_exec->type == APPEND)
-            append(mshell, &fd);
+        {
+            if (!append(mshell, &fd))
+				return (0);
+        }
 		else if (mshell->exec->start_exec->type == HRDOC_RDIR)
-            hrdoc_rdir(mshell);
+        {
+            if (!hrdoc_rdir(mshell))
+				return (0);
+		}
         if (!mshell->exec->start_exec->next)
 			break ;
         mshell->exec->start_exec = mshell->exec->start_exec->next;

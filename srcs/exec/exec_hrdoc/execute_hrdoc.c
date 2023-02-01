@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/30 22:18:47 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:42:02 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,11 @@ char *join_types_expanded__hrdoc(t_mshell *mshell)
 			i0++;
 			i1++;
 		}
+        free(mshell->expd->types[n_tp]);
 		n_tp++;
 	}
 	new_token[i1] = '\0';
+    free(mshell->expd->types);
 	return (new_token);
 }
 
@@ -192,7 +194,6 @@ int hrdoc_expander(char **usr_input, t_mshell *mshell)
     while (mshell->expd->types[n_tp])
     {
         make_expands_types__hrdoc(mshell, n_tp);
-        
         n_tp++;
     }
     free((*usr_input));
