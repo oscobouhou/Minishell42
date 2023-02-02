@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:18 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 12:35:57 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:27:42 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void remove_expt(char *to_rm, t_mshell *mshell)
 	free(export->exptvar);
 	if (export->value)
 		free(export->value);
-   
 }
 
 int do_unset(t_mshell *mshell)

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 13:16:56 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:20:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ int execmd(t_mshell *mshell, char **env)
 {
 	signal(SIGINT, &sig_fork_handler);
 	set_pos_to_cmd(mshell);
-	find_access(mshell);
-	seek_cmd_args(mshell);
+	if (mshell->no_env != -42)
+	{
+		find_access(mshell);
+		seek_cmd_args(mshell);
+	}
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	handle_tube(mshell);
 	if (!enable_redirections(mshell))

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:43:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/25 02:00:06 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 14:12:14 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	make_new_token(t_mshell *mshell)
 	if (!mshell->tkn->next)
 		return (0);
 	mshell->tkn = mshell->tkn->next;
+	mshell->tkn->pipe_fd_hrdoc[0] = -42;
+	mshell->tkn->pipe_fd_hrdoc[1] = -42;
 	mshell->tkn->tkn = NULL;
 	mshell->tkn->type = -1;
 	mshell->tkn->next = NULL;

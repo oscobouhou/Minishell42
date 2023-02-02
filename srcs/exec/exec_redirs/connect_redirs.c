@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 12:54:12 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 14:20:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ int hrdoc_rdir(t_mshell *mshell)
 {
     if (mshell->exec->no_cmd != 42)
     {
-        close(mshell->pipe_fd_hrdoc[1]);
-        dup2(mshell->pipe_fd_hrdoc[0], STDIN_FILENO);
-        close(mshell->pipe_fd_hrdoc[0]);
+        close(mshell->exec->start_exec->pipe_fd_hrdoc[1]);
+        dup2(mshell->exec->start_exec->pipe_fd_hrdoc[0], STDIN_FILENO);
+        close(mshell->exec->start_exec->pipe_fd_hrdoc[0]);
     }
     else
     {
-        close(mshell->pipe_fd_hrdoc[0]);
-        close(mshell->pipe_fd_hrdoc[1]);
+        close(mshell->exec->start_exec->pipe_fd_hrdoc[0]);
+        close(mshell->exec->start_exec->pipe_fd_hrdoc[1]);
     }
     return (1);
 }

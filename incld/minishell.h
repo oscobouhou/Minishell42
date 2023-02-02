@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 10:48:12 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:34:55 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_expt
 typedef struct s_tkn
 {
 	int				type;
+	int				pipe_fd_hrdoc[2];
 	char			*tkn;
 	struct s_tkn	*next;
 }					t_tkn;
@@ -98,6 +99,7 @@ typedef struct s_execve
 
 typedef struct s_mshell
 {
+	int				no_env;
 	int				exit_status;
 	int				old_expd__hrdoc;
 	int				pipe_fd[2];
@@ -163,12 +165,12 @@ enum e_bool
 t_mshell			*init_mshell(char **env);
 int					init_exec(t_mshell *mshell);
 int					init_built(t_mshell *mshell);
-int					init_execve(t_mshell *mshell);
 int					init_t_token(t_mshell *mshell);
 int					init_builtins(t_mshell *mshell);
 int					init_expansion(t_mshell *mshell);
 int					new_node_export(t_mshell *mshell);
 int					init_sort_export(t_mshell *mshell);
+int					init_execve(t_mshell *mshell, char **env);
 int					obtain_env_content(t_env **lst, char *env);
 int					begin_command(t_mshell *mshell, char **env);
 int					dup_env(t_env **lst, char **env, uint64_t *count);
@@ -216,6 +218,7 @@ int					ft_isalpha(int c);
 void				ft_putchar(char c);
 int					ft_strlen(char *str);
 void				ft_putstr(char *str);
+char				*ft_strdup(char *str);
 int					ft_atoi(const char *nptr);
 char				*ft_strchr(char *s, int c);
 int					ft_strequal_sign(char *str);

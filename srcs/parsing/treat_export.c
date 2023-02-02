@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 11:30:23 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 11:41:02 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 16:50:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int	sort_export(t_mshell *mshell)
 		actualise = env_sorter;
 		env_sorter = env_sorter->next;
 	}
-	free_actualise(actualise);
+	if (mshell->no_env != -42)
+		free_actualise(actualise);
 	mshell->expt = head_expt;
 	return (mshell->expt = head_expt, 1);
 }

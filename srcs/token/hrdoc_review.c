@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 11:26:23 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 14:31:47 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 		execute_hrdoc(mshell, expander);
 		mshell->tkn = tmp;
 		gather_content_from_delim(mshell);
+		mshell->tkn->pipe_fd_hrdoc[0] = mshell->tkn->next->pipe_fd_hrdoc[0];
+		mshell->tkn->pipe_fd_hrdoc[1] = mshell->tkn->next->pipe_fd_hrdoc[1];
 		tmp = mshell->tkn->next->next;
 		free(mshell->tkn->next);
 		mshell->tkn->next = tmp;
@@ -61,3 +63,5 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 	}
 	return (1);
 }
+
+

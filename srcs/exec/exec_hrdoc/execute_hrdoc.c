@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 12:47:56 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 14:31:54 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ int execute_hrdoc(t_mshell *mshell, int expander)
 
     p = -42;
     line = 0;
-    p = pipe(mshell->pipe_fd_hrdoc);
+    p = pipe(mshell->tkn->pipe_fd_hrdoc);
     if (p == -1)
         return (dprintf(2, "\tpipe: creation failure\n"));
     while (1)
@@ -220,20 +220,20 @@ int execute_hrdoc(t_mshell *mshell, int expander)
         usr_input = readline("> ");
         if (!check_eof(usr_input))
         {
-            close(mshell->pipe_fd_hrdoc[1]);
+            close(mshell->tkn->pipe_fd_hrdoc[1]);
 			return (dprintf(STDERR_FILENO, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", line, mshell->tkn->tkn), 1);
         }
         if (!ft_strcmp(usr_input, mshell->tkn->tkn))
         {
             if (usr_input)
                 free(usr_input);
-            close(mshell->pipe_fd_hrdoc[1]);
+            close(mshell->tkn->pipe_fd_hrdoc[1]);
             break ;
         }
         if (expander == -42)
             hrdoc_expander(&usr_input, mshell);
-        write(mshell->pipe_fd_hrdoc[1], usr_input, ft_strlen(usr_input));
-        write(mshell->pipe_fd_hrdoc[1], "\n", 1);
+        write(mshell->tkn->pipe_fd_hrdoc[1], usr_input, ft_strlen(usr_input));
+        write(mshell->tkn->pipe_fd_hrdoc[1], "\n", 1);
         line++;
         free(usr_input);
     }

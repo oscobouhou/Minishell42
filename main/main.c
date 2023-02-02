@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 11:23:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 16:49:19 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ int	new_command_line(t_mshell *mshell)
 	return (1);
 }
 
-int	init_process_utils(t_mshell *mshell)
+int	init_process_utils(t_mshell *mshell, char **env)
 {
+	if (!*env)
+		mshell->no_env = -42;
 	if (!init_built(mshell))
 		return (0);
 	if (!init_expansion(mshell))
 		return (0);
-	if (!init_execve(mshell))
+	if (!init_execve(mshell, env))
 		return (0);
 	return (1);
 }
@@ -50,7 +52,7 @@ int	main(int ac, char **av, char **env)
 		return (write(2, "couldn't init struct, process aborted\n", 39), 1);
 	while (1)
 	{
-		init_process_utils(mshell);
+		init_process_utils(mshell, env);
 		mshell->rdline_outp = readline("dkermarf@e42r42p42:~/42/minishell$ ");
 		if (!check_eof(mshell->rdline_outp))
 			return (write(2, "exit\n", 5), terminate(mshell), 0);
