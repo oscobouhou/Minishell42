@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:12 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 01:21:50 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:01:53 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,6 +363,7 @@ t_env	*create_env_node(char *var)
 	if (!new_node)
 		return (NULL);
 	new_node->envar = ft_strdup(var);
+	new_node->value = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -371,7 +372,7 @@ t_env	*create_env_node(char *var)
 void	append_to_env(t_env **head, t_env *new_node)
 {
 	t_env	*last;
-		// dprintf(2, "salutchuila%d\n", new_node->value);
+
 	if (!head)
 		return ;
 	if (*head)
@@ -442,6 +443,7 @@ t_expt	*create_expt_node(char *var)
 	if (!new_node)
 		return (NULL);
 	new_node->exptvar = ft_strdup(var);
+	new_node->value = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -452,7 +454,6 @@ void	append_to_expt(t_expt **head, t_expt *new_node)
 	t_expt  *pos;
 
 	pos = search_exprt_pos(new_node->exptvar, *head);
-	dprintf(2, "salutchuila%s\n", pos->exptvar);
 	if (!head)
 		return ;
 	if (pos)

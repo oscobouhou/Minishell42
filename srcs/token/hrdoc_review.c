@@ -6,17 +6,11 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/30 22:14:02 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 11:26:23 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-	
-int		make_expand_in_hrdoc(t_mshell *mshell)
-{
-	(void)mshell;
-	return (1);
-}
 
 int	gather_content_from_delim(t_mshell *mshell)
 {
@@ -61,7 +55,8 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 		free(mshell->tkn->next);
 		mshell->tkn->next = tmp;
 		mshell->tkn->type = HRDOC_RDIR;
-		if (mshell->tkn->next->tkn && mshell->tkn->next->type == WORD && *cmd_cnt == 0)
+		if (mshell->tkn->next->tkn
+			&& mshell->tkn->next->type == WORD && *cmd_cnt == 0)
 			return (mshell->tkn->next->type = _CMD, *cmd_cnt += 1, 1);
 	}
 	return (1);

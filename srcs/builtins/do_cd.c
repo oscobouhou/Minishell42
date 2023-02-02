@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 02:22:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:01:27 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	copy_cd_arg(t_mshell *mshell)
 	int	i;
 
 	i = 0;
-	
 	while (mshell->exec->start_exec->tkn[i])
 		i++;
 	mshell->built->cd_arg = malloc(sizeof(char) * (i + 1));
@@ -35,7 +34,7 @@ int	copy_cd_arg(t_mshell *mshell)
 
 int	cd_args_checker(t_mshell *mshell)
 {
-	int arg;
+	int	arg;
 
 	arg = 0;
 	while (mshell->exec->start_exec)
@@ -92,7 +91,7 @@ int	join_pwd_to_directory(t_mshell *mshell, char *path)
 	return (1);
 }
 
-int absolute_path(t_mshell *mshell, int *backup)
+int	absolute_path(t_mshell *mshell, int *backup)
 {
 	while (mshell->exec->start_exec->type != _ARG)
 		mshell->exec->start_exec = mshell->exec->start_exec->next;
@@ -106,22 +105,21 @@ int absolute_path(t_mshell *mshell, int *backup)
 	return (0);
 }
 
-int do_cd(t_mshell *mshell)
+int	do_cd(t_mshell *mshell)
 {
-    char	*path;
+	char	*path;
 	int		backup[2];
 
 	backup[0] = -42;
 	backup[1] = -42;
 	if (mshell->built->builtin_p == -42)
 	{
-		dprintf(2, "%s\n", "went_here_ENTER");
-        bckup_stdin_out(backup);
+		bckup_stdin_out(backup);
 		enable_redirections(mshell);
 	}
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	path = NULL;
-    path = getcwd(path, 0);
+	path = getcwd(path, 0);
 	if (!path)
 		return (dprintf(2, "%s\n", strerror(errno)), exit_builtin(mshell, backup), 1);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;

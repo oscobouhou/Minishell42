@@ -6,13 +6,13 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:23 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 02:11:22 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 11:47:46 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int free_built_echo_tab(t_mshell *mshell)
+int	free_built_echo_tab(t_mshell *mshell)
 {
 	int	n;
 
@@ -26,7 +26,7 @@ int free_built_echo_tab(t_mshell *mshell)
 	return (1);
 }
 
-int free_cmd_args_execve(t_mshell *mshell)
+int	free_cmd_args_execve(t_mshell *mshell)
 {
 	int	n;
 
@@ -40,7 +40,7 @@ int free_cmd_args_execve(t_mshell *mshell)
 	return (1);
 }
 
-int free_paths_execve(t_mshell *mshell)
+int	free_paths_execve(t_mshell *mshell)
 {
 	int	n;
 
@@ -64,7 +64,7 @@ int	free_expd(t_mshell *mshell)
 	return (1);
 }
 
-int free_built(t_mshell *mshell)
+int	free_built(t_mshell *mshell)
 {
 	if (mshell->built->cd_arg)
 		free(mshell->built->cd_arg);
@@ -91,7 +91,7 @@ int	free_execve(t_mshell *mshell)
 int	free_exec(t_mshell *mshell)
 {
 	t_exec	*_tmp;
-	t_tkn 	*tmp;
+	t_tkn	*tmp;
 
 	mshell->exec = mshell->head_exec;
 	while (mshell->exec)

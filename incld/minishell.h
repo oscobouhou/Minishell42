@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 02:37:14 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 10:48:12 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,12 +285,19 @@ void				what_token(int token);
 void				print_tokens(t_mshell *mshell);
 int					print_exec_chains(t_mshell *mshell);
 // @ -------------------------- # free # ----------------------------- @ //
+int					free_exec(t_mshell *mshell);
 void				terminate(t_mshell *mshell);
+int					free_expd(t_mshell *mshell);
 void				free_t_env(t_mshell *mshell);
+int					free_built(t_mshell *mshell);
 void				free_exprt(t_mshell *mshell);
+int					free_execve(t_mshell *mshell);
 void				free_tokens(t_mshell *mshell);
 void				free_actualise(t_env *actualise);
 void				free_env_sorter(t_env *env_sorter);
+int					free_paths_execve(t_mshell *mshell);
+int					free_built_echo_tab(t_mshell *mshell);
+int					free_cmd_args_execve(t_mshell *mshell);
 // @ -------------------------- # error # ---------------------------- @ //
 int					error_manager(t_mshell *mshell);
 void				syntax_error(void);

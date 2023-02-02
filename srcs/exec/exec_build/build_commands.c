@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:34:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 15:45:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 10:55:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int build_commands_chains(t_mshell *mshell)
 		if (mshell->tkn->next->type == PIPE)
 		{
 			skip = mshell->tkn->next->next;
+			free(mshell->tkn->next->tkn);
 			free(mshell->tkn->next);
 			mshell->tkn->next = NULL;
 			mshell->tkn = skip;

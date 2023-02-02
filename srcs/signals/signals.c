@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:58:33 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 02:50:36 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 11:32:23 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	sig_handler(int signum)
 		handle_sigint();
 	}
 }
-
 
 void	manage_signals(void)
 {

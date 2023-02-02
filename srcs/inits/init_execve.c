@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:59:17 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/22 14:03:19 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 11:44:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int	init_execve(t_mshell *mshell)
 	mshell->execve->cmd = NULL;
 	mshell->execve->cmd_args = NULL;
 	mshell->execve->paths = NULL;
-    parse_paths(mshell);
+	parse_paths(mshell);
 	return (1);
 }

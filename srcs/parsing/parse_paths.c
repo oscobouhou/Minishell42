@@ -6,12 +6,11 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:51:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 12:32:23 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 11:36:00 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	cut_paths(t_mshell *mshell, int start, int *end, int *n_pth)
 {
@@ -87,5 +86,5 @@ int	parse_paths(t_mshell *mshell)
 	count_n_pths(mshell, &n_pth);
 	manage_cut_paths(mshell, &n_pth);
 	mshell->env = head;
-	return (1);	
+	return (1);
 }

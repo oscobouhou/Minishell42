@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 11:30:23 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 13:40:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 11:41:02 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	copy_env_content(t_env *dest, t_env *src)
 
 	dest->envar = malloc(sizeof(char) * (ft_strlen(src->envar) + 1));
 	if (!dest->envar)
-		return (0);														
+		return (0);
 	dest->value = malloc(sizeof(char) * (ft_strlen(src->value) + 1));
 	if (!dest->value)
-		return (0);														
+		return (0);
 	i = -1;
 	while (src->envar[++i])
 		dest->envar[i] = src->envar[i];

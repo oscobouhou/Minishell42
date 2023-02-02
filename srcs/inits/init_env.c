@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:32:31 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 13:40:11 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 11:44:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	init_env_sorter(t_mshell *mshell, t_env **env_sorter)
 	while (mshell->env->next)
 	{
 		if (!copy_env_content((*env_sorter), mshell->env))
-			return (0);						
+			return (0);
 		(*env_sorter)->next = malloc(sizeof(t_env));
 		if (!(*env_sorter)->next)
-			return (0);										// lst_clear{head}
+			return (0);
 		mshell->env = mshell->env->next;
 		(*env_sorter) = (*env_sorter)->next;
 	}
@@ -54,7 +54,7 @@ int	obtain_env_content(t_env **lst, char *env)
 		return (0);
 	(*lst)->value = malloc(sizeof(char) * (value_len) + 1);
 	if (!(*lst)->value)
-		return (0);									// free envar
+		return (0);
 	while (env[++j] != '=')
 		(*lst)->envar[j] = env[j];
 	(*lst)->envar[j] = '\0';
@@ -78,12 +78,12 @@ int	dup_env(t_env **lst, char **env, uint64_t *count)
 	while (env[i])
 	{
 		if (!obtain_env_content(lst, env[i]))
-			return (0);                				// lst_clear
+			return (0);
 		if (!env[i + 1])
 			break ;
 		(*lst)->next = malloc(sizeof(t_env));
 		if (!(*lst)->next)
-			return (0);								// lst_clear{start}
+			return (0);
 		(*lst) = (*lst)->next;
 		i++;
 	}
