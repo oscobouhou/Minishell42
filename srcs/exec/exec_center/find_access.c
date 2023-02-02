@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 13:04:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 03:16:21 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:52:55 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	find_access(t_mshell *mshell)
 	int		a;
 
 	i = 0;
-	dprintf(2, "%s --- %d\n", mshell->exec->start_exec->tkn, mshell->exec->start_exec->type);
-	if (!mshell->exec->start_exec->tkn || mshell->exec->no_cmd == 42)
+	// dprintf(2, "%s --- %d\n", mshell->exec->start_exec->tkn, mshell->exec->start_exec->type);
+	if (mshell->exec->no_cmd == 42 || mshell->exec->start_exec->type != _CMD)
 		return (1);
 	set_pos_to_cmd(mshell);
 	while (mshell->execve->paths[i])

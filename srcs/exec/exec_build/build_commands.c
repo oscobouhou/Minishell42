@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:34:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 03:39:52 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:45:30 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	make_new_exec(t_mshell *mshell)
 	mshell->exec->fd_in = 0;
 	mshell->exec->fd_out = 1;
 	mshell->exec->no_cmd = -42;
+	mshell->exec->no_redirs = -42;
 	mshell->exec->p_listener = -42;
 	mshell->exec->next = NULL;
 	mshell->exec->start_exec = NULL;

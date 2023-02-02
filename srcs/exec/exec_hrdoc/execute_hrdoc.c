@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 13:42:02 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:44:59 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ int execute_hrdoc(t_mshell *mshell, int expander)
         }
         if (expander == -42)
             hrdoc_expander(&usr_input, mshell);
+        dprintf(2, "%s\n", usr_input);
         write(mshell->pipe_fd_hrdoc[1], usr_input, ft_strlen(usr_input));
         write(mshell->pipe_fd_hrdoc[1], "\n", 1);
         line++;

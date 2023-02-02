@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 03:44:59 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:55:34 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int number_redirs_in_start_exec(t_mshell *mshell)
 
 int hrdoc_rdir(t_mshell *mshell)
 {
-    if (mshell->exec->no_cmd != -42)
+    if (mshell->exec->no_cmd != 42)
     {
         close(mshell->pipe_fd_hrdoc[1]);
         dup2(mshell->pipe_fd_hrdoc[0], STDIN_FILENO);
@@ -50,7 +50,7 @@ int append(t_mshell *mshell, int *fd)
     if (mshell->exec->fd[*fd] == -1)
         return (dprintf(2, "Couldn't open fd %s\n", mshell->exec->start_exec->tkn));
     dup2(mshell->exec->fd[*fd], STDOUT_FILENO);
-    mshell->exec->fd_out = mshell->exec->fd[*fd];
+    mshell->exec->no_redirs = 42;
     (*fd)++;
     return (1);
 }
@@ -61,7 +61,7 @@ int rdir_l(t_mshell *mshell, int *fd)
     if (mshell->exec->fd[*fd] == -1)
         return (dprintf(2, "minishell: %s: %s\n", mshell->exec->start_exec->next->tkn, strerror(errno)), 0);
     dup2(mshell->exec->fd[*fd], STDIN_FILENO);
-    mshell->exec->fd_in = mshell->exec->fd[*fd];
+    mshell->exec->no_redirs = 42;
     (*fd)++;
     return (1);
 }
@@ -72,18 +72,8 @@ int rdir_r(t_mshell *mshell, int *fd)
     if (mshell->exec->fd[*fd] == -1)
         return (dprintf(2, "minishell: %s: %s\n", mshell->exec->start_exec->next->tkn, strerror(errno)), 0);
     dup2(mshell->exec->fd[*fd], STDOUT_FILENO);
-    mshell->exec->fd_out = mshell->exec->fd[*fd];
+    mshell->exec->no_redirs = 42;
     (*fd)++;
-    return (1);
-}
-
-int no_redirs_case(t_mshell *mshell, int *fd)
-{
-    if (*fd == 0)
-    {
-        free(mshell->exec->fd);
-        mshell->exec->fd = NULL;
-    }
     return (1);
 }
 
@@ -93,7 +83,7 @@ int	enable_redirections(t_mshell *mshell)
 
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	fd = number_redirs_in_start_exec(mshell);
-    mshell->exec->fd = malloc(sizeof(int) * fd);
+    mshell->exec->fd = malloc(sizeof(int) * (fd + 1));
     if (!mshell->exec->fd)
         return (0);
     mshell->exec->n_fd = fd;
@@ -125,7 +115,6 @@ int	enable_redirections(t_mshell *mshell)
 			break ;
         mshell->exec->start_exec = mshell->exec->start_exec->next;
 	}
-    no_redirs_case(mshell, &fd);
 	return (1);
 }
 

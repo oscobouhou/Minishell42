@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:58:33 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 16:17:01 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 02:50:36 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,32 @@ void	handle_sigint(void)
 	rl_redisplay();
 }
 
+void	handle_sigquit(void)
+{
+	dprintf(2, "Quit (core dumped)\n");
+	exit(131);
+}
+
+void	sig_fork_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		handle_sigint();
+	}
+	if (signum == SIGQUIT)
+	{
+		handle_sigquit();
+	}
+}
+
 void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
+	{
 		handle_sigint();
+	}
 }
+
 
 void	manage_signals(void)
 {

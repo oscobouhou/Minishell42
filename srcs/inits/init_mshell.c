@@ -6,13 +6,13 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 16:06:00 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 01:14:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_dependencies(t_mshell *mshell, char **env)
+int	begin_command(t_mshell *mshell, char **env)
 {
 	if (!init_built(mshell))
 		return (0);
@@ -44,7 +44,7 @@ t_mshell	*init_mshell(char **env)
 	mshell->pipe_fd[1] = -42;
 	mshell->exit_status = -42;
 	mshell->old_expd__hrdoc = -42;
-	if (!init_dependencies(mshell, env))
+	if (!begin_command(mshell, env))
 		return (NULL);
 	return (mshell);
 }

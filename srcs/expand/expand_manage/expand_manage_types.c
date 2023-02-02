@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 12:07:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 23:43:42 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	manage_expands_in_sq(t_mshell *mshell, int n_tp)
 	i = 1;
 	j = 0;
 	new_type = malloc(sizeof(char) * (ft_strlen(mshell->expd->types[n_tp]) - 2) + 1);
+	if (!new_type)
+		return (0);
 	while (mshell->expd->types[n_tp][i] != SINGLE_QUOTE)
 	{
 		new_type[j] = mshell->expd->types[n_tp][i];
@@ -49,6 +51,12 @@ int	manage_expands_oq(t_mshell *mshell, int n_tp)
 				mshell->expd->old_expd_len = 1;
 				mshell->expd->new_expd_len = 1;
 				mshell->expd->expander = "$";
+			}
+			if (mshell->expd->types[n_tp][i + 1] == '?')
+			{
+				mshell->expd->expander = ft_itoa(mshell->exit_status);
+				mshell->expd->old_expd_len = 1;
+				mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
 			}
 			update_type(mshell, &i, n_tp);
 			i -= 1;
@@ -97,6 +105,12 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		{
 			cut_expander(mshell, n_tp, i);
 			check_expander(mshell);
+			if (mshell->expd->types[n_tp][i + 1] == '?')
+			{
+				mshell->expd->expander = ft_itoa(mshell->exit_status);
+				mshell->expd->old_expd_len = 1;
+				mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
+			}
 			if (mshell->expd->types[n_tp][i + 1] == SINGLE_QUOTE || mshell->expd->types[n_tp][i + 1] == DOUBLE_QUOTE)
 			{
 				get_all_content_from_string(mshell, n_tp);

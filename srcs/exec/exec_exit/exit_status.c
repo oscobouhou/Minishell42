@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   treat_space.c                                      :+:      :+:    :+:   */
+/*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 16:04:08 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 17:58:51 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/02/01 16:05:28 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/02/01 16:17:51 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	treat_space(t_mshell *mshell, int *i)
+char    *exit_status(t_mshell *mshell)
 {
-	while (mshell->rdline_outp[*i] == ' ' || mshell->rdline_outp[*i] == '\n'
-		|| mshell->rdline_outp[*i] == '\t' || mshell->rdline_outp[*i] == '\v'
-			|| mshell->rdline_outp[*i] == '\f' || mshell->rdline_outp[*i] == '\r')
-		++(*i);
-	return (1);
+    return (ft_itoa(mshell->exit_status));
 }
-

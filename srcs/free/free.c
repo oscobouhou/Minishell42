@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:23 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 22:10:11 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 02:11:22 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,42 @@ int	free_execve(t_mshell *mshell)
 
 int	free_exec(t_mshell *mshell)
 {
-	(void)mshell;
+	t_exec	*_tmp;
+	t_tkn 	*tmp;
+
+	mshell->exec = mshell->head_exec;
+	while (mshell->exec)
+	{
+		mshell->exec->start_exec = mshell->exec->start_exec_head;
+		while (mshell->exec->start_exec)
+		{
+			free(mshell->exec->start_exec->tkn);
+			tmp = mshell->exec->start_exec;
+			mshell->exec->start_exec = mshell->exec->start_exec->next;
+			free(tmp);
+		}
+		_tmp = mshell->exec;
+		free(mshell->exec->fd);
+		mshell->exec = mshell->exec->next;
+		free(_tmp);
+	}
 	return (1);
 }
 
-
 void	terminate(t_mshell *mshell)
 {
-	free_t_env(mshell);
-	free_exprt(mshell);
-	free_built(mshell);
-	free_expd(mshell);
-	free_execve(mshell);
-	free_exec(mshell);
+	if (mshell->env)
+		free_t_env(mshell);
+	if (mshell->expt)
+		free_exprt(mshell);
+	if (mshell->built)
+		free_built(mshell);
+	if (mshell->expd)
+		free_expd(mshell);
+	if (mshell->execve)
+		free_execve(mshell);
+	if (mshell->exec)
+		free_exec(mshell);
+	free(mshell->rdline_outp);
 	free(mshell);
 }

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 03:38:59 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 02:37:14 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_exec
 	int				fd_in;
 	int				fd_out;
 	int				no_cmd;
+	int 			no_redirs;
 	int				p_listener;
 	pid_t			pid;
 	t_tkn			*start_exec_head;
@@ -152,6 +153,12 @@ enum e_parse
 	TREAT_REDIR,
 	TREAT_QUOTE
 };
+
+enum e_bool
+{
+	FALSE,
+	TRUE
+};
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
 int					init_exec(t_mshell *mshell);
@@ -163,7 +170,7 @@ int					init_expansion(t_mshell *mshell);
 int					new_node_export(t_mshell *mshell);
 int					init_sort_export(t_mshell *mshell);
 int					obtain_env_content(t_env **lst, char *env);
-int					init_dependencies(t_mshell *mshell, char **env);
+int					begin_command(t_mshell *mshell, char **env);
 int					dup_env(t_env **lst, char **env, uint64_t *count);
 int					init_env_sorter(t_mshell *mshell, t_env **env_sorter);
 // @ ------------------------ # builtins # -------------------------- @ //
@@ -174,7 +181,16 @@ int					do_echo(t_mshell *mshell);
 int					do_exit(t_mshell *mshell);
 int					do_unset(t_mshell *mshell);
 int					do_exprt(t_mshell *mshell);
+t_env				*create_env_node(char *var);
+int					check_arg(char *current_arg);
+t_expt				*create_expt_node(char *var);
 int					center_builtins(t_mshell *mshell, int type);
+void				append_to_env(t_env **head, t_env *new_node);
+int					add_new_envar(char **to_add, t_mshell *mshell);
+int					manage_env(char **to_export, t_mshell *mshell);
+int					add_new_exptar(char **to_add, t_mshell *mshell);
+int					manage_expt(char **to_export, t_mshell *mshell);
+void				append_to_expt(t_expt **head, t_expt *new_node);
 // @ -------------------------- # token # --------------------------- @ //
 int					redirs_review(t_mshell *mshell);
 int					center_review(t_mshell *mshell);
@@ -189,16 +205,24 @@ void				handle_sigint(void);
 void				manage_signals(void);
 void				sig_handler(int signum);
 int					check_eof(char *rdline_outp);
+void				sig_fork_handler(int signum);
 // @ ------------------------- # compose # -------------------------- @ //
 void				what_token(int token);
 int					compose_and_launch_command(t_mshell *mhsell, char **env);
 // @ ------------------------- # libft # ---------------------------- @ //
+char				*ft_itoa(int n);
+int					ft_isalnum(int c);
+int					ft_isalpha(int c);
 void				ft_putchar(char c);
-void				ft_putstr(char *str);
 int					ft_strlen(char *str);
+void				ft_putstr(char *str);
+int					ft_atoi(const char *nptr);
+char				*ft_strchr(char *s, int c);
 int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
+char				**ft_split(char *s, char target);
 int					search_lowest(char *val, t_env *env);
+char				*ft_substr(char *s, int start, size_t len);
 // @ -------------------------- # exec # ---------------------------- @ //
 int					popen_tube(t_mshell *mshell);
 int					bckup_stdin_out(int *backup);
@@ -206,6 +230,7 @@ int					pclose_tube(t_mshell *mshell);
 int					handle_tube(t_mshell *mshell);
 int					find_access(t_mshell *mshell);
 int					scan_builtin(t_mshell *mshell);
+char    			*exit_status(t_mshell *mshell);
 int					close_file_fd(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
 int					seek_cmd_args(t_mshell *mshell);
@@ -219,6 +244,7 @@ int					make_expand_in_hrdoc(t_mshell *mshell);
 int					build_commands_chains(t_mshell *mshell);
 int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
+int					exit_builtin(t_mshell *mshell, int *backup);
 int					copy_first_cmd_arg(t_mshell *mshell, int *i);
 int					join_cmd_for_access(t_mshell *mshell, int *i);
 int					execute_hrdoc(t_mshell *mshell, int expander);

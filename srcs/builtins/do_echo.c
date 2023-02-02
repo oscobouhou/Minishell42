@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 18:35:32 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 23:49:53 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int print_echo_args(t_mshell *mshell)
 
     i = 1;
     ft_putstr(mshell->built->echo_arg[0]);
-    free(mshell->built->echo_arg[0]);
+    if (ft_strlen(mshell->built->echo_arg[0]) > 0)
+        free(mshell->built->echo_arg[0]);
     while (mshell->built->echo_arg[i])
     {
         ft_putchar(' ');
@@ -103,6 +104,11 @@ int scan_echo_args(t_mshell *mshell)
         {
             if (verif_flags(mshell, &prev_flag) && !prev_flag)
                 copy_echo_arg(mshell, &c);
+            else
+            {
+                mshell->built->echo_arg[c] = "";
+                c++;
+            }
         }
         mshell->exec->start_exec = mshell->exec->start_exec->next;
     }
@@ -123,13 +129,15 @@ int do_echo(t_mshell *mshell)
     i = count_echo_args(mshell);
     if (!i)
         return (dprintf(2, "\n"), 1);
-    mshell->built->echo_arg = malloc(sizeof(char) * (i + 1));
+    mshell->built->echo_arg = malloc(sizeof(char *) * (i + 1));
     if (!mshell->built->echo_arg)
         return (0);
+    mshell->built->echo_arg[i] = NULL;
     scan_echo_args(mshell);
     print_echo_args(mshell);
     mshell->built->echo_flag = -42;
     builtin_fork_exit(mshell);
+    dprintf(2, "ECHOECHO\n");
     mshell->exit_status = 0;
     return (1);
 }

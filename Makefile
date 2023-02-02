@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/01/29 20:50:48 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/02/02 02:53:18 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,18 @@ CC 				= gcc -g3 -Wall -Wextra -Werror -MMD
 
 OBJ				= $(SRCS:.c=.o)
 
+DEP				= $(SRCS:.c=.d)
+
 SRCS 			= main/main.c \
 				  srcs/libft/libft.c \
 				  srcs/signals/signals.c \
 				  srcs/compose/compose_tkn.c \
+				  srcs/exec/exec_exit/exit_status.c \
 				  srcs/exec/exec_build/build_commands.c \
 				  srcs/exec/exec_hrdoc/execute_hrdoc.c \
 				  srcs/exec/exec_hrdoc/treat_hrdoc_delim.c \
 				  srcs/exec/exec_redirs/connect_redirs.c \
+				  srcs/exec/exec_builtin/builtin_std.c \
 				  srcs/exec/exec_builtin/exec_builtin.c \
 				  srcs/exec/exec_center/center_exec.c \
 				  srcs/exec/exec_center/arg_seeker.c \
@@ -91,6 +95,7 @@ $(NAME):	$(OBJ)
 
 clean:
 			$(RM) $(OBJ)
+			$(RM) $(DEP)
 
 fclean:     clean
 			$(RM) $(NAME)

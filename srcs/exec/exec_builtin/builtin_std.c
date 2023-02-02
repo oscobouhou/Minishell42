@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_exec.c                                        :+:      :+:    :+:   */
+/*   builtin_std.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 18:51:32 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 15:45:09 by oboutarf         ###   ########.fr       */
+/*   Created: 2023/02/01 19:07:41 by oboutarf          #+#    #+#             */
+/*   Updated: 2023/02/02 02:19:17 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_exec(t_mshell *mshell)
+int	re_establish_stdin_out(int *backup)
 {
-	mshell->exec = malloc(sizeof(t_exec));
-	if (!mshell->exec)
-		return (0);
-	mshell->exec->fd = NULL;
-	mshell->exec->fd_in = 0;
-	mshell->exec->n_fd = -42;
-	mshell->exec->fd_out = 1;
-	mshell->exec->no_cmd = -42;
-	mshell->exec->no_redirs = -42;
-	mshell->exec->p_listener = -42;
-	mshell->exec->start_exec = NULL;
-	mshell->exec->start_exec_head = NULL;
-	mshell->head_exec = mshell->exec;
-	mshell->exec->next = NULL;
+	dup2(backup[0], STDIN_FILENO);
+	dup2(backup[1], STDOUT_FILENO);
+	return (1);
+}
+
+int bckup_stdin_out(int *backup)
+{
+	backup[0] = dup(STDIN_FILENO);
+	backup[1] = dup(STDOUT_FILENO);
+	return (1);
+}
+
+int	exit_builtin(t_mshell *mshell, int *backup)
+{
+	close_file_fd(mshell);
+	re_establish_stdin_out(backup);
 	return (1);
 }

@@ -6,32 +6,11 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 22:22:41 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 02:22:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	re_establish_stdin_out(int *backup)
-{
-	dup2(backup[0], STDIN_FILENO);
-	dup2(backup[1], STDOUT_FILENO);
-	return (1);
-}
-
-int bckup_stdin_out(int *backup)
-{
-	backup[0] = dup(STDIN_FILENO);
-	backup[1] = dup(STDOUT_FILENO);
-	return (1);
-}
-
-int	exit_builtin(t_mshell *mshell, int *backup)
-{
-	close_file_fd(mshell);
-	re_establish_stdin_out(backup);
-	return (1);
-}
 
 int	copy_cd_arg(t_mshell *mshell)
 {
@@ -132,12 +111,15 @@ int do_cd(t_mshell *mshell)
     char	*path;
 	int		backup[2];
 
-	mshell->exec->start_exec = mshell->exec->start_exec_head;
+	backup[0] = -42;
+	backup[1] = -42;
 	if (mshell->built->builtin_p == -42)
 	{
-		bckup_stdin_out(backup);
+		dprintf(2, "%s\n", "went_here_ENTER");
+        bckup_stdin_out(backup);
 		enable_redirections(mshell);
 	}
+	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	path = NULL;
     path = getcwd(path, 0);
 	if (!path)
@@ -150,6 +132,10 @@ int do_cd(t_mshell *mshell)
 	join_pwd_to_directory(mshell, path);
 	if (chdir(mshell->built->cd_chdir) == -1)
 		return (dprintf(2, "%s\n", strerror(errno)), exit_builtin(mshell, backup), 0);
-	exit_builtin(mshell, backup);
+	if (mshell->built->builtin_p == -42)
+	{
+		dprintf(2, "%s\n", "went_here_EXIT");
+		exit_builtin(mshell, backup);
+	}
 	return (1);
 }

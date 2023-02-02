@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:45:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 23:26:07 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 23:21:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,80 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
+int	ft_atoi(const char *nptr)
+{
+	int		mns;
+	int		num;
+	int		i;
+
+	i = 0;
+	num = 0;
+	mns = 1;
+	while (nptr[i] == ' ' || nptr[i] == '\n' || nptr[i] == '\t'
+		|| nptr[i] == '\v' || nptr[i] == '\f' || nptr[i] == '\r')
+		i++;
+	if (nptr[i] == '-')
+		mns = -1;
+	if (nptr[i] == '+' || nptr[i] == '-')
+		i++;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		num = num * 10 + (nptr[i] - 48);
+		i++;
+	}
+	return (num * mns);
+}
+
+
+static int	ft_nbrlen(int n)
+{
+	int				size;
+	unsigned int	nb;
+
+	size = 0;
+	if (n == 0)
+		return (0);
+	else if (n < 0)
+	{
+		nb = n * -1;
+		size = 1;
+	}
+	else
+		nb = n;
+	while (nb > 0)
+	{
+		nb /= 10;
+		size++;
+	}
+	return (size);
+}
+
+char	*ft_itoa(int n)
+{
+	char			*str;
+	int				i;
+	unsigned int	nb;
+
+	i = ft_nbrlen(n);
+	str = malloc(i + 1 * sizeof(char));
+	if (!str)
+		return (NULL);
+	if (n < 0)
+		nb = -n;
+	else
+		nb = n;
+	str[i--] = '\0';
+	while (i >= 0)
+	{
+		str[i] = nb % 10 + '0';
+		nb /= 10;
+		i--;
+	}
+	if (n < 0)
+		str[0] = '-';
+	return (str);
+}
+
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -55,8 +129,8 @@ int	set_pos_to_cmd(t_mshell *mshell)
 	{
 		while (mshell->exec->start_exec && mshell->exec->start_exec->type != _CMD)
 		{
-			if (!mshell->exec->start_exec->next && !mshell->exec->next)
-				return (mshell->exec->no_cmd = 42, 0);
+			if (!mshell->exec->start_exec->next)
+				return (mshell->exec->no_cmd = 42, mshell->exec->start_exec = mshell->exec->start_exec_head, 0);
 			mshell->exec->start_exec = mshell->exec->start_exec->next;
 		}
 	}

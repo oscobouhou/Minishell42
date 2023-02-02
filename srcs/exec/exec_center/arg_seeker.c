@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 13:02:44 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 23:49:49 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:37:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	seek_cmd_args(t_mshell *mshell)
 	int	i;
 	
 	i = 0;
-	if (!mshell->exec->start_exec->tkn || mshell->exec->no_cmd == 42)
+	if (mshell->exec->no_cmd == 42)
 		return (1);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	while (mshell->exec->start_exec)
