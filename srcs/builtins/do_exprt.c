@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:12 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 12:01:53 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 13:05:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -534,6 +534,8 @@ int	do_exprt(t_mshell *mshell)
 			ft_putstr("minishell: export: '");
 			ft_putstr(args->tkn);
 			ft_putstr("': not a valid identifier\n");
+			args = args->next;
+			continue ;
 		}
 		export_split = ft_split(args->tkn, '=');
 		if (manage_expt(export_split, mshell) != 1)

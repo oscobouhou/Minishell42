@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:18 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 01:24:59 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:35:57 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,47 +34,47 @@ int	check_current_unset_arg(char *arg)
 
 void remove_env(char *to_rm, t_mshell *mshell)
 {
-    t_env *env;
-    t_env *prev;
+	t_env *env;
+	t_env *prev;
 
-    prev = NULL;
-    env = mshell->env;
-    while (env->next && env->envar && ft_strcmp(env->envar, to_rm) != 0)
-    {
-        prev = env;
-    	env = env->next;
-    }
-    if (!env && !env->envar)
-        return ;
-    prev->next = env->next;
-    free(env->envar);
-    free(env->value);
+	prev = NULL;
+	env = mshell->env;
+	while (env->next && env->envar && ft_strcmp(env->envar, to_rm) != 0)
+	{
+		prev = env;
+		env = env->next;
+	}
+	if (!env && !env->envar)
+		return ;
+	prev->next = env->next;
+	free(env->envar);
+	free(env->value);
 }
 
 void remove_expt(char *to_rm, t_mshell *mshell)
 {
-    t_expt *export;
-    t_expt *prev;
+	t_expt *export;
+	t_expt *prev;
 
-    prev = NULL;
-    export = mshell->expt;
-    while (export->next && export->exptvar && ft_strcmp(export->exptvar, to_rm) != 0)
-    {
-        prev = export;
-    	export = export->next;
-    }
-    if (!export && !export->exptvar)
-        return ;
-    prev->next = export->next;
-    free(export->exptvar);
-    if (export->value)
-        free(export->value);
+	prev = NULL;
+	export = mshell->expt;
+	while (export->next && export->exptvar && ft_strcmp(export->exptvar, to_rm) != 0)
+	{
+		prev = export;
+		export = export->next;
+	}
+	if (!export && !export->exptvar)
+		return ;
+	prev->next = export->next;
+	free(export->exptvar);
+	if (export->value)
+		free(export->value);
    
 }
 
 int do_unset(t_mshell *mshell)
 {
-    t_tkn *args;
+	t_tkn *args;
 
 	if (mshell->exec->start_exec->next == NULL ||mshell->exec->start_exec->next->tkn == NULL)
 		return (1);
@@ -87,10 +87,10 @@ int do_unset(t_mshell *mshell)
 			ft_putstr(args->tkn);
 			ft_putstr("': not a valid identifier\n");
 		}
-        remove_env(args->tkn, mshell);
-        remove_expt(args->tkn, mshell);
+		remove_env(args->tkn, mshell);
+		remove_expt(args->tkn, mshell);
 		args = args->next;
 	}
-    (void)mshell;
-    return (1);
+	(void)mshell;
+	return (1);
 }

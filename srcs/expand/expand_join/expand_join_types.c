@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:51:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 12:46:13 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:37:24 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1)
 	return (1);
 }
 
-int join_types_expanded(t_mshell *mshell)
+int	join_types_expanded(t_mshell *mshell)
 {
 	char	*new_token;
 	int		n_tp;

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 12:01:27 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 13:15:22 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,12 +128,14 @@ int	do_cd(t_mshell *mshell)
 	if (absolute_path(mshell, backup))
 		return (exit_builtin(mshell, backup), 1);
 	join_pwd_to_directory(mshell, path);
+	free(path);
 	if (chdir(mshell->built->cd_chdir) == -1)
 		return (dprintf(2, "%s\n", strerror(errno)), exit_builtin(mshell, backup), 0);
 	if (mshell->built->builtin_p == -42)
 	{
-		dprintf(2, "%s\n", "went_here_EXIT");
 		exit_builtin(mshell, backup);
+		return (1);
 	}
-	return (1);
+	terminate(mshell);
+	exit(0);
 }
