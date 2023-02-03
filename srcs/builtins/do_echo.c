@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 06:09:10 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:40:00 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int	do_echo(t_mshell *mshell)
 	backup[1] = -42;
 	if (mshell->built->builtin_p == -42)
 	{
+		dprintf(2, "%d --- %d\n", backup[0], backup[1]);
 		bckup_stdin_out(backup);
 		enable_redirections(mshell);
 	}
