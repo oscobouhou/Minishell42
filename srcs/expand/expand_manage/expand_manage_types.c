@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 23:43:42 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 05:11:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,25 @@ int	manage_expands_in_sq(t_mshell *mshell, int n_tp)
 	return (1);
 }
 
+int	update_expd_exit(t_mshell *mshell, int n_tp, int *i)
+{
+	if (!mshell->expd->types[n_tp][*i + 1])
+	{
+		(*i)++;
+		return (1);
+	}
+	else if (mshell->expd->types[n_tp][*i + 1] == '?')
+	{
+		free(mshell->expd->expander);
+		mshell->expd->expander = NULL;
+		mshell->expd->expander = ft_itoa(mshell->exit_status);
+		mshell->expd->old_expd_len = 2;
+		mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
+	}
+	return (1);
+}
+
+
 int	manage_expands_oq(t_mshell *mshell, int n_tp)
 {
 	int		i;
@@ -44,19 +63,15 @@ int	manage_expands_oq(t_mshell *mshell, int n_tp)
 	{
 		if (mshell->expd->types[n_tp][i] == EXPAND)
 		{
-			cut_expander(mshell, n_tp, i);
-			check_expander(mshell);
-			if (!mshell->expd->types[n_tp][i + 1] && !mshell->expd->types[n_tp + 1])
+			if (mshell->expd->types[n_tp][i + 1] && mshell->expd->types[n_tp][i + 1] != '?')
 			{
-				mshell->expd->old_expd_len = 1;
-				mshell->expd->new_expd_len = 1;
-				mshell->expd->expander = "$";
+				cut_expander(mshell, n_tp, i);
+				check_expander(mshell);
 			}
-			if (mshell->expd->types[n_tp][i + 1] == '?')
+			else
 			{
-				mshell->expd->expander = ft_itoa(mshell->exit_status);
-				mshell->expd->old_expd_len = 1;
-				mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
+				mshell->expd->old_expd_len = 0;
+				update_expd_exit(mshell, n_tp, &i);
 			}
 			update_type(mshell, &i, n_tp);
 			i -= 1;
@@ -107,6 +122,11 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 			check_expander(mshell);
 			if (mshell->expd->types[n_tp][i + 1] == '?')
 			{
+				if (mshell->expd->expander)
+				{
+					free(mshell->expd->expander);
+					mshell->expd->expander = NULL;
+				}
 				mshell->expd->expander = ft_itoa(mshell->exit_status);
 				mshell->expd->old_expd_len = 1;
 				mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);

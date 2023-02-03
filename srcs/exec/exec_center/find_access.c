@@ -6,13 +6,13 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 13:04:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 00:30:03 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 06:48:25 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int rewind_cmd(t_mshell *mshell)
+int	rewind_cmd(t_mshell *mshell)
 {
 	int	i;
 
@@ -32,11 +32,34 @@ int rewind_cmd(t_mshell *mshell)
 	return (1);
 }
 
+int	join_path_to_tmp_command__exec_access(t_mshell *mshell,
+	char **cmd_tmp, int j, int *i)
+{
+	int	a;
+
+	a = 0;
+	while (mshell->execve->paths[*i][a])
+	{
+		(*cmd_tmp)[j] = mshell->execve->paths[*i][a];
+		a++;
+		j++;
+	}
+	a = 0;
+	while (mshell->exec->start_exec->tkn[a])
+	{
+		(*cmd_tmp)[j] = mshell->exec->start_exec->tkn[a];
+		a++;
+		j++;
+	}
+	(*cmd_tmp)[j] = '\0';
+	return (1);
+}
+
 int	join_cmd_for_access(t_mshell *mshell, int *i)
 {
 	char	*cmd_tmp;
-	int	a;
-	int j;
+	int		a;
+	int		j;
 
 	a = ft_strlen(mshell->execve->paths[*i]);
 	j = ft_strlen(mshell->exec->start_exec->tkn);
@@ -45,20 +68,7 @@ int	join_cmd_for_access(t_mshell *mshell, int *i)
 		return (0);
 	a = 0;
 	j = 0;
-	while (mshell->execve->paths[*i][a])
-	{
-		cmd_tmp[j] = mshell->execve->paths[*i][a];
-		a++;
-		j++;	
-	}
-	a = 0;
-	while (mshell->exec->start_exec->tkn[a])
-	{
-		cmd_tmp[j] = mshell->exec->start_exec->tkn[a];
-		a++;
-		j++;	
-	}
-	cmd_tmp[j] = '\0';
+	join_path_to_tmp_command__exec_access(mshell, &cmd_tmp, j, i);
 	mshell->execve->cmd = cmd_tmp;
 	return (1);
 }
@@ -77,7 +87,8 @@ int	find_access(t_mshell *mshell)
 		join_cmd_for_access(mshell, &i);
 		a = access(mshell->execve->cmd, X_OK | F_OK);
 		if (!a)
-			return (mshell->exec->start_exec = mshell->exec->start_exec_head, 1);
+			return (mshell->exec->start_exec
+				= mshell->exec->start_exec_head, 1);
 		free(mshell->execve->cmd);
 		mshell->execve->cmd = NULL;
 		i++;

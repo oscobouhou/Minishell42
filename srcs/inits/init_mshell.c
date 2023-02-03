@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 00:50:14 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 04:08:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,10 +195,10 @@ t_mshell	*init_mshell(char **env)
 	mshell->execve = NULL;
 	mshell->no_env = 420;
 	mshell->empty_cmd = 0;
+	mshell->exit_status = 0;
 	mshell->exec_env = NULL;
 	mshell->pipe_fd[0] = -42;
 	mshell->pipe_fd[1] = -42;
-	mshell->exit_status = -42;
 	mshell->old_expd__hrdoc = -42;
 	if (!begin_command(mshell, env))
 		return (NULL);

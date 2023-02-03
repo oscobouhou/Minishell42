@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:45:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/01 23:21:05 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 01:47:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,15 @@ char	*ft_itoa(int n)
 	int				i;
 	unsigned int	nb;
 
+	if (!n)
+	{
+		str = malloc(sizeof(char) * 2);
+		if (!str)
+			return (NULL);
+		str[n] = '0';
+		str[n + 1] = '\0';
+		return (str);
+	}
 	i = ft_nbrlen(n);
 	str = malloc(i + 1 * sizeof(char));
 	if (!str)

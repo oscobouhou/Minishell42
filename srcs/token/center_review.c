@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 13:16:37 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 23:38:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 03:07:49 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	center_review(t_mshell *mshell)
 	mshell->tkn = mshell->head_tkn;
 	while (mshell->tkn->next)
 	{
-		
 		word_review(mshell, &cmd_cnt);
 		if (!redirs_review(mshell))
 			return (0);

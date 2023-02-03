@@ -6,15 +6,15 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 01:10:01 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 06:09:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int count_echo_args(t_mshell *mshell)
+int	count_echo_args(t_mshell *mshell)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
@@ -28,9 +28,9 @@ int count_echo_args(t_mshell *mshell)
 	return (i);
 }
 
-int copy_echo_arg(t_mshell *mshell, int *c)
+int	copy_echo_arg(t_mshell *mshell, int *c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (mshell->exec->start_exec->tkn[i])
@@ -49,16 +49,17 @@ int copy_echo_arg(t_mshell *mshell, int *c)
 	return (1);
 }
 
-int verif_flags(t_mshell *mshell, int *flag)
+int	verif_flags(t_mshell *mshell, int *flag)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!*flag)
 		return (1);
 	if (mshell->exec->start_exec->tkn[0] != '-')
 		return (*flag = 0, 1);
-	if (mshell->exec->start_exec->tkn[0] == '-' && !mshell->exec->start_exec->tkn[1])
+	if (mshell->exec->start_exec->tkn[0] == '-'
+		&& !mshell->exec->start_exec->tkn[1])
 		return (*flag = 0, 1);
 	while (mshell->exec->start_exec->tkn[i])
 	{
@@ -69,9 +70,9 @@ int verif_flags(t_mshell *mshell, int *flag)
 	return (mshell->built->echo_flag = 0, 1);
 }
 
-int print_echo_args(t_mshell *mshell)
+int	print_echo_args(t_mshell *mshell)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	ft_putstr(mshell->built->echo_arg[0]);
@@ -92,10 +93,10 @@ int print_echo_args(t_mshell *mshell)
 	return (1);
 }
 
-int scan_echo_args(t_mshell *mshell)
+int	scan_echo_args(t_mshell *mshell)
 {
-	int prev_flag;
-	int c;
+	int	prev_flag;
+	int	c;
 
 	c = 0;
 	prev_flag = 1;
@@ -117,19 +118,18 @@ int scan_echo_args(t_mshell *mshell)
 	return (1);
 }
 
-void builtin_fork_exit(t_mshell *mshell)
+void	builtin_fork_exit(t_mshell *mshell)
 {
 	if (mshell->built->builtin_p == 42)
 	{
-		
 		exit(0);
 	}
 }
 
-int do_echo(t_mshell *mshell)
+int	do_echo(t_mshell *mshell)
 {
-	int i;
-	int backup[2];
+	int	backup[2];
+	int	i;
 
 	backup[0] = -42;
 	backup[1] = -42;

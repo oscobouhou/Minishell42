@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 03:37:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/29 03:37:59 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 06:50:32 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	close_pipe_fds(t_mshell *mshell)
 	return (1);
 }
 
-int handle_tube(t_mshell *mshell)
+int	handle_tube(t_mshell *mshell)
 {
 	if (mshell->exec->fd_in != 0)
 	{
 		dup2(mshell->exec->fd_in, STDIN_FILENO);
-		close(mshell->exec->fd_in );
+		close(mshell->exec->fd_in);
 	}
 	if (mshell->exec->fd_out != 1)
 	{
@@ -43,7 +43,7 @@ int handle_tube(t_mshell *mshell)
 	return (1);
 }
 
-int pclose_tube(t_mshell *mshell)
+int	pclose_tube(t_mshell *mshell)
 {
 	if (mshell->exec->fd_in != 0)
 		close(mshell->exec->fd_in);
@@ -52,7 +52,7 @@ int pclose_tube(t_mshell *mshell)
 	return (1);
 }
 
-int popen_tube(t_mshell *mshell)
+int	popen_tube(t_mshell *mshell)
 {
 	if (mshell->exec->next)
 	{

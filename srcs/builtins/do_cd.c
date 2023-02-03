@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 13:15:22 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 06:32:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,8 @@ int	cd_args_checker(t_mshell *mshell)
 	return (1);
 }
 
-int	join_pwd_to_directory(t_mshell *mshell, char *path)
+int	assembling_pwdir__cd(t_mshell *mshell, char *path, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (path[i])
-		i++;
-	i += 1;
-	while (mshell->built->cd_arg[j])
-		j++;
-	mshell->built->cd_chdir = malloc(sizeof(char) * ((i + j) + 1));
-	if (!mshell->built->cd_chdir)
-		return (0);
-	if (!i && !j)
-		return (free(mshell->built->cd_chdir), mshell->built->cd_chdir = NULL, 1);
-	i = 0;
-	j = 0;
 	while (path[i])
 	{
 		mshell->built->cd_chdir[i] = path[i];
@@ -91,6 +74,30 @@ int	join_pwd_to_directory(t_mshell *mshell, char *path)
 	return (1);
 }
 
+int	join_pwd_to_directory(t_mshell *mshell, char *path)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (path[i])
+		i++;
+	i += 1;
+	while (mshell->built->cd_arg[j])
+		j++;
+	mshell->built->cd_chdir = malloc(sizeof(char) * ((i + j) + 1));
+	if (!mshell->built->cd_chdir)
+		return (0);
+	if (!i && !j)
+		return (free(mshell->built->cd_chdir),
+			mshell->built->cd_chdir = NULL, 1);
+	i = 0;
+	j = 0;
+	assembling_pwdir__cd(mshell, path, i, j);
+	return (1);
+}
+
 int	absolute_path(t_mshell *mshell, int *backup)
 {
 	while (mshell->exec->start_exec->type != _ARG)
@@ -98,18 +105,16 @@ int	absolute_path(t_mshell *mshell, int *backup)
 	if (mshell->exec->start_exec->tkn[0] == '/')
 	{
 		if (chdir(mshell->exec->start_exec->tkn) == -1)
-			return (dprintf(2, "%s\n", strerror(errno)), exit_builtin(mshell, backup), 0);
+			return (dprintf(2, "%s\n", strerror(errno)),
+				exit_builtin(mshell, backup), 0);
 		return (1);
 	}
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	return (0);
 }
 
-int	do_cd(t_mshell *mshell)
+int	forked_builtin_redir_treat(t_mshell *mshell, int *backup)
 {
-	char	*path;
-	int		backup[2];
-
 	backup[0] = -42;
 	backup[1] = -42;
 	if (mshell->built->builtin_p == -42)
@@ -117,20 +122,32 @@ int	do_cd(t_mshell *mshell)
 		bckup_stdin_out(backup);
 		enable_redirections(mshell);
 	}
+	return (1);
+}
+
+int	do_cd(t_mshell *mshell)
+{
+	char	*path;
+	int		backup[2];
+
+	forked_builtin_redir_treat(mshell, backup);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	path = NULL;
 	path = getcwd(path, 0);
 	if (!path)
-		return (dprintf(2, "%s\n", strerror(errno)), exit_builtin(mshell, backup), 1);
+		return (dprintf(2, "minishell: cd: %s\n", strerror(errno)),
+			exit_builtin(mshell, backup), 1);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	if (!cd_args_checker(mshell))
-		return (dprintf(2, "minishell: cd: too many arguments\n"), exit_builtin(mshell, backup), 1);
+		return (dprintf(2, "minishell: cd: too many arguments\n"),
+			exit_builtin(mshell, backup), 1);
 	if (absolute_path(mshell, backup))
 		return (exit_builtin(mshell, backup), 1);
 	join_pwd_to_directory(mshell, path);
 	free(path);
 	if (chdir(mshell->built->cd_chdir) == -1)
-		return (dprintf(2, "%s\n", strerror(errno)), exit_builtin(mshell, backup), 0);
+		return (dprintf(2, "%s\n", strerror(errno)),
+			exit_builtin(mshell, backup), 0);
 	if (mshell->built->builtin_p == -42)
 	{
 		exit_builtin(mshell, backup);

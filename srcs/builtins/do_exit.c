@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:10 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 11:55:19 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 06:17:16 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,32 @@ int	exit_numeric_char(t_mshell *mshell)
 	return (1);
 }
 
+int	do_exit_too_many_arg(t_mshell *mshell)
+{
+	mshell->exec->start_exec = mshell->exec->start_exec_head;
+	dprintf(2, "exit\nminishell: exit: too many arguments\n");
+	if (mshell->built->builtin_p == 42)
+	{
+		terminate(mshell);
+		exit(1);
+	}
+	mshell->exit_status = 1;
+	return (1);
+}
+
+int	do_exit_numeric_error(t_mshell *mshell)
+{
+	mshell->exec->start_exec = mshell->exec->start_exec_head;
+	dprintf(2, "exit\nminishell: exit: numeric argument required\n");
+	if (mshell->built->builtin_p == 42)
+	{
+		terminate(mshell);
+		exit(2);
+	}
+	mshell->exit_status = 2;
+	return (1);
+}
+
 int	do_exit(t_mshell *mshell)
 {
 	int	arg;
@@ -60,44 +86,18 @@ int	do_exit(t_mshell *mshell)
 		exit(0);
 	}
 	if (!exit_numeric_char(mshell))
-	{
-		mshell->exec->start_exec = mshell->exec->start_exec_head;
-		dprintf(2, "exit\nminishell: exit: numeric argument required\n");
-		if (mshell->built->builtin_p == 42)
-		{
-			terminate(mshell);
-			exit(2);
-		}
-		// terminate_command_line(mshell);
-		mshell->exit_status = 2;
-		return (1);
-	}
+		do_exit_numeric_error(mshell);
 	if (arg > 1)
-	{
-		mshell->exec->start_exec = mshell->exec->start_exec_head;
-		dprintf(2, "exit\nminishell: exit: too many arguments\n");
-		if (mshell->built->builtin_p == 42)
-		{
-			terminate(mshell);
-			exit(1);
-		}
-		// terminate_command_line(mshell);
-		mshell->exit_status = 1;
-		return (1);
-	}
+		do_exit_too_many_arg(mshell);
 	while (mshell->exec->start_exec->type != _ARG)
 		mshell->exec->start_exec = mshell->exec->start_exec->next;
 	dprintf(2, "exit\n");
 	arg = (ft_atoi(mshell->exec->start_exec->tkn) % 256);
 	if (arg < 0)
 		arg = 256 + arg;
-	if (mshell->built->builtin_p == 42)
-	{
-		terminate(mshell);
-		exit(arg);
-	}
-	// terminate_command_line(mshell);
 	mshell->exit_status = arg;
+	terminate(mshell);
+	exit(arg);
 	return (1);
 }
 //                          bash: exit: wqqddw: numeric argument required

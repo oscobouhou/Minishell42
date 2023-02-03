@@ -6,11 +6,25 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 22:37:05 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 05:19:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int check_expd_for_update(t_mshell *mshell, int i0, int *i2, char **update)
+{
+	if (mshell->expd->expander)
+	{
+		while (mshell->expd->expander[i0])
+		{
+			(*update)[*i2] = mshell->expd->expander[i0];
+			(*i2)++;
+			i0++;
+		}
+	}
+	return (1);
+}
 
 int	update_type(t_mshell *mshell, int *i, int n_tp)
 {
@@ -22,6 +36,8 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 	i0 = 0;
 	i1 = 0;
 	i2 = 0;
+	if (!mshell->expd->types[n_tp][*i])
+		return (1);
 	while (i1 != (*i + mshell->expd->new_expd_len))
 		i1++;
 	while (mshell->expd->types[n_tp][i2 + *i + mshell->expd->old_expd_len])
@@ -35,15 +51,7 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 		update[i2] = mshell->expd->types[n_tp][i2];
 		i2++;
 	}
-	if (mshell->expd->expander)
-	{
-		while (mshell->expd->expander[i0])
-		{
-			update[i2] = mshell->expd->expander[i0];
-			i0++;
-			i2++;
-		}
-	}
+	check_expd_for_update(mshell, i0, &i2, &update);
 	i0 = 1;
 	while (mshell->expd->types[n_tp][*i + i0 + mshell->expd->old_expd_len])
 	{
@@ -63,7 +71,6 @@ int	center_expand(t_mshell *mshell)
 	mshell->tkn = mshell->head_tkn;
 	while (mshell->tkn)
 	{
-		dprintf(1, "old: | %s |\n", mshell->tkn->tkn);
 		if (mshell->tkn->type == _CMD || mshell->tkn->type == _ARG || mshell->tkn->type == _FILE)
 		{
 			mshell->expd->n_types = find_types_len_expd(mshell);
@@ -73,7 +80,6 @@ int	center_expand(t_mshell *mshell)
 		}
 		if (!mshell->tkn->next)
 			break ;
-		dprintf(1, "new: | %s |\n", mshell->tkn->tkn);
 		mshell->tkn = mshell->tkn->next;
 	}
 	mshell->tkn = mshell->head_tkn;

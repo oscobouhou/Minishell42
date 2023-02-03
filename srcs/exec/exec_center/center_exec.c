@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 01:04:57 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 07:07:44 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exit_process(int err, char *tkn, t_mshell *mshell)
 	perror(tkn);
 	if (mshell->exec->no_redirs != -42)
 		close_file_fd(mshell);
+	dprintf(1, "%s\n", "COUCOU");
 	terminate(mshell);
 	if (err == ENOENT)
 	{
@@ -40,7 +41,7 @@ int	close_file_fd(t_mshell *mshell)
 
 int	wait_pids(t_mshell *mshell)
 {
-	int status;
+	int	status;
 
 	while (mshell->exec)
 	{
@@ -53,7 +54,20 @@ int	wait_pids(t_mshell *mshell)
 	return (1);
 }
 
-int execmd(t_mshell *mshell, char **env)
+void	command_child_execve(t_mshell *mshell)
+{
+	if (mshell->exec->no_cmd == -42)
+	{
+		if (mshell->exec->start_exec->tkn[0] == '/')
+			if (access(mshell->exec->start_exec->tkn, X_OK | F_OK))
+				execve(mshell->exec->start_exec->tkn, mshell->execve->cmd_args,
+					mshell->exec_env);
+		execve(mshell->execve->cmd, mshell->execve->cmd_args, mshell->exec_env);
+		exit_process(errno, mshell->execve->cmd, mshell);
+	}
+}
+
+int	execmd(t_mshell *mshell, char **env)
 {
 	signal(SIGINT, &sig_fork_handler);
 	set_pos_to_cmd(mshell);
@@ -69,14 +83,7 @@ int execmd(t_mshell *mshell, char **env)
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	set_pos_to_cmd(mshell);
 	scan_builtin(mshell);
-	if (mshell->exec->no_cmd == -42)
-	{
-		if (mshell->exec->start_exec->tkn[0] == '/')
-			if (access(mshell->exec->start_exec->tkn, X_OK | F_OK))
-				execve(mshell->exec->start_exec->tkn, mshell->execve->cmd_args, mshell->exec_env);	
-		execve(mshell->execve->cmd, mshell->execve->cmd_args, mshell->exec_env);
-		exit_process(errno, mshell->execve->cmd, mshell);
-	}
+	command_child_execve(mshell);
 	if (mshell->exec->no_redirs != -42)
 		close_file_fd(mshell);
 	if (mshell->exec->next)
@@ -97,39 +104,69 @@ int	no_cmd_no_pipe(t_mshell *mshell, int *backup)
 	return (1);
 }
 
-int center_exec(t_mshell *mshell, char **env)
+int	unforked(t_mshell *mshell, int *backup)
 {
-	int	backup[2];
+	if (!mshell->exec->next && scan_builtin(mshell))
+		return (0);
+	if (!mshell->exec->next && mshell->exec && mshell->exec->no_cmd == 42)
+		return (no_cmd_no_pipe(mshell, backup), 0);
+	return (1);
+}
 
+void	retrieve_signals(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sig_handler);
+}
+
+int	start_cmd_pipeline(t_mshell *mshell)
+{
+	mshell->built->builtin_p = 42;
+	popen_tube(mshell);
+	mshell->exec->pid = fork();
+	if (mshell->exec->pid == -1)
+		return (dprintf(2, "\tfork: child failure\n"));
+	return (1);
+}
+
+int	start_exec(t_mshell *mshell, int *backup)
+{
 	backup[0] = -42;
 	backup[1] = -42;
 	mshell->pipe_fd[0] = -42;
 	mshell->built->builtin_p = -42;
-    if (!init_exec(mshell))
+	if (!init_exec(mshell))
 		return (0);
 	if (!build_commands_chains(mshell))
 		return (0);
+	return (1);
+}
+
+int	controler(t_mshell *mshell)
+{
+	pclose_tube(mshell);
+	close_file_fd(mshell);
+	if (!mshell->exec->next)
+		return (0);
+	return (1);
+}
+
+int	center_exec(t_mshell *mshell, char **env)
+{
+	int	backup[2];
+
+	if (!start_exec(mshell, backup))
+		return (0);
 	mshell->exec = mshell->head_exec;
-	if (!mshell->exec->next && scan_builtin(mshell))
+	if (!unforked(mshell, backup))
 		return (1);
-	if (!mshell->exec->next && mshell->exec && mshell->exec->no_cmd == 42)
-		return (no_cmd_no_pipe(mshell, backup), 1);
-	mshell->exec->start_exec = mshell->exec->start_exec;
-	mshell->exec = mshell->head_exec;
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, &sig_fork_handler);
+	stop_signals();
 	while (mshell->exec)
 	{
-		mshell->built->builtin_p = 42;
-		popen_tube(mshell);
-		mshell->exec->pid = fork();
-		if (mshell->exec->pid == -1)
-			return (dprintf(2, "\tfork: child failure\n"));
+		start_cmd_pipeline(mshell);
 		if (mshell->exec->pid == 0)
 			execmd(mshell, env);
-		pclose_tube(mshell);
-		close_file_fd(mshell);
-		if (!mshell->exec->next)
+		if (!controler(mshell))
 			break ;
 		mshell->exec = mshell->exec->next;
 		mshell->exec->no_cmd = -42;
@@ -138,8 +175,7 @@ int center_exec(t_mshell *mshell, char **env)
 	close_pipe_fds(mshell);
 	mshell->exec = mshell->head_exec;
 	wait_pids(mshell);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, &sig_handler);
+	retrieve_signals();
 	mshell->exec = mshell->head_exec;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 00:50:34 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 04:23:43 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ int					pipe_review(t_mshell *mshell, int *cmd_cnt);
 int					hrdoc_review(t_mshell *mshell, int *cmd_cnt);
 int					tokenizer(t_mshell *mshell, int strt, int end);
 // @ ------------------------ # signals # --------------------------- @ //
+void				stop_signals(void);
 void				handle_sigint(void);
 void				manage_signals(void);
 void				sig_handler(int signum);

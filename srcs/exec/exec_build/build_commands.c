@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:34:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 10:55:33 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 06:41:08 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	make_new_exec(t_mshell *mshell)
 
 int	search_next_pipe(t_mshell *mshell)
 {
-	t_tkn 	*head;
+	t_tkn	*head;
 
 	head = mshell->tkn;
 	while (mshell->tkn->next)
@@ -59,30 +59,44 @@ int	set_end_of_command_chain(t_mshell *mshell)
 	return (1);
 }
 
-int build_commands_chains(t_mshell *mshell)
+int	skip_pipe_token(t_mshell *mshell, t_tkn *skip)
+{
+	skip = mshell->tkn->next->next;
+	free(mshell->tkn->next->tkn);
+	free(mshell->tkn->next);
+	mshell->tkn->next = NULL;
+	mshell->tkn = skip;
+	return (1);
+}		
+
+int	new_exec_line(t_mshell *mshell)
+{
+	if (!search_next_pipe(mshell))
+	{
+		set_end_of_command_chain(mshell);
+		return (0);
+	}
+	return (1);
+}
+
+int	build_commands_chains(t_mshell *mshell)
 {
 	t_tkn	*skip;
 
-    mshell->exec->start_exec = mshell->tkn;
+	skip = NULL;
+	mshell->exec->start_exec = mshell->tkn;
 	mshell->exec->start_exec_head = mshell->exec->start_exec;
 	while (mshell->tkn->next)
 	{
 		if (mshell->tkn->next->type == PIPE)
 		{
-			skip = mshell->tkn->next->next;
-			free(mshell->tkn->next->tkn);
-			free(mshell->tkn->next);
-			mshell->tkn->next = NULL;
-			mshell->tkn = skip;
+			skip_pipe_token(mshell, skip);
 			if (!make_new_exec(mshell))
 				return (0);
 			mshell->exec->start_exec = mshell->tkn;
 			mshell->exec->start_exec_head = mshell->exec->start_exec;
-			if (!search_next_pipe(mshell))
-			{
-				set_end_of_command_chain(mshell);
+			if (!new_exec_line(mshell))
 				break ;
-			}
 		}
 		else
 			mshell->tkn = mshell->tkn->next;
