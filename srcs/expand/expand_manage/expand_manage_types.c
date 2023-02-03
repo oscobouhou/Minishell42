@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 16:52:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 20:55:46 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,41 @@ int	update_expd_exit(t_mshell *mshell, int n_tp, int *i)
 	return (1);
 }
 
+void	clean_expander(t_mshell *mshell)
+{
+	if (mshell->expd->expander)
+	{
+		free(mshell->expd->expander);
+		mshell->expd->expander = NULL;
+	}
+}
+
+int skip_hexpander_hrdoc(t_mshell *mshell, int n_tp, int *i)
+{
+	// int 	j;
+
+	// j = 0;
+	while (mshell->expd->types[n_tp][*i] && ((mshell->expd->types[n_tp][*i] >= 9 && mshell->expd->types[n_tp][*i] <= 13) || (mshell->expd->types[n_tp][*i] == 32)))
+		(*i)++;
+	while (mshell->expd->types[n_tp][*i] && check_printable_char(mshell->expd->types[n_tp][*i]))
+		(*i)++;
+	// clean_expander(mshell);
+	// mshell->expd->expander = malloc(sizeof(char) * (*i - tmp_i + 1));
+	// if (!mshell->expd->expander)
+	// 	return (0);
+	// i = tmp_i;
+	// while (mshell->expd->types[n_tp][*i] && check_printable_char(mshell->expd->types[n_tp][*i]))
+	// {
+	// 	mshell->expd->expander[j] = mshell->expd->types[n_tp][*i];
+	// 	i++;
+	// 	j++;
+	// }
+	// mshell->expd->expander[j] = '\0';
+	return (1);
+
+
+}
+
 
 int	manage_expands_oq(t_mshell *mshell, int n_tp)
 {
@@ -61,7 +96,17 @@ int	manage_expands_oq(t_mshell *mshell, int n_tp)
 	i = 0;
 	while (mshell->expd->types[n_tp][i])
 	{
-		if (mshell->expd->types[n_tp][i] == EXPAND)
+
+		if (mshell->expd->types[n_tp][i] == REDIR_L && mshell->expd->types[n_tp][i + 1] == REDIR_L)
+		{
+			i += 2;
+			skip_hexpander_hrdoc(mshell, n_tp, &i);
+			// mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
+			// mshell->expd->old_expd_len = 0;
+			update_type(mshell, &i, n_tp);
+			i -= 1;
+		}
+		else if (mshell->expd->types[n_tp][i] == EXPAND)
 		{
 			if (mshell->expd->types[n_tp][i + 1] && mshell->expd->types[n_tp][i + 1] != '?')
 			{
@@ -102,6 +147,21 @@ int	get_all_content_from_string(t_mshell *mshell, int n_tp)
 	return (1);
 }
 
+int	scan_herdoc(t_mshell *mshell, int n_tp)
+{
+	int	i;
+
+	i = 0;
+	while (mshell->expd->types[n_tp][i])
+	{
+		if (mshell->expd->types[n_tp][i + 1] && mshell->expd->types[n_tp][i] == REDIR_L \
+			&& mshell->expd->types[n_tp][i + 1] == REDIR_L)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 {
 	int	i;
@@ -115,6 +175,13 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 	}
 	while (mshell->expd->types[n_tp][i])
 	{
+		if (n_tp > 0)
+		{
+			if (scan_herdoc(mshell, n_tp - 1))
+				get_all_content_from_string(mshell, n_tp);
+					break ;
+			
+		}
 		if (mshell->expd->types[n_tp][i] == EXPAND)
 		{
 			cut_expander(mshell, n_tp, i);
@@ -161,3 +228,9 @@ int	manage_expands_in_types(t_mshell *mshell)
 	}
 	return (1);
 }
+	// n_tp = 0;
+	// while (mshell->expd->types[n_tp])
+	// {
+	// 	dprintf(2, "|%s|\n", mshell->expd->types[n_tp]);
+	// 	n_tp++;
+	// }

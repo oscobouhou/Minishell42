@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 16:55:29 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 20:56:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,5 @@ int	center_expand(t_mshell *mshell)
 	mshell->rdline_outp = join_types_expanded(mshell);
 	if (!mshell->rdline_outp)
 		return (0);
-	dprintf(2, "%s\n", mshell->rdline_outp);
-	return (0);
+	return (1);
 }

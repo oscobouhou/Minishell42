@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:45:27 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 17:17:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:56:25 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	treat_single_quote_expand_cut(t_mshell *mshell, int *i, int *tmp_i, int *n_t
 	int	j;
 
 	j = 0;
-	dprintf(2, "%s\n", &mshell->rdline_outp[*i]);
 	if (mshell->rdline_outp[*i] == SINGLE_QUOTE)
 	{
 		*tmp_i = *i - 1;
@@ -85,25 +84,24 @@ int treat_out_quote_expand_cut(t_mshell *mshell, int *i, int *tmp_i, int *n_tp)
 	int	j;
 
 	j = 0;
-	if (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != DOUBLE_QUOTE && mshell->rdline_outp[*i] != SINGLE_QUOTE)
+	*tmp_i = *i;
+	while (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != DOUBLE_QUOTE && mshell->rdline_outp[*i] != SINGLE_QUOTE)
+		(*i)++;
+	mshell->expd->types[*n_tp] = malloc(sizeof(char) * (*i - *tmp_i) + 1);
+	if (!mshell->expd->types[*n_tp])
+		return (0);
+	while (*tmp_i < *i)
 	{
-		*tmp_i = *i;
-		while (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != DOUBLE_QUOTE && mshell->rdline_outp[*i] != SINGLE_QUOTE)
-			(*i)++;
-		mshell->expd->types[*n_tp] = malloc(sizeof(char) * (*i - *tmp_i) + 1);
-		if (!mshell->expd->types[*n_tp])
-			return (0);
-		while (*tmp_i < *i)
-		{
-			mshell->expd->types[*n_tp][j] = mshell->rdline_outp[*tmp_i];
-			(*tmp_i)++;
-			j++;
-		}
-		mshell->expd->types[*n_tp][j] = '\0';
-		(*n_tp)++;
+		mshell->expd->types[*n_tp][j] = mshell->rdline_outp[*tmp_i];
+		(*tmp_i)++;
+		j++;
 	}
+	mshell->expd->types[*n_tp][j] = '\0';
+	(*n_tp)++;
 	return (1);
 }
+	// if (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != DOUBLE_QUOTE && mshell->rdline_outp[*i] != SINGLE_QUOTE)
+	// {
 
 int	cut_types_expd(t_mshell *mshell)
 {
