@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:18 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 20:27:42 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 01:17:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int do_unset(t_mshell *mshell)
 {
 	t_tkn *args;
 
-	if (mshell->exec->start_exec->next == NULL ||mshell->exec->start_exec->next->tkn == NULL)
+	if (mshell->exec->start_exec->next == NULL)
 		return (1);
 	args = mshell->exec->start_exec->next;
 	while (args != NULL && args->tkn != NULL)

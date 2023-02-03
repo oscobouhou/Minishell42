@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 18:20:13 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 01:04:57 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,16 @@ int execmd(t_mshell *mshell, char **env)
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	handle_tube(mshell);
 	if (!enable_redirections(mshell))
-		return (exit(0), 0);
+		return (exit(1), 0);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	set_pos_to_cmd(mshell);
 	scan_builtin(mshell);
 	if (mshell->exec->no_cmd == -42)
 	{
-		execve(mshell->execve->cmd, mshell->execve->cmd_args, env);
+		if (mshell->exec->start_exec->tkn[0] == '/')
+			if (access(mshell->exec->start_exec->tkn, X_OK | F_OK))
+				execve(mshell->exec->start_exec->tkn, mshell->execve->cmd_args, mshell->exec_env);	
+		execve(mshell->execve->cmd, mshell->execve->cmd_args, mshell->exec_env);
 		exit_process(errno, mshell->execve->cmd, mshell);
 	}
 	if (mshell->exec->no_redirs != -42)
@@ -80,6 +83,7 @@ int execmd(t_mshell *mshell, char **env)
 		close_pipe_fds(mshell);
 	terminate(mshell);
 	exit (0);
+	(void)env;
 }
 
 int	no_cmd_no_pipe(t_mshell *mshell, int *backup)

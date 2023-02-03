@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 12:05:29 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 22:37:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 int	center_expand(t_mshell *mshell)
 {
 	mshell->tkn = mshell->head_tkn;
-	while (mshell->tkn->next)
+	while (mshell->tkn)
 	{
+		dprintf(1, "old: | %s |\n", mshell->tkn->tkn);
 		if (mshell->tkn->type == _CMD || mshell->tkn->type == _ARG || mshell->tkn->type == _FILE)
 		{
 			mshell->expd->n_types = find_types_len_expd(mshell);
@@ -70,6 +71,9 @@ int	center_expand(t_mshell *mshell)
 			manage_expands_in_types(mshell);
 			join_types_expanded(mshell);
 		}
+		if (!mshell->tkn->next)
+			break ;
+		dprintf(1, "new: | %s |\n", mshell->tkn->tkn);
 		mshell->tkn = mshell->tkn->next;
 	}
 	mshell->tkn = mshell->head_tkn;

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 13:29:57 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 01:10:01 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void builtin_fork_exit(t_mshell *mshell)
 {
 	if (mshell->built->builtin_p == 42)
 	{
+		
 		exit(0);
 	}
 }
@@ -146,7 +147,6 @@ int do_echo(t_mshell *mshell)
 	mshell->built->echo_arg[i] = NULL;
 	scan_echo_args(mshell);
 	print_echo_args(mshell);
-	mshell->built->echo_flag = -42;
 	builtin_fork_exit(mshell);
 	exit_builtin(mshell, backup);
 	mshell->exit_status = 0;

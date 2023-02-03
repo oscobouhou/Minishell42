@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:09:16 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 14:12:08 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/02 23:26:29 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ int	init_t_token(t_mshell *mshell)
 	mshell->tkn->pipe_fd_hrdoc[1] = -42;
 	mshell->tkn->next = NULL;
 	mshell->head_tkn = mshell->tkn;
-	return (1);
+	return (1); 
 }

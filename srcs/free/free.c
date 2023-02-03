@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:23 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 11:47:46 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 00:59:15 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,20 @@ int	free_exec(t_mshell *mshell)
 	return (1);
 }
 
+int	free_tab_exec_env(t_mshell *mshell)
+{
+	int	i;
+
+	i = 0;
+	while (mshell->exec_env[i])
+	{
+		free(mshell->exec_env[i]);
+		i++;
+	}
+	free(mshell->exec_env);
+	return (1);
+}
+
 void	terminate(t_mshell *mshell)
 {
 	if (mshell->env)
@@ -126,6 +140,8 @@ void	terminate(t_mshell *mshell)
 		free_execve(mshell);
 	if (mshell->exec)
 		free_exec(mshell);
+	if (mshell->exec_env)
+		free_tab_exec_env(mshell);
 	free(mshell->rdline_outp);
 	free(mshell);
 }

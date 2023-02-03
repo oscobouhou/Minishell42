@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 17:34:55 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 00:50:34 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_execve
 typedef struct s_mshell
 {
 	int				no_env;
+	int				empty_cmd;
 	int				exit_status;
 	int				old_expd__hrdoc;
 	int				pipe_fd[2];
@@ -116,6 +117,7 @@ typedef struct s_mshell
 	t_expd			*expd;
 	t_built			*built;
 	t_execve		*execve;
+	char			**exec_env;
 }					t_mshell;
 // @ --------------------------- # enums # -------------------------- @ //
 enum e_tokens
@@ -224,6 +226,7 @@ char				*ft_strchr(char *s, int c);
 int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 char				**ft_split(char *s, char target);
+char				**copy_env_in_tab(t_mshell *mshell);
 int					search_lowest(char *val, t_env *env);
 char				*ft_substr(char *s, int start, size_t len);
 // @ -------------------------- # exec # ---------------------------- @ //

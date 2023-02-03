@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:12 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 13:05:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 00:52:01 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,6 @@ char	**copy_env_in_tab(t_mshell *mshell)
 		env_tab[i] = ft_strjoin(env_tab[i], env->value, 1);
 		if (!env_tab[i])
 			return (NULL);                                          //free
-		dprintf(2, "\n%s\n", env_tab[i]);
 		i++;
 		env = env->next;
 	}
