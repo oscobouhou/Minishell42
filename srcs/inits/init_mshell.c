@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 04:08:33 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 08:24:30 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	copy_underscore(t_mshell *mshell)
 {
 	char	*underscore;
-	int 	i;
+	int		i;
 
 	i = 0;
 	underscore = "/usr/bin/env";
@@ -35,7 +35,6 @@ int	copy_underscore(t_mshell *mshell)
 	mshell->env->value[i] = '\0';
 	return (1);
 }
-
 
 int	copy_pwd(t_mshell *mshell, char *pwd_var, char *pwd)
 {
@@ -64,7 +63,7 @@ int	copy_pwd(t_mshell *mshell, char *pwd_var, char *pwd)
 	return (1);
 }
 
-int copy_shlvl(t_mshell *mshell, char *shlvl)
+int	copy_shlvl(t_mshell *mshell, char *shlvl)
 {
 	int	i;
 
@@ -120,9 +119,9 @@ int	set_default_export(t_mshell *mshell)
 
 int	set_default_envars(t_mshell *mshell)
 {
-	char 	pwd[1024];
+	char	pwd[1024];
 	char	*pwd_var;
-	char 	*shlvl;
+	char	*shlvl;
 	t_env	*head;
 
 	shlvl = "SHLVL";
@@ -162,7 +161,7 @@ int	begin_command(t_mshell *mshell, char **env)
 	if (*env)
 	{
 		if (!dup_env(&mshell->env, env, &mshell->envc))
-			return (0);	
+			return (0);
 		if (!sort_export(mshell))
 			return (0);
 		mshell->exec_env = copy_env_in_tab(mshell);

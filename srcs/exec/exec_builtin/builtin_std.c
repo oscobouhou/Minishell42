@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:07:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 06:41:52 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:31:48 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	re_establish_stdin_out(int *backup)
 {
-	dup2(backup[0], STDIN_FILENO);
-	dup2(backup[1], STDOUT_FILENO);
 	close(backup[0]);
 	close(backup[1]);
+	dup2(backup[0], STDIN_FILENO);
+	dup2(backup[1], STDOUT_FILENO);
 	return (1);
 }
 

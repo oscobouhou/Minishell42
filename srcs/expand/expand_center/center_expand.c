@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 05:19:39 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 10:07:24 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 		i2++;
 	}
 	check_expd_for_update(mshell, i0, &i2, &update);
-	i0 = 1;
+	if (!mshell->expd->types[n_tp][*i + i0 + mshell->expd->old_expd_len])
+		i0 = 0;
+	else
+		i0 = 1;
 	while (mshell->expd->types[n_tp][*i + i0 + mshell->expd->old_expd_len])
 	{
 		update[i2] = mshell->expd->types[n_tp][*i + i0 + mshell->expd->old_expd_len];

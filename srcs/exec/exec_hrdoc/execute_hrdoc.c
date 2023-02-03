@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 07:42:35 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:33:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,8 +223,8 @@ int	execute_hrdoc(t_mshell *mshell, int expander)
 		if (!check_eof(usr_input))
 		{
 			close(mshell->tkn->pipe_fd_hrdoc[1]);
-			return (dprintf(STDERR_FILENO, "minishell: warning: here-document at \
-				line %d delimited by end-of-file (wanted `%s')\n",
+			return (dprintf(STDERR_FILENO, "minishell: warning: here-document \
+				at line %d delimited by end-of-file (wanted `%s')\n",
 					line, mshell->tkn->tkn), 1);
 		}
 		if (!ft_strcmp(usr_input, mshell->tkn->tkn))

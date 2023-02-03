@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 21:38:29 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:24:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 	expander = -42;
 	if (mshell->tkn->type == HRDOC)
 	{
-		// close(mshell->exec->start_exec->pipe_fd_hrdoc[0]);
-        // close(mshell->exec->start_exec->pipe_fd_hrdoc[1]);
 		tmp = mshell->tkn;
 		if (!type_next_token(mshell->tkn, DLIM_HRDOC))
 			return (0);
@@ -56,6 +54,7 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 		mshell->tkn->pipe_fd_hrdoc[0] = mshell->tkn->next->pipe_fd_hrdoc[0];
 		mshell->tkn->pipe_fd_hrdoc[1] = mshell->tkn->next->pipe_fd_hrdoc[1];
 		tmp = mshell->tkn->next->next;
+		free(mshell->tkn->next->tkn);
 		free(mshell->tkn->next);
 		mshell->tkn->next = tmp;
 		mshell->tkn->type = HRDOC_RDIR;
