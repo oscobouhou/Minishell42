@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 12:40:00 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 13:52:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,26 @@ int	print_echo_args(t_mshell *mshell)
 	int	i;
 
 	i = 1;
-	ft_putstr(mshell->built->echo_arg[0]);
 	if (ft_strlen(mshell->built->echo_arg[0]) > 0)
-		free(mshell->built->echo_arg[0]);
-	while (mshell->built->echo_arg[i])
 	{
-		ft_putchar(' ');
-		ft_putstr(mshell->built->echo_arg[i]);
-		if (mshell->built->echo_arg[i])
-			free(mshell->built->echo_arg[i]);
-		i++;
+		ft_putstr(mshell->built->echo_arg[0]);
+		free(mshell->built->echo_arg[0]);
 	}
-	free(mshell->built->echo_arg);
-	mshell->built->echo_arg = NULL;
-	if (mshell->built->echo_flag == -42)
-		ft_putchar('\n');
+	if (mshell->built->echo_arg[0 + 1])
+	{
+		while (mshell->built->echo_arg[i])
+		{
+			ft_putchar(' ');
+			ft_putstr(mshell->built->echo_arg[i]);
+			if (mshell->built->echo_arg[i])
+				free(mshell->built->echo_arg[i]);
+			i++;
+		}
+		free(mshell->built->echo_arg);
+		mshell->built->echo_arg = NULL;
+		if (mshell->built->echo_flag == -42)
+			ft_putchar('\n');
+	}
 	return (1);
 }
 
@@ -137,6 +142,7 @@ int	do_echo(t_mshell *mshell)
 	{
 		dprintf(2, "%d --- %d\n", backup[0], backup[1]);
 		bckup_stdin_out(backup);
+		dprintf(2, "%d --- %d\n", backup[0], backup[1]);
 		enable_redirections(mshell);
 	}
 	i = count_echo_args(mshell);

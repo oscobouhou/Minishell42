@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 10:07:24 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:55:29 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,14 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 int	center_expand(t_mshell *mshell)
 {
 	mshell->tkn = mshell->head_tkn;
-	while (mshell->tkn)
-	{
-		if (mshell->tkn->type == _CMD || mshell->tkn->type == _ARG || mshell->tkn->type == _FILE)
-		{
-			mshell->expd->n_types = find_types_len_expd(mshell);
-			cut_types_expd(mshell);
-			manage_expands_in_types(mshell);
-			join_types_expanded(mshell);
-		}
-		if (!mshell->tkn->next)
-			break ;
-		mshell->tkn = mshell->tkn->next;
-	}
-	mshell->tkn = mshell->head_tkn;
-	return (1);
+	mshell->expd->n_types = find_types_len_expd(mshell);
+	cut_types_expd(mshell);
+	manage_expands_in_types(mshell);
+	free(mshell->rdline_outp);
+	mshell->rdline_outp = NULL;
+	mshell->rdline_outp = join_types_expanded(mshell);
+	if (!mshell->rdline_outp)
+		return (0);
+	dprintf(2, "%s\n", mshell->rdline_outp);
+	return (0);
 }

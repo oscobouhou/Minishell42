@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 07:07:44 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 15:03:47 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	exit_process(int err, char *tkn, t_mshell *mshell)
 	perror(tkn);
 	if (mshell->exec->no_redirs != -42)
 		close_file_fd(mshell);
-	dprintf(1, "%s\n", "COUCOU");
 	terminate(mshell);
 	if (err == ENOENT)
 	{
@@ -32,6 +31,7 @@ int	close_file_fd(t_mshell *mshell)
 	{
 		while (mshell->exec->n_fd > 0)
 		{
+			dprintf(2, "%d\n", mshell->exec->fd[mshell->exec->n_fd - 1]);
 			close(mshell->exec->fd[mshell->exec->n_fd - 1]);
 			mshell->exec->n_fd--;
 		}
@@ -71,7 +71,7 @@ int	execmd(t_mshell *mshell, char **env)
 {
 	signal(SIGINT, &sig_fork_handler);
 	set_pos_to_cmd(mshell);
-	if (mshell->no_env != -42)
+	if (mshell->no_env != -42 )
 	{
 		find_access(mshell);
 		seek_cmd_args(mshell);

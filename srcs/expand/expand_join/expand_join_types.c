@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:51:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 10:55:32 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:22:57 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1)
 	return (1);
 }
 
-int	join_types_expanded(t_mshell *mshell)
+char	*join_types_expanded(t_mshell *mshell)
 {
 	char	*new_token;
 	int		n_tp;
@@ -38,7 +38,7 @@ int	join_types_expanded(t_mshell *mshell)
 	n_tp = 0;
 	new_token = malloc(sizeof(char) * (i1 + 1));
 	if (!new_token)
-		return (0);
+		return (NULL);
 	i1 = 0;
 	while (mshell->expd->types[n_tp])
 	{
@@ -55,7 +55,5 @@ int	join_types_expanded(t_mshell *mshell)
 	new_token[i1] = '\0';
 	free(mshell->expd->types);
 	mshell->expd->types = NULL;
-	free(mshell->tkn->tkn);
-	mshell->tkn->tkn = new_token;
-	return (1);
+	return (new_token);
 }

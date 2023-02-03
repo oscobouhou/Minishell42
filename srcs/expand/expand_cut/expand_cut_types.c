@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:45:27 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 05:57:28 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:17:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,23 @@ int	treat_single_quote_expand_cut(t_mshell *mshell, int *i, int *tmp_i, int *n_t
 	int	j;
 
 	j = 0;
-	if (mshell->tkn->tkn[*i] == SINGLE_QUOTE)
+	dprintf(2, "%s\n", &mshell->rdline_outp[*i]);
+	if (mshell->rdline_outp[*i] == SINGLE_QUOTE)
 	{
-		*tmp_i = *i;
+		*tmp_i = *i - 1;
 		*i += 1;
-		while (mshell->tkn->tkn[*i] && mshell->tkn->tkn[*i] != SINGLE_QUOTE)
+		while (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != SINGLE_QUOTE)
+		{
 			(*i)++;
+		}
 		*i += 1;
-		mshell->expd->types[*n_tp] = malloc(sizeof(char) * (*i - *tmp_i) + 1);
+		mshell->expd->types[*n_tp] = malloc(sizeof(char) * (*i - *tmp_i) + 2);
 		if (!mshell->expd->types[*n_tp])
 			return (0);
 		j = 0;
 		while (*tmp_i <= (*i - 1))
 		{
-			mshell->expd->types[*n_tp][j] = mshell->tkn->tkn[*tmp_i];
+			mshell->expd->types[*n_tp][j] = mshell->rdline_outp[*tmp_i];
 			(*tmp_i)++;
 			j++;
 		}
@@ -54,11 +57,11 @@ int treat_double_quote_expand_cut(t_mshell *mshell, int *i, int *tmp_i, int *n_t
 	int j;
 
 	j = 0;
-	if (mshell->tkn->tkn[*i] == DOUBLE_QUOTE)
+	if (mshell->rdline_outp[*i] == DOUBLE_QUOTE)
 	{
 		*tmp_i = *i;
 		*i += 1;
-		while (mshell->tkn->tkn[*i] && mshell->tkn->tkn[*i] != DOUBLE_QUOTE)
+		while (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != DOUBLE_QUOTE)
 			(*i)++;
 		*i += 1;
 		mshell->expd->types[*n_tp] = malloc(sizeof(char) * (*i - *tmp_i) + 1);
@@ -67,7 +70,7 @@ int treat_double_quote_expand_cut(t_mshell *mshell, int *i, int *tmp_i, int *n_t
 		j = 0;
 		while (*tmp_i <= (*i - 1))
 		{
-			mshell->expd->types[*n_tp][j] = mshell->tkn->tkn[*tmp_i];
+			mshell->expd->types[*n_tp][j] = mshell->rdline_outp[*tmp_i];
 			(*tmp_i)++;
 			j++;
 		}
@@ -82,17 +85,17 @@ int treat_out_quote_expand_cut(t_mshell *mshell, int *i, int *tmp_i, int *n_tp)
 	int	j;
 
 	j = 0;
-	if (mshell->tkn->tkn[*i] && mshell->tkn->tkn[*i] != DOUBLE_QUOTE && mshell->tkn->tkn[*i] != SINGLE_QUOTE)
+	if (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != DOUBLE_QUOTE && mshell->rdline_outp[*i] != SINGLE_QUOTE)
 	{
 		*tmp_i = *i;
-		while (mshell->tkn->tkn[*i] && mshell->tkn->tkn[*i] != DOUBLE_QUOTE && mshell->tkn->tkn[*i] != SINGLE_QUOTE)
+		while (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != DOUBLE_QUOTE && mshell->rdline_outp[*i] != SINGLE_QUOTE)
 			(*i)++;
 		mshell->expd->types[*n_tp] = malloc(sizeof(char) * (*i - *tmp_i) + 1);
 		if (!mshell->expd->types[*n_tp])
 			return (0);
 		while (*tmp_i < *i)
 		{
-			mshell->expd->types[*n_tp][j] = mshell->tkn->tkn[*tmp_i];
+			mshell->expd->types[*n_tp][j] = mshell->rdline_outp[*tmp_i];
 			(*tmp_i)++;
 			j++;
 		}
@@ -112,7 +115,7 @@ int	cut_types_expd(t_mshell *mshell)
 	n_tp = 0;
 	tmp_i = 0;
 	init_cut_types_expander(mshell);
-	while (mshell->tkn->tkn[i])
+	while (mshell->rdline_outp[i])
 	{
 		treat_out_quote_expand_cut(mshell, &tmp_i, &i, &n_tp);
 		treat_double_quote_expand_cut(mshell, &tmp_i, &i, &n_tp);

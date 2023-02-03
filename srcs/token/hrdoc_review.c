@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 11:24:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:24:23 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 	t_tkn	*tmp;
 
 	expander = -42;
+	if (mshell->tkn->pipe_fd_hrdoc[0] != -42)
+	{
+		close(mshell->tkn->pipe_fd_hrdoc[0]);
+		close(mshell->tkn->pipe_fd_hrdoc[1]);
+	}
 	if (mshell->tkn->type == HRDOC)
 	{
 		tmp = mshell->tkn;

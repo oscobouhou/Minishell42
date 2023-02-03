@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 04:23:43 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:23:23 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ int					center_expand(t_mshell *mshell);
 int					check_expander(t_mshell *mshell);
 int					cut_types_expd(t_mshell *mshell);
 int					find_types_len_expd(t_mshell *mshell);
-int					join_types_expanded(t_mshell *mshell);
+char				*join_types_expanded(t_mshell *mshell);
 int					manage_expands_in_types(t_mshell *mshell);
 int					make_expansion(t_mshell *mshell, char *input);
 int					manage_expands_oq(t_mshell *mshell, int n_tp);

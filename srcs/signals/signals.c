@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:58:33 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 04:24:05 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:01:46 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	handle_sigint(void)
 void	handle_sigquit(void)
 {
 	dprintf(2, "Quit (core dumped)\n");
-	exit(131);
 }
 
 void stop_signals(void)

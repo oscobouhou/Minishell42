@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 05:11:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:52:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	manage_expands_oq(t_mshell *mshell, int n_tp)
 	return (1);
 }
 
-
 int	get_all_content_from_string(t_mshell *mshell, int n_tp)
 {
 	char 	*new_type;
@@ -95,7 +94,7 @@ int	get_all_content_from_string(t_mshell *mshell, int n_tp)
 	while (mshell->expd->types[n_tp][i])
 	{
 		new_type[i] = mshell->expd->types[n_tp][i];
-		i++;	
+		i++;
 	}
 	new_type[i] = '\0';
 	free(mshell->expd->types[n_tp]);
@@ -141,7 +140,7 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		}
 		i++;
 	}
-	remove_closing_quotes_dq(mshell, n_tp);
+	// remove_closing_quotes_dq(mshell, n_tp);
 	return (1);
 }
 

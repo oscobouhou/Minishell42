@@ -6,13 +6,13 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/02/02 19:09:28 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/02/03 13:27:40 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= minishell
 
-CC 				= gcc -g3 -Wall -Wextra -Werror -MMD
+CC 				= gcc -g3 -Wall -Wextra -Werror -MMD # -fsanitize=address
 
 OBJ				= $(SRCS:.c=.o)
 
