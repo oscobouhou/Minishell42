@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:52:19 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 00:52:46 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:34:30 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int	check_expander(t_mshell *mshell)
 		}
 		mshell->expt = mshell->expt->next;
 	}
+	if (mshell->expd->expander)
+		free(mshell->expd->expander);
 	mshell->expd->expander = NULL;
-	mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
+	mshell->expd->new_expd_len = 0;
 	mshell->expt = head;
 	return (1);
 }

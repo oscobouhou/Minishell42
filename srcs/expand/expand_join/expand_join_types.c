@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:51:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 11:50:13 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:21:46 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1)
 {
 	int	dcrm;
 
-	dcrm = mshell->expd->n_types; 
+	dcrm = mshell->expd->n_types;
 	while (dcrm-- > 0)
 	{
 		*i0 = 0;

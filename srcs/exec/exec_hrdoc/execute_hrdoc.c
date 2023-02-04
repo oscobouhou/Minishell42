@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 11:33:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:29:08 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,25 @@ int	lens_types_expd__hrdoc(char *usr_input)
 	return (cuts);
 }
 
+int	alloc__hrdoc_for_join(t_mshell *mshell)
+{
+	int n_tp;
+	int i0;
+	int	i1;
+	
+	i1 = 0;
+	n_tp = 0;
+	while (mshell->expd->types[n_tp])
+	{
+		i0 = 0;
+		while (mshell->expd->types[n_tp][i0])
+			i0++;
+		i1 += i0;
+		n_tp++;
+	}
+	return (i1);
+}
+
 char	*join_types_expanded__hrdoc(t_mshell *mshell)
 {
 	char	*new_token;
@@ -74,9 +93,7 @@ char	*join_types_expanded__hrdoc(t_mshell *mshell)
 	int		i1;
 
 	n_tp = 0;
-	i1 = 0;
-	alloc_new_token_for_join(mshell, &i0, &n_tp, &i1);
-	n_tp = 0;
+	i1 = alloc__hrdoc_for_join(mshell);
 	new_token = malloc(sizeof(char) * (i1 + 1));
 	if (!new_token)
 		return (NULL);
@@ -90,7 +107,8 @@ char	*join_types_expanded__hrdoc(t_mshell *mshell)
 			i0++;
 			i1++;
 		}
-		free(mshell->expd->types[n_tp]);
+		if (mshell->expd->types[n_tp])
+			free(mshell->expd->types[n_tp]);
 		n_tp++;
 	}
 	new_token[i1] = '\0';
@@ -152,7 +170,7 @@ int	types_expd_cut__hrdoc(t_mshell *mshell, char *usr_input, int n_tp)
 			if (!mshell->expd->types[n_tp])
 				return (0);
 			j = 0;
-			while (tmp_i <= (i - 1))
+			while (usr_input[tmp_i] && tmp_i < i)
 			{
 				mshell->expd->types[n_tp][j] = usr_input[tmp_i];
 				tmp_i++;
@@ -169,7 +187,7 @@ int	types_expd_cut__hrdoc(t_mshell *mshell, char *usr_input, int n_tp)
 			if (!mshell->expd->types[n_tp])
 				return (0);
 			j = 0;
-			while (tmp_i <= (i - 1))
+			while (usr_input[tmp_i] && tmp_i < i)
 			{
 				mshell->expd->types[n_tp][j] = usr_input[tmp_i];
 				tmp_i++;
@@ -195,7 +213,9 @@ int	hrdoc_expander(char **usr_input, t_mshell *mshell)
 	types_expd_cut__hrdoc(mshell, (*usr_input), n_tp);
 	while (mshell->expd->types[n_tp])
 	{
+		dprintf(2, "|%s|\n", mshell->expd->types[n_tp]);
 		make_expands_types__hrdoc(mshell, n_tp);
+		dprintf(2, "|%s|\n", mshell->expd->types[n_tp]);
 		n_tp++;
 	}
 	free((*usr_input));
@@ -214,7 +234,7 @@ int	execute_hrdoc(t_mshell *mshell, int expander)
 
 	p = -42;
 	line = 0;
-	p = pipe(mshell->tkn->pipe_fd_hrdoc);
+	p = pipe(mshell->pipe_fd_hrdoc);
 	if (p == -1)
 		return (dprintf(2, "\tpipe: creation failure\n"));
 	while (1)
@@ -222,7 +242,7 @@ int	execute_hrdoc(t_mshell *mshell, int expander)
 		usr_input = readline("> ");
 		if (!check_eof(usr_input))
 		{
-			close(mshell->tkn->pipe_fd_hrdoc[1]);
+			close(mshell->pipe_fd_hrdoc[1]);
 			return (dprintf(STDERR_FILENO, "minishell: warning: here-document \
 				at line %d delimited by end-of-file (wanted `%s')\n",
 					line, mshell->tkn->tkn), 1);
@@ -231,13 +251,13 @@ int	execute_hrdoc(t_mshell *mshell, int expander)
 		{
 			if (usr_input)
 				free(usr_input);
-			close(mshell->tkn->pipe_fd_hrdoc[1]);
+			close(mshell->pipe_fd_hrdoc[1]);
 			break ;
 		}
 		if (expander == -42)
 			hrdoc_expander(&usr_input, mshell);
-		write(mshell->tkn->pipe_fd_hrdoc[1], usr_input, ft_strlen(usr_input));
-		write(mshell->tkn->pipe_fd_hrdoc[1], "\n", 1);
+		write(mshell->pipe_fd_hrdoc[1], usr_input, ft_strlen(usr_input));
+		write(mshell->pipe_fd_hrdoc[1], "\n", 1);
 		line++;
 		free(usr_input);
 	}

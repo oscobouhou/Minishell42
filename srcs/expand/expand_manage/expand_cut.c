@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:47:33 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 14:00:05 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:38:25 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int	cut_expander(t_mshell *mshell, int n_tp, int i)
 	j = 0;
 	i += 1;
 	tmp_i = i;
-	if (mshell->expd->expander)
-		free(mshell->expd->expander);
+	// if (mshell->expd->expander)
+	// 	free(mshell->expd->expander);
 	while (mshell->expd->types[n_tp][i] && mshell->expd->types[n_tp][i] != SINGLE_QUOTE
 		&& mshell->expd->types[n_tp][i] != DOUBLE_QUOTE && mshell->expd->types[n_tp][i] != EXPAND
 			&& mshell->expd->types[n_tp][i] != BACKSLSH)
 		i++;
+	if (i == tmp_i)
+		return (-42); 
 	mshell->expd->expander = malloc(sizeof(char) * ((i - tmp_i) + 1));
 	if (!mshell->expd->expander)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 01:02:26 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:20:02 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 		if (!type_next_token(mshell->tkn, DLIM_HRDOC))
 			return (0);
 		mshell->tkn = mshell->tkn->next;
-		dprintf(2, "%s\n", mshell->tkn->tkn);
+		dprintf(1, ": %d\n", expander);
 		center_hrdoc_delim_treatment(mshell, &expander);
 		execute_hrdoc(mshell, expander);
 		mshell->tkn = tmp;

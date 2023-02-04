@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 11:58:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 23:39:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int skip_hexpander_hrdoc(t_mshell *mshell, int n_tp, int *i)
 {
 	int	tmp_i;
 
-	
 	while (mshell->expd->types[n_tp][*i] && ((mshell->expd->types[n_tp][*i] >= 9 && mshell->expd->types[n_tp][*i] <= 13) || (mshell->expd->types[n_tp][*i] == 32)))
 		(*i)++;
 	tmp_i = 0;
@@ -124,25 +123,25 @@ int	manage_expands_oq(t_mshell *mshell, int n_tp)
 			skip_hexpander_hrdoc(mshell, n_tp, &i);
 			mshell->expd->old_expd_len = 0;
 			mshell->expd->new_expd_len = 0;
-			update_type(mshell, &i, n_tp);
-			i -= 1;
+			update_type(mshell, &i, n_tp);	
 		}
-		else if (mshell->expd->types[n_tp][i] == EXPAND)
+		else if (mshell->expd->types[n_tp][i] == EXPAND && mshell->expd->types[n_tp][i + 1] != EXPAND)
 		{
 			if (mshell->expd->types[n_tp][i + 1] && mshell->expd->types[n_tp][i + 1] != '?')
 			{
-				cut_expander(mshell, n_tp, i);
-				check_expander(mshell);
+				if (cut_expander(mshell, n_tp, i) != -42)
+					check_expander(mshell);
+				update_type(mshell, &i, n_tp);			
 			}
 			else
 			{
-				mshell->expd->old_expd_len = 0;
 				update_expd_exit(mshell, n_tp, &i);
+				continue ;
 			}
-			update_type(mshell, &i, n_tp);
-			i -= 1;
 		}
-		i++;
+		else
+			i++;
+		// i++;
 	}
 	return (1);
 }
@@ -185,8 +184,8 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		}
 		if (mshell->expd->types[n_tp][i] == EXPAND)
 		{
-			cut_expander(mshell, n_tp, i);
-			check_expander(mshell);
+			if (cut_expander(mshell, n_tp, i) != -42)
+				check_expander(mshell);
 			treat_export_exit_status(mshell, n_tp, i);
 			if (mshell->expd->types[n_tp][i + 1] == SINGLE_QUOTE || mshell->expd->types[n_tp][i + 1] == DOUBLE_QUOTE)
 			{

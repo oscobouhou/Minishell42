@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:18 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 02:44:38 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:14:40 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void remove_env(char *to_rm, t_mshell *mshell)
 		prev->next = env->next;
 	free(env->envar);
 	free(env->value);
-	printf("ohestla\n\n");
+	free(env);
 }
 
 void remove_expt(char *to_rm, t_mshell *mshell)
@@ -78,6 +78,7 @@ void remove_expt(char *to_rm, t_mshell *mshell)
 	free(export->exptvar);
 	if (export->value)
 		free(export->value);
+	free(export);
 }
 
 int do_unset(t_mshell *mshell)

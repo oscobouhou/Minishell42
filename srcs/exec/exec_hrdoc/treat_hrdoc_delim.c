@@ -6,11 +6,54 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:48:15 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 01:07:51 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:52:21 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	treat_len_out_quotes__hrdoc(t_mshell *mshell, int *i, int *cuts)
+{
+	if (mshell->tkn->tkn[*i] != DOUBLE_QUOTE && mshell->tkn->tkn[*i] != SINGLE_QUOTE)
+	{
+		while (mshell->tkn->tkn[*i] && mshell->tkn->tkn[*i] != DOUBLE_QUOTE && mshell->tkn->tkn[*i] != SINGLE_QUOTE)
+			(*i)++;
+		(*cuts)++;
+	}
+	return (1);
+}
+
+int	find_types_len_expd__hrdoc(t_mshell *mshell)
+{
+	int	cuts;
+	int	i;
+	
+	i = 0;
+	cuts = 0;
+	while (mshell->tkn->tkn[i])
+	{
+		treat_len_out_quotes__hrdoc(mshell, &i, &cuts);
+		if (mshell->tkn->tkn[i] == DOUBLE_QUOTE)
+		{
+			i += 1;
+			while (mshell->tkn->tkn[i] && mshell->tkn->tkn[i] != DOUBLE_QUOTE)
+				i++;
+			cuts++;
+			i += 1;
+		}
+		if (mshell->tkn->tkn[i] == SINGLE_QUOTE)
+		{
+			i += 1;
+			while (mshell->tkn->tkn[i] && mshell->tkn->tkn[i] != SINGLE_QUOTE)
+				i++;
+			cuts++;
+			if (mshell->tkn->tkn[i + 1])
+				i += 1;
+		}
+	}
+	return (cuts);
+}
+
 
 int init_cut_types_expander__hrdoc(t_mshell *mshell)
 {
@@ -156,6 +199,8 @@ int	manage_hrdoc_delim_oq(t_mshell *mshell, int n_tp)
 				|| mshell->expd->types[n_tp + 1][0] == DOUBLE_QUOTE))
 				i++;
 		new_type[j] = mshell->expd->types[n_tp][i];
+		if (i >= ft_strlen(mshell->expd->types[n_tp]))
+			break ;
 		j++;
 		i++;
 	}
@@ -177,13 +222,27 @@ int	cut_types_expd__hrdoc(t_mshell *mshell)
 	init_cut_types_expander__hrdoc(mshell);
 	while (mshell->tkn->tkn[i])
 	{
-		treat_out_quote_expand_cut__hrdoc(mshell, &tmp_i, &i, &n_tp);
-		treat_double_quote_expand_cut__hrdoc(mshell, &tmp_i, &i, &n_tp);
-		treat_single_quote_expand_cut__hrdoc(mshell, &tmp_i, &i, &n_tp);
+		if (mshell->tkn->tkn[i] != SINGLE_QUOTE && mshell->tkn->tkn[i] != DOUBLE_QUOTE)
+			treat_out_quote_expand_cut__hrdoc(mshell, &tmp_i, &i, &n_tp);
+		if (mshell->tkn->tkn[i] == SINGLE_QUOTE)
+			treat_single_quote_expand_cut__hrdoc(mshell, &tmp_i, &i, &n_tp);
+		if (mshell->tkn->tkn[i] == DOUBLE_QUOTE)
+			treat_double_quote_expand_cut__hrdoc(mshell, &tmp_i, &i, &n_tp);
 	}
 	return (1);
 }
 
+int tablen(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return (-42);
+	while (tab[i])
+		i++;
+	return (i);
+}
 
 int	center_hrdoc_delim_treatment(t_mshell *mshell, int *expander)
 {
@@ -191,7 +250,7 @@ int	center_hrdoc_delim_treatment(t_mshell *mshell, int *expander)
 	int		n_tp;
 
 	n_tp = 0;
-	mshell->expd->n_types = find_types_len_expd(mshell);
+	mshell->expd->n_types = find_types_len_expd__hrdoc(mshell);
 	cut_types_expd__hrdoc(mshell);
 	while (mshell->expd->types[n_tp])
 	{

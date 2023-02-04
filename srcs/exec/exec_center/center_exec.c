@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 13:53:13 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:38:27 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	command_child_execve(t_mshell *mshell)
 				execve(mshell->exec->start_exec->tkn, mshell->execve->cmd_args,
 					mshell->exec_env);
 		execve(mshell->execve->cmd, mshell->execve->cmd_args, mshell->exec_env);
-		exit_process(errno, mshell->execve->cmd, mshell);
+		exit_process(errno, mshell->tkn->tkn, mshell);
 	}
 }
 

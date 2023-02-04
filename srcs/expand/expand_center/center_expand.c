@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 14:14:27 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 23:37:56 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,51 +22,89 @@ int check_expd_for_update(t_mshell *mshell, int i0, int *i2, char **update)
 			(*i2)++;
 			i0++;
 		}
-		free(mshell->expd->expander);
+		(*update)[*i2] = '\0';
+		if (mshell->expd->expander)
+		{
+			free(mshell->expd->expander);
+			mshell->expd->expander = NULL;
+		}
 	}
 	return (1);
 }
 
+
+
+
+
+
+
+
 int	update_type(t_mshell *mshell, int *i, int n_tp)
 {
 	char 	*update;
-	int		i0;
-	int		i1;
-	int		i2;
+	int 	ptr[3];
 
-	i0 = 0;
-	i1 = 0;
-	i2 = 0;
-	if (!mshell->expd->types[n_tp] && !mshell->expd->types[n_tp][*i])
-		return (1);
-	while (i1 != (*i + mshell->expd->new_expd_len))
-		i1++;
-	while (mshell->expd->types[n_tp][i2 + *i + mshell->expd->old_expd_len])
-		i2++;
-	update = malloc(sizeof(char) + (i1 + i2));
-	if (!update)
-		return (0);
-	i2 = 0;
-	while (i2 < *i)
+	if (!mshell->expd->types[n_tp][*i])
+		return (1) ;
+	ptr[0] = ft_strlen(mshell->expd->types[n_tp]) - mshell->expd->old_expd_len;
+	dprintf(2, "%s\n", &mshell->expd->types[n_tp][*i]);
+	if (!mshell->expd->expander)
 	{
-		update[i2] = mshell->expd->types[n_tp][i2];
-		i2++;
+		update = malloc(sizeof(char) * (ptr[0] + 1));
+		if (!update)
+			return (0);
+		ptr[0] = 0;
+		while (ptr[0] < *i)
+		{
+			update[ptr[0]] = mshell->expd->types[n_tp][ptr[0]];
+			ptr[0]++;
+		}
+		*i = ptr[0];
+		ptr[1] = ptr[0];
+		ptr[0] += mshell->expd->old_expd_len + 1;
+		while (mshell->expd->types[n_tp][ptr[0]])
+		{
+			update[ptr[1]] = mshell->expd->types[n_tp][ptr[0]];
+			ptr[0]++;
+			ptr[1]++;
+		}
+		update[ptr[1]] = '\0';
+		free(mshell->expd->types[n_tp]);
+		mshell->expd->types[n_tp] = update;
 	}
-	check_expd_for_update(mshell, i0, &i2, &update);
-	if (!mshell->expd->types[n_tp][*i + i0 + mshell->expd->old_expd_len])
-		i0 = 0;
 	else
-		i0 = 1;
-	while (mshell->expd->types[n_tp][*i + i0 + mshell->expd->old_expd_len])
 	{
-		update[i2] = mshell->expd->types[n_tp][*i + i0 + mshell->expd->old_expd_len];
-		i2++;
-		i0++;
+		ptr[0] += mshell->expd->new_expd_len;
+		update = malloc(sizeof(char) * (ptr[0]));
+		if (!update)
+			return (0);
+		ptr[0] = 0;
+		while (ptr[0] < *i)
+		{
+			update[ptr[0]] = mshell->expd->types[n_tp][ptr[0]];
+			ptr[0]++;
+		}
+		ptr[1] = 0;
+		ptr[2] = ptr[0] + mshell->expd->old_expd_len + 1;
+		while (mshell->expd->expander[ptr[1]])
+		{
+			update[ptr[0]] = mshell->expd->expander[ptr[1]];
+			ptr[0]++;
+			ptr[1]++;
+		}
+		free(mshell->expd->expander);
+		*i = ptr[0];
+		mshell->expd->expander = NULL;
+		while (mshell->expd->types[n_tp][ptr[2]])
+		{
+			update[ptr[0]] = mshell->expd->types[n_tp][ptr[2]];
+			ptr[0]++;
+			ptr[2]++;
+		}
+		update[ptr[0]] = '\0';
+		free(mshell->expd->types[n_tp]);
+		mshell->expd->types[n_tp] = update;
 	}
-	update[i2] = '\0';
-	free(mshell->expd->types[n_tp]);
-	mshell->expd->types[n_tp] = update;
-	*i += mshell->expd->new_expd_len;
 	return (1);
 }
 
@@ -111,6 +149,7 @@ int	center_expand(t_mshell *mshell)
 	free(mshell->rdline_outp);
 	mshell->rdline_outp = NULL;
 	mshell->rdline_outp = join_types_expanded(mshell);
+	dprintf(2, "%s\n", mshell->rdline_outp);
 	if (!mshell->rdline_outp)
 		return (0);
 	return (1);

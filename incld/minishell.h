@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 13:41:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:00:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ int					manage_env(char **to_export, t_mshell *mshell);
 int					add_new_exptar(char **to_add, t_mshell *mshell);
 int					manage_expt(char **to_export, t_mshell *mshell);
 void				append_to_expt(t_expt **head, t_expt *new_node);
+int					unforked_builtin_redir_treat(t_mshell *mshell, int *backup);
 // @ -------------------------- # token # --------------------------- @ //
 int					redirs_review(t_mshell *mshell);
 int					center_review(t_mshell *mshell);

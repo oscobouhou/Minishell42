@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 06:32:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:59:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	absolute_path(t_mshell *mshell, int *backup)
 	return (0);
 }
 
-int	forked_builtin_redir_treat(t_mshell *mshell, int *backup)
+int	unforked_builtin_redir_treat(t_mshell *mshell, int *backup)
 {
 	backup[0] = -42;
 	backup[1] = -42;
@@ -130,7 +130,7 @@ int	do_cd(t_mshell *mshell)
 	char	*path;
 	int		backup[2];
 
-	forked_builtin_redir_treat(mshell, backup);
+	unforked_builtin_redir_treat(mshell, backup);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	path = NULL;
 	path = getcwd(path, 0);
