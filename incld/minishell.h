@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 22:13:57 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:32:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_built
 {
 	int				builtin_p;
 	int				echo_flag;
+	int				echo_args_len;
 	char			*cd_arg;
 	char			*cd_chdir;
 	char			**echo_arg;
@@ -220,14 +221,15 @@ char				*ft_itoa(int n);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 void				ft_putchar(char c);
-int					ft_strlen(char *str);
 void				ft_putstr(char *str);
+int					ft_strlen(char *str);
 char				*ft_strdup(char *str);
 int					ft_atoi(const char *nptr);
 char				*ft_strchr(char *s, int c);
 int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 char				*ft_charcat(char *str, char c);
+void				ft_putstr_fd(char *str, int fd);
 char				**ft_split(char *s, char target);
 char				**copy_env_in_tab(t_mshell *mshell);
 int					search_lowest(char *val, t_env *env);

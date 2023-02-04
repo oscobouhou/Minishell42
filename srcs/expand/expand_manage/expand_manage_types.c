@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 03:14:41 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:58:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,21 @@ int	manage_expands_oq(t_mshell *mshell, int n_tp)
 	return (1);
 }
 
+int treat_export_exit_status(t_mshell *mshell, int n_tp, int i)
+{
+	if (mshell->expd->types[n_tp][i + 1] == '?')
+	{
+		if (mshell->expd->expander)
+		{
+			free(mshell->expd->expander);
+			mshell->expd->expander = NULL;
+		}
+		mshell->expd->expander = ft_itoa(mshell->exit_status);
+		mshell->expd->old_expd_len = 1;
+		mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
+	}
+	return (1);
+}
 
 int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 {
@@ -172,17 +187,7 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		{
 			cut_expander(mshell, n_tp, i);
 			check_expander(mshell);
-			if (mshell->expd->types[n_tp][i + 1] == '?')
-			{
-				if (mshell->expd->expander)
-				{
-					free(mshell->expd->expander);
-					mshell->expd->expander = NULL;
-				}
-				mshell->expd->expander = ft_itoa(mshell->exit_status);
-				mshell->expd->old_expd_len = 1;
-				mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
-			}
+			treat_export_exit_status(mshell, n_tp, i);
 			if (mshell->expd->types[n_tp][i + 1] == SINGLE_QUOTE || mshell->expd->types[n_tp][i + 1] == DOUBLE_QUOTE)
 			{
 				get_all_content_from_string(mshell, n_tp);
@@ -199,9 +204,11 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 int	manage_expands_in_types(t_mshell *mshell)
 {
 	int	n_tp;
+	int	dcrm;
 
 	n_tp = 0;
-	while (mshell->expd->types[n_tp])
+	dcrm = mshell->expd->n_types;
+	while (dcrm-- > 0)
 	{
 		if (mshell->expd->types[n_tp][0] == SINGLE_QUOTE)
 			manage_expands_in_sq(mshell, n_tp);

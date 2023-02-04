@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:32:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 03:20:36 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:21:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,22 @@ char	*remove_quotes(char *str)
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
-	while (i < len)
+	if (len)
 	{
-		if (str[i] == DOUBLE_QUOTE && !in_quotes[1])
-			in_quotes[0] = !in_quotes[0];
-		else if (str[i] == SINGLE_QUOTE && !in_quotes[0])
-			in_quotes[1] = !in_quotes[1];
-		else if (str[i] == DOUBLE_QUOTE && !in_quotes[1]) 
-			continue ;
-		else if (str[i] == SINGLE_QUOTE && !in_quotes[0]) 
-			continue ;
-		else
-			res[j++] = str[i];
-		i++;
+		while (i < len)
+		{
+			if (str[i] == DOUBLE_QUOTE && !in_quotes[1])
+				in_quotes[0] = !in_quotes[0];
+			else if (str[i] == SINGLE_QUOTE && !in_quotes[0])
+				in_quotes[1] = !in_quotes[1];
+			else if (str[i] == DOUBLE_QUOTE && !in_quotes[1]) 
+				continue ;
+			else if (str[i] == SINGLE_QUOTE && !in_quotes[0]) 
+				continue ;
+			else
+				res[j++] = str[i];
+			i++;
+		}
 	}
 	res[j] = '\0';
 	free(str);

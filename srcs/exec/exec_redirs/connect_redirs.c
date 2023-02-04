@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 08:18:24 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:57:11 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	append(t_mshell *mshell, int *fd)
 		return (dprintf(2, "Couldn't open fd %s\n",
 				mshell->exec->start_exec->tkn));
 	dup2(mshell->exec->fd[*fd], STDOUT_FILENO);
+	mshell->exec->fd_out = mshell->exec->fd[*fd];
 	mshell->exec->no_redirs = 42;
 	(*fd)++;
 	return (1);
@@ -65,6 +66,7 @@ int	rdir_l(t_mshell *mshell, int *fd)
 		return (dprintf(2, "minishell: %s: %s\n",
 				mshell->exec->start_exec->next->tkn, strerror(errno)), 0);
 	dup2(mshell->exec->fd[*fd], STDIN_FILENO);
+	mshell->exec->fd_in = mshell->exec->fd[*fd];
 	mshell->exec->no_redirs = 42;
 	(*fd)++;
 	return (1);
@@ -78,6 +80,7 @@ int	rdir_r(t_mshell *mshell, int *fd)
 		return (dprintf(2, "minishell: %s: %s\n",
 				mshell->exec->start_exec->next->tkn, strerror(errno)), 0);
 	dup2(mshell->exec->fd[*fd], STDOUT_FILENO);
+	mshell->exec->fd_out = mshell->exec->fd[*fd];
 	mshell->exec->no_redirs = 42;
 	(*fd)++;
 	return (1);

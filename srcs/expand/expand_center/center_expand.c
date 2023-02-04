@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 03:12:14 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 12:02:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,44 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 	return (1);
 }
 
+int	only_quote_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != SINGLE_QUOTE && str[i] != DOUBLE_QUOTE)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	seek_expander(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == EXPAND)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	center_expand(t_mshell *mshell)
 {
-	int	n_tp = 0;
 	mshell->tkn = mshell->head_tkn;
+	if (only_quote_str(mshell->rdline_outp))
+		return (1);
+	if (!seek_expander(mshell->rdline_outp))
+		return (1);
 	mshell->expd->n_types = find_types_len_expd(mshell);
 	cut_types_expd(mshell);
 	manage_expands_in_types(mshell);
-	while (mshell->expd->types[n_tp])
-	{
-		dprintf(2, "|%s|\n", mshell->expd->types[n_tp]);
-		n_tp++;
-	}
 	free(mshell->rdline_outp);
 	mshell->rdline_outp = NULL;
 	mshell->rdline_outp = join_types_expanded(mshell);
@@ -88,3 +114,10 @@ int	center_expand(t_mshell *mshell)
 		return (0);
 	return (1);
 }
+
+	// int	n_tp = 0;
+	// while (mshell->expd->types[n_tp])
+	// {
+	// 	dprintf(2, "|%s|\n", mshell->expd->types[n_tp]);
+	// 	n_tp++;
+	// }

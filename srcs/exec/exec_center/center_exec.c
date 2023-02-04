@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 15:03:47 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:10:52 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	close_file_fd(t_mshell *mshell)
 	{
 		while (mshell->exec->n_fd > 0)
 		{
-			dprintf(2, "%d\n", mshell->exec->fd[mshell->exec->n_fd - 1]);
 			close(mshell->exec->fd[mshell->exec->n_fd - 1]);
 			mshell->exec->n_fd--;
 		}

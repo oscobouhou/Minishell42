@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:51:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 01:24:57 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:50:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1)
 {
-	while (mshell->expd->types[*n_tp])
+	int	dcrm;
+
+	dcrm = mshell->expd->n_types; 
+	while (dcrm-- > 0)
 	{
 		*i0 = 0;
 		while (mshell->expd->types[*n_tp][*i0])
@@ -40,7 +43,7 @@ char	*join_types_expanded(t_mshell *mshell)
 	if (!new_token)
 		return (NULL);
 	i1 = 0;
-	while (mshell->expd->types[n_tp])
+	while (mshell->expd->n_types-- > 0)
 	{
 		i0 = 0;
 		while (mshell->expd->types[n_tp][i0])
@@ -52,6 +55,8 @@ char	*join_types_expanded(t_mshell *mshell)
 		free(mshell->expd->types[n_tp]);
 		n_tp++;
 	}
+	if (mshell->expd->types[n_tp])
+		free(mshell->expd->types[n_tp]);
 	new_token[i1] = '\0';
 	free(mshell->expd->types);
 	mshell->expd->types = NULL;
