@@ -6,7 +6,7 @@
 #    By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:44:23 by oboutarf          #+#    #+#              #
-#    Updated: 2023/02/03 13:27:40 by oboutarf         ###   ########.fr        #
+#    Updated: 2023/02/03 22:10:21 by oboutarf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ OBJ				= $(SRCS:.c=.o)
 DEP				= $(SRCS:.c=.d)
 
 SRCS 			= main/main.c \
-				  srcs/libft/libft.c \
+				  srcs/libft/libft_1.c \
+				  srcs/libft/libft_2.c \
+				  srcs/libft/libft_3.c \
+				  srcs/libft/libft_4.c \
 				  srcs/signals/signals.c \
 				  srcs/compose/compose_tkn.c \
 				  srcs/exec/exec_exit/exit_status.c \
@@ -80,6 +83,8 @@ SRCS 			= main/main.c \
 				  srcs/builtins/do_unset.c \
 				  srcs/builtins/do_exprt.c \
 				  srcs/builtins/center_builtins.c \
+				  srcs/builtins/export/manage_env.c \
+				  srcs/builtins/export/manage_expt.c \
 
 SRCH_INCLDS 	= -Iincld
 

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:50:18 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/31 12:07:42 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 21:11:46 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	remove_closing_quotes_dq(t_mshell *mshell, int n_tp)
 	char	*quote_remover;
 	int		i0;
 	int		i1;
-	
+
 	i0 = 1;
 	i1 = 0;
 	quote_remover = malloc(sizeof(char) * ft_strlen(mshell->expd->types[n_tp]) + 1);

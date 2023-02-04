@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:48:52 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 18:24:43 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:32:19 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	make_expansion(t_mshell *mshell, char *input)
 		return (0);
 	while (input[i])
 	{
-		dprintf(2, "||:%s\n", mshell->rdline_outp);
 		mshell->expd->expander[i] = input[i];
 		i++;
 	}

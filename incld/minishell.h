@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 16:23:23 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:13:57 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ int					do_exprt(t_mshell *mshell);
 t_env				*create_env_node(char *var);
 int					check_arg(char *current_arg);
 t_expt				*create_expt_node(char *var);
+t_expt				*search_exprt_pos(char *val, t_expt *head);
 int					center_builtins(t_mshell *mshell, int type);
 void				append_to_env(t_env **head, t_env *new_node);
 int					add_new_envar(char **to_add, t_mshell *mshell);
@@ -226,10 +227,12 @@ int					ft_atoi(const char *nptr);
 char				*ft_strchr(char *s, int c);
 int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
+char				*ft_charcat(char *str, char c);
 char				**ft_split(char *s, char target);
 char				**copy_env_in_tab(t_mshell *mshell);
 int					search_lowest(char *val, t_env *env);
 char				*ft_substr(char *s, int start, size_t len);
+char				*ft_strjoin(char *s1, char *s2, int upend);
 // @ -------------------------- # exec # ---------------------------- @ //
 int					popen_tube(t_mshell *mshell);
 int					bckup_stdin_out(int *backup);

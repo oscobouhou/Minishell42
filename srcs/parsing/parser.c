@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:25:09 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 12:49:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:27:35 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ int	parse_output(t_mshell *mshell)
 			return (0);
 	}
 	if (!mshell->empty_cmd)
-	{
-		dprintf(2, "%s\n", "COUCOU");
 		return (0);
-	}
 	return (1);
 }

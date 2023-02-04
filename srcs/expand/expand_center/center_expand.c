@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 20:56:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 03:12:14 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 	i0 = 0;
 	i1 = 0;
 	i2 = 0;
-	if (!mshell->expd->types[n_tp][*i])
+	if (!mshell->expd->types[n_tp] && !mshell->expd->types[n_tp][*i])
 		return (1);
 	while (i1 != (*i + mshell->expd->new_expd_len))
 		i1++;
@@ -71,10 +71,16 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 
 int	center_expand(t_mshell *mshell)
 {
+	int	n_tp = 0;
 	mshell->tkn = mshell->head_tkn;
 	mshell->expd->n_types = find_types_len_expd(mshell);
 	cut_types_expd(mshell);
 	manage_expands_in_types(mshell);
+	while (mshell->expd->types[n_tp])
+	{
+		dprintf(2, "|%s|\n", mshell->expd->types[n_tp]);
+		n_tp++;
+	}
 	free(mshell->rdline_outp);
 	mshell->rdline_outp = NULL;
 	mshell->rdline_outp = join_types_expanded(mshell);

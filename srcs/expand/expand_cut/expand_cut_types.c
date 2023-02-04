@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:45:27 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 18:56:25 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 00:22:45 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ int treat_out_quote_expand_cut(t_mshell *mshell, int *i, int *tmp_i, int *n_tp)
 	(*n_tp)++;
 	return (1);
 }
-	// if (mshell->rdline_outp[*i] && mshell->rdline_outp[*i] != DOUBLE_QUOTE && mshell->rdline_outp[*i] != SINGLE_QUOTE)
-	// {
 
 int	cut_types_expd(t_mshell *mshell)
 {

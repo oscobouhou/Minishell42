@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 20:55:46 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 03:14:41 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,66 +64,15 @@ void	clean_expander(t_mshell *mshell)
 
 int skip_hexpander_hrdoc(t_mshell *mshell, int n_tp, int *i)
 {
-	// int 	j;
+	int	tmp_i;
 
-	// j = 0;
+	
 	while (mshell->expd->types[n_tp][*i] && ((mshell->expd->types[n_tp][*i] >= 9 && mshell->expd->types[n_tp][*i] <= 13) || (mshell->expd->types[n_tp][*i] == 32)))
 		(*i)++;
+	tmp_i = 0;
 	while (mshell->expd->types[n_tp][*i] && check_printable_char(mshell->expd->types[n_tp][*i]))
 		(*i)++;
-	// clean_expander(mshell);
-	// mshell->expd->expander = malloc(sizeof(char) * (*i - tmp_i + 1));
-	// if (!mshell->expd->expander)
-	// 	return (0);
-	// i = tmp_i;
-	// while (mshell->expd->types[n_tp][*i] && check_printable_char(mshell->expd->types[n_tp][*i]))
-	// {
-	// 	mshell->expd->expander[j] = mshell->expd->types[n_tp][*i];
-	// 	i++;
-	// 	j++;
-	// }
-	// mshell->expd->expander[j] = '\0';
-	return (1);
-
-
-}
-
-
-int	manage_expands_oq(t_mshell *mshell, int n_tp)
-{
-	int		i;
-
-	i = 0;
-	while (mshell->expd->types[n_tp][i])
-	{
-
-		if (mshell->expd->types[n_tp][i] == REDIR_L && mshell->expd->types[n_tp][i + 1] == REDIR_L)
-		{
-			i += 2;
-			skip_hexpander_hrdoc(mshell, n_tp, &i);
-			// mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
-			// mshell->expd->old_expd_len = 0;
-			update_type(mshell, &i, n_tp);
-			i -= 1;
-		}
-		else if (mshell->expd->types[n_tp][i] == EXPAND)
-		{
-			if (mshell->expd->types[n_tp][i + 1] && mshell->expd->types[n_tp][i + 1] != '?')
-			{
-				cut_expander(mshell, n_tp, i);
-				check_expander(mshell);
-			}
-			else
-			{
-				mshell->expd->old_expd_len = 0;
-				update_expd_exit(mshell, n_tp, &i);
-			}
-			update_type(mshell, &i, n_tp);
-			i -= 1;
-		}
-		i++;
-	}
-	return (1);
+	return (*i - tmp_i);
 }
 
 int	get_all_content_from_string(t_mshell *mshell, int n_tp)
@@ -161,6 +110,43 @@ int	scan_herdoc(t_mshell *mshell, int n_tp)
 	}
 	return (0);
 }
+
+int	manage_expands_oq(t_mshell *mshell, int n_tp)
+{
+	int		i;
+
+	i = 0;
+	while (mshell->expd->types[n_tp][i])
+	{
+		if (mshell->expd->types[n_tp][i] == REDIR_L && mshell->expd->types[n_tp][i + 1] == REDIR_L)
+		{
+			i += 2;
+			skip_hexpander_hrdoc(mshell, n_tp, &i);
+			mshell->expd->old_expd_len = 0;
+			mshell->expd->new_expd_len = 0;
+			update_type(mshell, &i, n_tp);
+			i -= 1;
+		}
+		else if (mshell->expd->types[n_tp][i] == EXPAND)
+		{
+			if (mshell->expd->types[n_tp][i + 1] && mshell->expd->types[n_tp][i + 1] != '?')
+			{
+				cut_expander(mshell, n_tp, i);
+				check_expander(mshell);
+			}
+			else
+			{
+				mshell->expd->old_expd_len = 0;
+				update_expd_exit(mshell, n_tp, &i);
+			}
+			update_type(mshell, &i, n_tp);
+			i -= 1;
+		}
+		i++;
+	}
+	return (1);
+}
+
 
 int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 {
@@ -207,7 +193,6 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		}
 		i++;
 	}
-	// remove_closing_quotes_dq(mshell, n_tp);
 	return (1);
 }
 
@@ -228,9 +213,3 @@ int	manage_expands_in_types(t_mshell *mshell)
 	}
 	return (1);
 }
-	// n_tp = 0;
-	// while (mshell->expd->types[n_tp])
-	// {
-	// 	dprintf(2, "|%s|\n", mshell->expd->types[n_tp]);
-	// 	n_tp++;
-	// }
