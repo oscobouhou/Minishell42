@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:32:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 12:21:10 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:31:48 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,26 @@ char	*remove_quotes(char *str)
 	int		i;
 
 	i = 0;
-	len = strlen(str);
+	len = ft_strlen(str);
 	in_quotes[0] = 0;
 	in_quotes[1] = 0;
 	j = 0;
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
-	if (len)
+	while (str && str[i] && i < len)
 	{
-		while (i < len)
-		{
-			if (str[i] == DOUBLE_QUOTE && !in_quotes[1])
-				in_quotes[0] = !in_quotes[0];
-			else if (str[i] == SINGLE_QUOTE && !in_quotes[0])
-				in_quotes[1] = !in_quotes[1];
-			else if (str[i] == DOUBLE_QUOTE && !in_quotes[1]) 
-				continue ;
-			else if (str[i] == SINGLE_QUOTE && !in_quotes[0]) 
-				continue ;
-			else
-				res[j++] = str[i];
-			i++;
-		}
+		if (str[i] == DOUBLE_QUOTE && !in_quotes[1])
+			in_quotes[0] = !in_quotes[0];
+		else if (str[i] == SINGLE_QUOTE && !in_quotes[0])
+			in_quotes[1] = !in_quotes[1];
+		else if (str[i] == DOUBLE_QUOTE && !in_quotes[1]) 
+			continue ;
+		else if (str[i] == SINGLE_QUOTE && !in_quotes[0]) 
+			continue ;
+		else
+			res[j++] = str[i];
+		i++;
 	}
 	res[j] = '\0';
 	free(str);

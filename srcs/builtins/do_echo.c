@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 13:15:00 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:42:00 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,7 @@ int	do_echo(t_mshell *mshell)
 	i = count_echo_args(mshell);
 	if (!i)
 	{
-		if (mshell->exec->fd_in > 2 || mshell->exec->fd_out > 2)
-			ft_putstr("\n");
+		ft_putstr_fd("\n", mshell->exec->fd_out);
 		return (exit_builtin(mshell, backup), mshell->exit_status = 0, 1);
 	}
 	mshell->built->echo_arg = malloc(sizeof(char *) * (i + 1));
@@ -155,6 +154,5 @@ int	do_echo(t_mshell *mshell)
 	print_echo_args(mshell);
 	builtin_fork_exit(mshell);
 	exit_builtin(mshell, backup);
-	mshell->exit_status = 0;
 	return (1);
 }

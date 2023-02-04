@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:45:27 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 11:12:00 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:08:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,12 @@ int	cut_types_expd(t_mshell *mshell)
 	init_cut_types_expander(mshell);
 	while (mshell->rdline_outp[i])
 	{
-		treat_out_quote_expand_cut(mshell, &tmp_i, &i, &n_tp);
-		treat_double_quote_expand_cut(mshell, &tmp_i, &i, &n_tp);
-		treat_single_quote_expand_cut(mshell, &tmp_i, &i, &n_tp);
+		if (mshell->rdline_outp[i] != SINGLE_QUOTE && mshell->rdline_outp[i] != DOUBLE_QUOTE)
+			treat_out_quote_expand_cut(mshell, &tmp_i, &i, &n_tp);
+		if (mshell->rdline_outp[i] == DOUBLE_QUOTE)
+			treat_double_quote_expand_cut(mshell, &tmp_i, &i, &n_tp);
+		if (mshell->rdline_outp[i] == DOUBLE_QUOTE)
+			treat_single_quote_expand_cut(mshell, &tmp_i, &i, &n_tp);
 	}
 	return (1);
 }

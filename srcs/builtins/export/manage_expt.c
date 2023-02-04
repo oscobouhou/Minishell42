@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_expt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:19:20 by dkermia           #+#    #+#             */
-/*   Updated: 2023/02/03 11:34:30 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/04 14:27:28 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ int	replace_value(t_expt *export, char **to_export)
 {
 	if (export->value)
 		free(export->value);
-	export->value = to_export[1];
-	return (free(to_export[0]), free(to_export), 1);
+	export->value = ft_strdup(to_export[1]);
+	if (!export->value)
+		return (0);
+	return (1);
 }
 
 int	manage_expt(char **to_export, t_mshell *mshell)

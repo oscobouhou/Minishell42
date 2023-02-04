@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:48:52 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 22:32:19 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:04:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	make_expansion(t_mshell *mshell, char *input)
 	int	i;
 
 	i = 0;
+	if (mshell->expd->expander)
+		free(mshell->expd->expander);
 	mshell->expd->expander = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	if (!mshell->expd->expander)
 		return (0);

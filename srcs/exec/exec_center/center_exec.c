@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 13:10:52 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:53:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	wait_pids(t_mshell *mshell)
 
 void	command_child_execve(t_mshell *mshell)
 {
-	if (mshell->exec->no_cmd == -42)
+	if (mshell->exec->no_cmd == -42 && mshell->execve->cmd)
 	{
 		if (mshell->exec->start_exec->tkn[0] == '/')
 			if (access(mshell->exec->start_exec->tkn, X_OK | F_OK))
@@ -88,7 +88,7 @@ int	execmd(t_mshell *mshell, char **env)
 	if (mshell->exec->next)
 		close_pipe_fds(mshell);
 	terminate(mshell);
-	exit (0);
+	exit(0);
 	(void)env;
 }
 

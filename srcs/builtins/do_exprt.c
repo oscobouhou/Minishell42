@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:12 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 22:05:36 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:31:13 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,15 @@ char **split_args(char *args)
 	var_len = ft_strequal_sign(args);
 	value_len = arg_len - var_len;
 	if (var_len == arg_len)
+	{
 		to_export = malloc(sizeof(char *) * 2);
+		to_export[1] = NULL;
+	}
 	else
+	{
 		to_export = malloc(sizeof(char *) * 3);
+		to_export[2] = NULL;
+	}
 	if (!to_export)
 		return (NULL);
 	to_export[0] = ft_substr(args, 0, var_len);
@@ -98,11 +104,26 @@ char **split_args(char *args)
 	return (to_export);
 }
 
+int	free_export_split(char **export_split)
+{
+	int	i;
+
+	i = 0;
+	while (export_split[i])
+	{
+		free(export_split[i]);
+		i++;
+	}
+	
+	return (1);
+}
+
 int do_exprt(t_mshell *mshell)
 {
 	char **export_split;
 	t_tkn *args;
 
+	export_split = NULL;
 	if (mshell->exec->start_exec->next == NULL)
 		return (print_export(mshell), 1);
 	args = mshell->exec->start_exec->next;
@@ -124,5 +145,7 @@ int do_exprt(t_mshell *mshell)
 				return (0);
 		args = args->next;
 	}
+	free_export_split(export_split);
+	free(export_split);
 	return (1);
 }

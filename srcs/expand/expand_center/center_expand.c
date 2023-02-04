@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 12:02:05 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:14:27 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int check_expd_for_update(t_mshell *mshell, int i0, int *i2, char **update)
 			(*i2)++;
 			i0++;
 		}
+		free(mshell->expd->expander);
 	}
 	return (1);
 }

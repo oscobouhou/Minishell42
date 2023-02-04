@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:23 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 14:36:23 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:55:44 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	free_paths_execve(t_mshell *mshell)
 
 int	free_expd(t_mshell *mshell)
 {
-	if (mshell->expd->expander && ft_strcmp(mshell->expd->expander, "$") != 1)
+	if (mshell->expd->expander)
 		free(mshell->expd->expander);
 	if (mshell->expd->update_tkn)
 		free(mshell->expd->update_tkn);
