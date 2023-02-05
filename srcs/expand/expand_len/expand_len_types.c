@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:23:31 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 10:10:26 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:45:16 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,14 @@ int	treat_len_out_quotes(t_mshell *mshell, int *i, int *cuts)
 
 void	single_n_double(t_mshell *mshell, int *i, int *cuts, int quote)
 {
-	if (mshell->rdline_outp[*i] == quote)
+	if (mshell->rdline_outp[*i] == quote && mshell->rdline_outp[*i + 1])
 	{
-		i += 1;
+		(*i)++;
 		while (mshell->rdline_outp[*i]
 			&& mshell->rdline_outp[*i] != quote)
-			i++;
+			(*i)++;
 		(*cuts)++;
-		if (mshell->rdline_outp[*i + 1])
-			i += 1;
+		(*i)++;
 	}
 }
 

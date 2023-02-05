@@ -1,3 +1,5 @@
+
+
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -23,6 +25,7 @@ SRCS 			= main/main.c \
 				  srcs/libft/libft_2.c \
 				  srcs/libft/libft_3.c \
 				  srcs/libft/libft_4.c \
+				  srcs/libft/libft_5.c \
 				  srcs/signals/signals.c \
 				  srcs/compose/compose_tkn.c \
 				  srcs/exec/exec_exit/exit_status.c \
@@ -105,4 +108,3 @@ fclean:     clean
 			$(RM) $(NAME)
 
 re:         fclean $(NAME)
-

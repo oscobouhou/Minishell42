@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 08:09:57 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 18:24:31 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ void				what_token(int token);
 int					compose_and_launch_command(t_mshell *mhsell, char **env);
 // @ ------------------------- # libft # ---------------------------- @ //
 char				*ft_itoa(int n);
+int 				ft_nbrlen(int n);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 void				ft_putchar(char c);
@@ -244,6 +245,7 @@ int					ft_strcmp(char *s1, char *s2);
 char				*ft_charcat(char *str, char c);
 void				ft_putstr_fd(char *str, int fd);
 char				**ft_split(char *s, char target);
+char				*ft_convert_to_str(int n, int i);
 char				**copy_env_in_tab(t_mshell *mshell);
 int					search_lowest(char *val, t_env *env);
 char				*ft_substr(char *s, int start, size_t len);
@@ -254,6 +256,7 @@ int					bckup_stdin_out(int *backup);
 int					pclose_tube(t_mshell *mshell);
 int					handle_tube(t_mshell *mshell);
 int					find_access(t_mshell *mshell);
+void				print_tokens(t_mshell *mshell);
 int					scan_builtin(t_mshell *mshell);
 char				*exit_status(t_mshell *mshell);
 int					close_file_fd(t_mshell *mshell);

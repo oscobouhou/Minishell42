@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 09:01:44 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:43:17 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	skip_hexpander_hrdoc(t_mshell *mshell, int n_tp, int *i)
 {
 	int	tmp_i;
 
+	(*i)++;
+	(*i)++;
 	while (mshell->expd->types[n_tp][*i] \
 	&& ((mshell->expd->types[n_tp][*i] >= 9 \
 	&& mshell->expd->types[n_tp][*i] <= 13) \
@@ -148,13 +150,13 @@ int	manage_expands_oq(t_mshell *mshell, int n_tp)
 		if (mshell->expd->types[n_tp][i] == REDIR_L \
 			&& mshell->expd->types[n_tp][i + 1] == REDIR_L)
 		{
-			i += 2;
 			skip_hexpander_hrdoc(mshell, n_tp, &i);
 			mshell->expd->old_expd_len = 0;
 			mshell->expd->new_expd_len = 0;
 			update_type(mshell, &i, n_tp);
 		}
-		else if (mshell->expd->types[n_tp][i] == EXPAND \
+		else if (mshell->expd->types[n_tp][i + 1] \
+			&& mshell->expd->types[n_tp][i] == EXPAND \
 			&& mshell->expd->types[n_tp][i + 1] != EXPAND)
 		{
 			check_update_string_with_expand(mshell, n_tp, &i);
@@ -180,7 +182,9 @@ int	hrdoc_scannner(t_mshell *mshell, int n_tp)
 int	sort_expander_in_dq(t_mshell *mshell, int n_tp, int *i)
 {
 	if (cut_expander(mshell, n_tp, *i) != -42)
+	{
 		check_expander(mshell);
+	}
 	treat_export_exit_status(mshell, n_tp, *i);
 	if (mshell->expd->types[n_tp][*i + 1] == SINGLE_QUOTE \
 		|| mshell->expd->types[n_tp][*i + 1] == DOUBLE_QUOTE)
@@ -202,7 +206,9 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		&& mshell->expd->types[n_tp][i + 1] == DOUBLE_QUOTE)
 	{
 		free(mshell->expd->types[n_tp]);
-		mshell->expd->types[n_tp] = "$\0";
+		mshell->expd->types[n_tp] = malloc(sizeof(char) * 2);
+		mshell->expd->types[n_tp][0] = '$';
+		mshell->expd->types[n_tp][1] = '\0';
 		return (1);
 	}
 	while (mshell->expd->types[n_tp][i])
@@ -211,7 +217,7 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 			if (hrdoc_scannner(mshell, n_tp))
 				break ;
 		if (mshell->expd->types[n_tp][i] == EXPAND)
-			if (sort_expander_in_dq(mshell, n_tp, &i))
+			if (!sort_expander_in_dq(mshell, n_tp, &i))
 				break ;
 		i++;
 	}

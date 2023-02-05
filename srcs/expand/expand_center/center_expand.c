@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 08:49:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 22:14:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,7 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 {
 	char	*update;
 	int		ptr[4];
-	int		d;
 
-	d = untreat_dollar(mshell, *i, n_tp);
-	if (d)
-		return (*i += d);
 	ptr[0] = ft_strlen(mshell->expd->types[n_tp]) \
 		- mshell->expd->old_expd_len + 1;
 	if (!mshell->expd->expander)

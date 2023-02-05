@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:32:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 10:03:41 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 17:12:57 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	compose_and_launch_command(t_mshell *mshell, char **env)
 		return (free_tokens(mshell), 0);
 	if (!center_review(mshell))
 		return (free_tokens(mshell), 0);
+	// print_tokens(mshell);
 	if (!center_quotes(mshell))
 		return (free_tokens(mshell), 0);
 	if (!center_exec(mshell, env))

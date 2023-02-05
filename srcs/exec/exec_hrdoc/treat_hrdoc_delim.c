@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:48:15 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 08:43:56 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 14:41:19 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	find_types_len_expd__hrdoc(t_mshell *mshell)
 			while (mshell->tkn->tkn[i] && mshell->tkn->tkn[i] != SINGLE_QUOTE)
 				i++;
 			cuts++;
-			if (mshell->tkn->tkn[i + 1])
-				i += 1;
+			i += 1;
 		}
 	}
 	return (cuts);
