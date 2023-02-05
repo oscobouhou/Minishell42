@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 18:29:08 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 07:54:07 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ int	lens_types_expd__hrdoc(char *usr_input)
 
 int	alloc__hrdoc_for_join(t_mshell *mshell)
 {
-	int n_tp;
-	int i0;
+	int	n_tp;
+	int	i0;
 	int	i1;
-	
+
 	i1 = 0;
 	n_tp = 0;
 	while (mshell->expd->types[n_tp])
@@ -85,11 +85,24 @@ int	alloc__hrdoc_for_join(t_mshell *mshell)
 	return (i1);
 }
 
+int	joinit_heredoc(t_mshell *mshell, char **new_token, int n_tp, int *i1)
+{
+	int	i0;
+
+	i0 = 0;
+	while (mshell->expd->types[n_tp][i0])
+	{
+		(*new_token)[*i1] = mshell->expd->types[n_tp][i0];
+		i0++;
+		(*i1)++;
+	}
+	return (1);
+}
+
 char	*join_types_expanded__hrdoc(t_mshell *mshell)
 {
 	char	*new_token;
 	int		n_tp;
-	int		i0;
 	int		i1;
 
 	n_tp = 0;
@@ -100,13 +113,7 @@ char	*join_types_expanded__hrdoc(t_mshell *mshell)
 	i1 = 0;
 	while (mshell->expd->types[n_tp])
 	{
-		i0 = 0;
-		while (mshell->expd->types[n_tp][i0])
-		{
-			new_token[i1] = mshell->expd->types[n_tp][i0];
-			i0++;
-			i1++;
-		}
+		joinit_heredoc(mshell, &new_token, n_tp, &i1);
 		if (mshell->expd->types[n_tp])
 			free(mshell->expd->types[n_tp]);
 		n_tp++;

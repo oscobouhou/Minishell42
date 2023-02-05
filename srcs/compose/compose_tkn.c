@@ -6,40 +6,43 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:32:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 13:31:48 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 10:03:41 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//scan-build-12 make re
-//scan-view-12 /tmp/scan-build-tructructruc
-
-char	*remove_quotes(char *str)
+char	*init_rm_quotes(char *str)
 {
-	int		len;
-	int		in_quotes[2];
 	char	*res;
-	int		j;
-	int		i;
+	int		len;
 
-	i = 0;
 	len = ft_strlen(str);
-	in_quotes[0] = 0;
-	in_quotes[1] = 0;
-	j = 0;
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
-	while (str && str[i] && i < len)
+	return (res);
+}
+
+char	*remove_quotes(char *str)
+{
+	static int		in_quotes[2];
+	char			*res;
+	int				j;
+	int				i;
+
+	i = 0;
+	j = 0;
+	res = init_rm_quotes(str);
+	while (str && str[i])
 	{
 		if (str[i] == DOUBLE_QUOTE && !in_quotes[1])
 			in_quotes[0] = !in_quotes[0];
 		else if (str[i] == SINGLE_QUOTE && !in_quotes[0])
 			in_quotes[1] = !in_quotes[1];
-		else if (str[i] == DOUBLE_QUOTE && !in_quotes[1]) 
+		else if (str[i] == DOUBLE_QUOTE && !in_quotes[1])
 			continue ;
-		else if (str[i] == SINGLE_QUOTE && !in_quotes[0]) 
+		else if (str[i] == SINGLE_QUOTE && !in_quotes[0])
 			continue ;
 		else
 			res[j++] = str[i];

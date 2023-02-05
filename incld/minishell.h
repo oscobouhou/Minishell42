@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 15:00:33 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 08:09:57 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_exec
 	int				fd_in;
 	int				fd_out;
 	int				no_cmd;
-	int 			no_redirs;
+	int				no_redirs;
 	int				p_listener;
 	pid_t			pid;
 	t_tkn			*start_exec_head;
@@ -105,14 +105,14 @@ typedef struct s_mshell
 	int				exit_status;
 	int				old_expd__hrdoc;
 	int				pipe_fd[2];
-	int 			pipe_fd_hrdoc[2];
+	int				pipe_fd_hrdoc[2];
 	char			*rdline_outp;
 	uint64_t		exprtc;
 	uint64_t		envc;
 	t_tkn			*tkn;
 	t_tkn			*head_tkn;
 	t_exec			*exec;
-	t_exec 			*head_exec;
+	t_exec			*head_exec;
 	t_env			*env;
 	t_expt			*expt;
 	t_expd			*expd;
@@ -164,6 +164,13 @@ enum e_bool
 	FALSE,
 	TRUE
 };
+
+enum e_env_len
+{
+	VAR,
+	VALUE,
+	ARG
+};
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
 int					init_exec(t_mshell *mshell);
@@ -198,6 +205,11 @@ int					add_new_exptar(char **to_add, t_mshell *mshell);
 int					manage_expt(char **to_export, t_mshell *mshell);
 void				append_to_expt(t_expt **head, t_expt *new_node);
 int					unforked_builtin_redir_treat(t_mshell *mshell, int *backup);
+void				builtin_fork_exit(t_mshell *mshell);
+int					scan_echo_args(t_mshell *mshell);
+int					verif_flags(t_mshell *mshell, int *flag);
+int					copy_echo_arg(t_mshell *mshell, int *c);
+int					count_echo_args(t_mshell *mshell);
 // @ -------------------------- # token # --------------------------- @ //
 int					redirs_review(t_mshell *mshell);
 int					center_review(t_mshell *mshell);
@@ -243,7 +255,7 @@ int					pclose_tube(t_mshell *mshell);
 int					handle_tube(t_mshell *mshell);
 int					find_access(t_mshell *mshell);
 int					scan_builtin(t_mshell *mshell);
-char    			*exit_status(t_mshell *mshell);
+char				*exit_status(t_mshell *mshell);
 int					close_file_fd(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
 int					seek_cmd_args(t_mshell *mshell);
@@ -261,7 +273,8 @@ int					exit_builtin(t_mshell *mshell, int *backup);
 int					copy_first_cmd_arg(t_mshell *mshell, int *i);
 int					join_cmd_for_access(t_mshell *mshell, int *i);
 int					execute_hrdoc(t_mshell *mshell, int expander);
-int					center_hrdoc_delim_treatment(t_mshell *mshell, int *expander);
+int					center_hrdoc_delim_treatment(t_mshell *mshell, \
+					int *expander);
 // @ ------------------------- # expand # --------------------------- @ //
 int					center_expand(t_mshell *mshell);
 int					check_expander(t_mshell *mshell);
@@ -276,8 +289,12 @@ int					cut_expander(t_mshell *mshell, int n_tp, int i);
 int					manage_expands_in_sq(t_mshell *mshell, int n_tp);
 int					manage_expands_in_dq(t_mshell *mshell, int n_tp);
 int					remove_closing_quotes_dq(t_mshell *mshell, int n_tp);
-int					alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1);
-int					alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1);
+int					alloc_new_token_for_join(t_mshell *mshell, int *i0, \
+					int *n_tp, int *i1);
+int					alloc_new_token_for_join(t_mshell *mshell, int *i0, \
+					int *n_tp, int *i1);
+void				cutitintypes(t_mshell *mshell, int *tmp_i, int \
+					*n_tp, int *i);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
 int					parse_paths(t_mshell *mshell);
@@ -292,11 +309,10 @@ int					treat_printable(t_mshell *mshell, int *i);
 int					copy_env_content(t_env *dest, t_env *src);
 int					copy_env_sorter_content(t_expt *dest, t_env *src);
 int					search_next_quote(t_mshell *mshell, char quote, int *q);
-int					copy_and_suppress_env_node(t_mshell *mshell, t_env *env_sorter, t_env *actualise);
+int					copy_and_suppress_env_node(t_mshell *mshell, \
+					t_env *env_sorter, t_env *actualise);
 // @ ------------------------- # printer # --------------------------- @ //
 void				what_token(int token);
-void				print_tokens(t_mshell *mshell);
-int					print_exec_chains(t_mshell *mshell);
 // @ -------------------------- # free # ----------------------------- @ //
 int					free_exec(t_mshell *mshell);
 void				terminate(t_mshell *mshell);
@@ -308,11 +324,12 @@ int					free_execve(t_mshell *mshell);
 void				free_tokens(t_mshell *mshell);
 void				free_actualise(t_env *actualise);
 void				free_env_sorter(t_env *env_sorter);
+void				builtin_fork_exit(t_mshell *mshell);
 int					free_paths_execve(t_mshell *mshell);
 int					free_built_echo_tab(t_mshell *mshell);
 int					free_cmd_args_execve(t_mshell *mshell);
 // @ -------------------------- # error # ---------------------------- @ //
-int					error_manager(t_mshell *mshell);
-void				syntax_error(void);
+int					error_manager(char *process, char *tkn, char *error);
+void				syntax_error(char *tkn);
 // @ ---------------------------- ### -------------------------------- @ //
 #endif

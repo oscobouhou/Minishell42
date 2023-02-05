@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:20:55 by dkermia           #+#    #+#             */
-/*   Updated: 2023/02/05 02:54:53 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 03:52:47 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	add_new_envar(char **to_add, t_mshell *mshell)
 	return (1);
 }
 
-int manage_env(char **to_export, t_mshell *mshell)
+int	manage_env(char **to_export, t_mshell *mshell)
 {
-	int			plus_index;
-	t_env       *environment;
+	int		plus_index;
+	t_env	*environment;
 
 	environment = mshell->env;
 	plus_index = 0;

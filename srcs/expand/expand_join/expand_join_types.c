@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:51:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 18:21:46 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 07:42:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,20 @@ int	alloc_new_token_for_join(t_mshell *mshell, int *i0, int *n_tp, int *i1)
 	return (1);
 }
 
+int	join_t_expanded(t_mshell *mshell, int n_tp, int *i1, char **new_token)
+{
+	int	i0;
+
+	i0 = 0;
+	while (mshell->expd->types[n_tp][i0])
+	{
+		(*new_token)[*i1] = mshell->expd->types[n_tp][i0];
+		i0++;
+		(*i1)++;
+	}
+	return (1);
+}
+
 char	*join_types_expanded(t_mshell *mshell)
 {
 	char	*new_token;
@@ -45,13 +59,7 @@ char	*join_types_expanded(t_mshell *mshell)
 	i1 = 0;
 	while (mshell->expd->n_types-- > 0)
 	{
-		i0 = 0;
-		while (mshell->expd->types[n_tp][i0])
-		{
-			new_token[i1] = mshell->expd->types[n_tp][i0];
-			i0++;
-			i1++;
-		}
+		join_t_expanded(mshell, n_tp, &i1, &new_token);
 		free(mshell->expd->types[n_tp]);
 		n_tp++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_review.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:00:19 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/01/21 15:36:23 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/05 07:01:09 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	pipe_review(t_mshell *mshell, int *cmd_cnt)
 	if (mshell->tkn->type == PIPE)
 	{
 		if (mshell->tkn->next->tkn == NULL)
-			return (syntax_error(), 0);
+			return (syntax_error(NULL), 0);
 		if (mshell->tkn == mshell->head_tkn)
-			return (syntax_error(), 0);
+			return (syntax_error(mshell->tkn->tkn), 0);
 		if (mshell->tkn->next->type == PIPE)
-			return (syntax_error(), 0);
+			return (syntax_error(mshell->tkn->tkn), 0);
 		if (mshell->tkn->next->type == RDIR_L \
 		|| mshell->tkn->next->type == RDIR_R \
 		|| mshell->tkn->next->type == APPEND)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 14:59:39 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 04:25:34 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	do_cd(t_mshell *mshell)
 	path = NULL;
 	path = getcwd(path, 0);
 	if (!path)
-		return (dprintf(2, "minishell: cd: %s\n", strerror(errno)),
+		return (error_manager("cd", path, strerror(errno)),
 			exit_builtin(mshell, backup), 1);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	if (!cd_args_checker(mshell))
@@ -146,13 +146,10 @@ int	do_cd(t_mshell *mshell)
 	join_pwd_to_directory(mshell, path);
 	free(path);
 	if (chdir(mshell->built->cd_chdir) == -1)
-		return (dprintf(2, "%s\n", strerror(errno)),
+		return (error_manager("cd", path, strerror(errno)),
 			exit_builtin(mshell, backup), 0);
 	if (mshell->built->builtin_p == -42)
-	{
-		exit_builtin(mshell, backup);
-		return (1);
-	}
+		return (exit_builtin(mshell, backup), 1);
 	terminate(mshell);
 	exit(0);
 }

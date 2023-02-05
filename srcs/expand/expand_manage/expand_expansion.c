@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:48:52 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 18:48:23 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 08:51:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ int	make_expansion(t_mshell *mshell, char *input)
 		i++;
 	}
 	mshell->expd->expander[i] = '\0';
-	return (1);	
+	return (1);
 }

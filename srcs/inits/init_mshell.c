@@ -6,11 +6,22 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 08:24:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 09:58:16 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	fill_default_export(t_mshell *mshell)
+{
+	mshell->expt->exptvar = ft_strdup(mshell->env->envar);
+	if (!mshell->expt->exptvar)
+		return (0);
+	mshell->expt->value = ft_strdup(mshell->env->value);
+	if (!mshell->expt->value)
+		return (0);
+	return (1);
+}
 
 int	copy_underscore(t_mshell *mshell)
 {
@@ -97,12 +108,7 @@ int	set_default_export(t_mshell *mshell)
 	head_expt = mshell->expt;
 	while (mshell->env)
 	{
-		mshell->expt->exptvar = ft_strdup(mshell->env->envar);
-		if (!mshell->expt->exptvar)
-			return (0);
-		mshell->expt->value = ft_strdup(mshell->env->value);
-		if (!mshell->expt->value)
-			return (0);
+		fill_default_export(mshell);
 		if (!mshell->env->next)
 			break ;
 		mshell->expt->next = malloc(sizeof(t_expt));

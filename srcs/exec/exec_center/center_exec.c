@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   center_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 14:38:27 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 06:23:25 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	execmd(t_mshell *mshell, char **env)
 {
 	signal(SIGINT, &sig_fork_handler);
 	set_pos_to_cmd(mshell);
-	if (mshell->no_env != -42 )
+	if (mshell->no_env != -42)
 	{
 		find_access(mshell);
 		seek_cmd_args(mshell);

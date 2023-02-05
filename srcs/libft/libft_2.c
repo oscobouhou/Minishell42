@@ -6,7 +6,7 @@
 /*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:06:44 by dkermia           #+#    #+#             */
-/*   Updated: 2023/02/03 11:09:13 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/05 05:49:52 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_bzero(void *b, size_t n)
 	while (i < n)
 		((char *)b)[i++] = 0;
 }
-
 
 void	fill_s1(char *str, char *s1, int *i)
 {

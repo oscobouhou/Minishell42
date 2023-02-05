@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:45:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 17:02:46 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 05:53:46 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_strequal_sign(char *str)
 		i++;
 	return (i);
 }
-
 
 int	ft_strlen(char *str)
 {
@@ -59,7 +58,6 @@ int	ft_atoi(const char *nptr)
 	return (num * mns);
 }
 
-
 static int	ft_nbrlen(int n)
 {
 	int				size;
@@ -83,22 +81,11 @@ static int	ft_nbrlen(int n)
 	return (size);
 }
 
-char	*ft_itoa(int n)
+char	*ft_convert_to_str(int n, int i)
 {
 	char			*str;
-	int				i;
 	unsigned int	nb;
 
-	if (!n)
-	{
-		str = malloc(sizeof(char) * 2);
-		if (!str)
-			return (NULL);
-		str[n] = '0';
-		str[n + 1] = '\0';
-		return (str);
-	}
-	i = ft_nbrlen(n);
 	str = malloc(i + 1 * sizeof(char));
 	if (!str)
 		return (NULL);
@@ -115,6 +102,23 @@ char	*ft_itoa(int n)
 	}
 	if (n < 0)
 		str[0] = '-';
+	return (str);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*str;
+	int		i;
+
+	if (!n)
+	{
+		str = malloc(sizeof(char) * 2);
+		if (!str)
+			return (NULL);
+		return (str[n] = '0', str[n + 1] = '\0', str);
+	}
+	i = ft_nbrlen(n);
+	str = ft_convert_to_str(n, i);
 	return (str);
 }
 

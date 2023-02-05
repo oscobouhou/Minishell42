@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:10 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/03 06:17:16 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 05:03:03 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,3 @@ int	do_exit(t_mshell *mshell)
 	exit(arg);
 	return (1);
 }
-//                          bash: exit: wqqddw: numeric argument required
-
-//                          bash: exit: too many arguments

@@ -6,7 +6,7 @@
 /*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:09:22 by dkermia           #+#    #+#             */
-/*   Updated: 2023/02/03 11:13:30 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/05 05:35:45 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*ft_strchr(char *s, int c)
 		return (((char *)&s[i]));
 	return (NULL);
 }
-
 
 int	search_lowest(char *val, t_env *env)
 {

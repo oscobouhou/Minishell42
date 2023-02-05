@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hrdoc_review.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 16:20:02 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 06:01:02 by dkermia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,3 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 	}
 	return (1);
 }
-
-
