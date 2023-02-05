@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:12 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 21:08:52 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 02:55:55 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	free_export_split(char **export_split)
 		free(export_split[i]);
 		i++;
 	}
-	
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:51:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 16:18:35 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/05 02:52:49 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ int	manage_cut_paths(t_mshell *mshell, int *n_pth)
 	return (1);
 }
 
-void	count_n_pths(t_mshell *mshell, int *n_pth)
+int	count_n_pths(t_mshell *mshell, int *n_pth)
 {
 	int	i;
 
 	i = 0;
+	if (!mshell->env->value)
+		return (0);
 	while (mshell->env->value[i])
 	{
 		if (mshell->env->value[i] == ':')
@@ -68,6 +70,7 @@ void	count_n_pths(t_mshell *mshell, int *n_pth)
 		i++;
 	}
 	(*n_pth) += 1;
+	return (1);
 }
 
 int	parse_paths(t_mshell *mshell)
@@ -83,7 +86,8 @@ int	parse_paths(t_mshell *mshell)
 			break ;
 		mshell->env = mshell->env->next;
 	}
-	count_n_pths(mshell, &n_pth);
+	if (!count_n_pths(mshell, &n_pth))
+		return (0);
 	manage_cut_paths(mshell, &n_pth);
 	mshell->env = head;
 	return (1);
