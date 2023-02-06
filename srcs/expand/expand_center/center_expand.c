@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:46:34 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 22:14:50 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:20:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	update_type_expanded(t_mshell *mshell, int *ptr, int n_tp, char **update)
 	ptr[3] = ptr[0];
 	mshell->expd->expander = NULL;
 	close_string_after_expand_update(mshell, ptr, update, n_tp);
-	return (1);
+	return (ptr[3]);
 }
 
 int	update_type(t_mshell *mshell, int *i, int n_tp)
@@ -128,7 +128,7 @@ int	update_type(t_mshell *mshell, int *i, int n_tp)
 	else
 	{
 		ptr[3] = *i;
-		update_type_expanded(mshell, ptr, n_tp, &update);
+		*i = update_type_expanded(mshell, ptr, n_tp, &update);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/06 00:43:17 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:32:12 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ int	sort_expander_in_dq(t_mshell *mshell, int n_tp, int *i)
 		return (0);
 	}
 	update_type(mshell, i, n_tp);
-	i -= 1;
+	(*i)--;
 	return (1);
 }
 
