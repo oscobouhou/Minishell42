@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:17:52 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 18:23:45 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:20:34 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	ft_nbrlen(int n)
 	return (size);
 }
 
-void	ft_putstr_fd(char *str, int fd)
+void	ft_putstr_fd(int fd, char *str)
 {
 	if (!str)
 		return ;
-	write(fd, &str, ft_strlen(str));
+	write(fd, str, ft_strlen(str));
 }
 
 int	ft_atoi(const char *nptr)

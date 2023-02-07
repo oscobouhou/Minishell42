@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/06 12:32:12 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:32:53 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,9 +216,13 @@ int	manage_expands_in_dq(t_mshell *mshell, int n_tp)
 		if (n_tp > 0)
 			if (hrdoc_scannner(mshell, n_tp))
 				break ;
-		if (mshell->expd->types[n_tp][i] == EXPAND)
+		if (mshell->expd->types[n_tp][i] == EXPAND \
+		&& mshell->expd->types[n_tp][i + 1] \
+		&& mshell->expd->types[n_tp][i + 1] != EXPAND)
+		{
 			if (!sort_expander_in_dq(mshell, n_tp, &i))
 				break ;
+		}
 		i++;
 	}
 	return (1);

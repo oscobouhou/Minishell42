@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   center_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 06:23:25 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/07 03:12:22 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	execmd(t_mshell *mshell, char **env)
 	if (!enable_redirections(mshell))
 		return (exit(1), 0);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	set_pos_to_cmd(mshell);
 	scan_builtin(mshell);
 	command_child_execve(mshell);
 	if (mshell->exec->no_redirs != -42)

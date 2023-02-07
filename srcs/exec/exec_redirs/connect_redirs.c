@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 14:26:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 15:29:19 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 03:16:44 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	rdir_r(t_mshell *mshell, int *fd)
 	(*fd)++;
 	return (1);
 }
-
+	
 int	fds_redirections_center__exec(t_mshell *mshell, int *fd)
 {
 	if (mshell->exec->start_exec->type == RDIR_R)

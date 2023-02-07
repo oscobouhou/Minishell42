@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 18:24:31 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 00:25:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ int					begin_command(t_mshell *mshell, char **env);
 int					dup_env(t_env **lst, char **env, uint64_t *count);
 int					init_env_sorter(t_mshell *mshell, t_env **env_sorter);
 // @ ------------------------ # builtins # -------------------------- @ //
+char				*new_str(char *input);
 int					do_cd(t_mshell *mshell);
 int					do_env(t_mshell *mshell);
 int					do_pwd(t_mshell *mshell);
@@ -196,8 +197,14 @@ int					do_exprt(t_mshell *mshell);
 t_env				*create_env_node(char *var);
 int					check_arg(char *current_arg);
 t_expt				*create_expt_node(char *var);
+int					scan_echo_args(t_mshell *mshell);
+int					count_echo_args(t_mshell *mshell);
+void				builtin_fork_exit(t_mshell *mshell);
+int					copy_echo_arg(t_mshell *mshell, int *c);
+int					verif_flags(t_mshell *mshell, int *flag);
 t_expt				*search_exprt_pos(char *val, t_expt *head);
 int					center_builtins(t_mshell *mshell, int type);
+char				*catch_enval(t_mshell *mshell, char *envar);
 void				append_to_env(t_env **head, t_env *new_node);
 int					add_new_envar(char **to_add, t_mshell *mshell);
 int					manage_env(char **to_export, t_mshell *mshell);
@@ -205,11 +212,7 @@ int					add_new_exptar(char **to_add, t_mshell *mshell);
 int					manage_expt(char **to_export, t_mshell *mshell);
 void				append_to_expt(t_expt **head, t_expt *new_node);
 int					unforked_builtin_redir_treat(t_mshell *mshell, int *backup);
-void				builtin_fork_exit(t_mshell *mshell);
-int					scan_echo_args(t_mshell *mshell);
-int					verif_flags(t_mshell *mshell, int *flag);
-int					copy_echo_arg(t_mshell *mshell, int *c);
-int					count_echo_args(t_mshell *mshell);
+int					change_enval(t_mshell *mshell, char *envar, char *replace);
 // @ -------------------------- # token # --------------------------- @ //
 int					redirs_review(t_mshell *mshell);
 int					center_review(t_mshell *mshell);
@@ -243,7 +246,7 @@ char				*ft_strchr(char *s, int c);
 int					ft_strequal_sign(char *str);
 int					ft_strcmp(char *s1, char *s2);
 char				*ft_charcat(char *str, char c);
-void				ft_putstr_fd(char *str, int fd);
+void				ft_putstr_fd(int fd, char *str);
 char				**ft_split(char *s, char target);
 char				*ft_convert_to_str(int n, int i);
 char				**copy_env_in_tab(t_mshell *mshell);

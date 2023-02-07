@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 04:25:34 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/07 00:38:04 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	absolute_path(t_mshell *mshell, int *backup)
 	if (mshell->exec->start_exec->tkn[0] == '/')
 	{
 		if (chdir(mshell->exec->start_exec->tkn) == -1)
-			return (dprintf(2, "%s\n", strerror(errno)),
+			return (dprintf(2, "%s\n", strerror(errno)), \
 				exit_builtin(mshell, backup), 0);
 		return (1);
 	}
@@ -125,6 +125,25 @@ int	unforked_builtin_redir_treat(t_mshell *mshell, int *backup)
 	return (1);
 }
 
+int cd_tilde(t_mshell *mshell)
+{
+	t_env	*head;
+	char	*tmp;
+
+	head = mshell->env;
+	if (!mshell->exec->start_exec->next)
+	{
+		tmp = catch_enval(mshell, "HOME");
+		if (!chdir(tmp))
+			return (0);
+		mshell->env = head;
+		change_enval(mshell, "PWD", tmp);
+		mshell->env = head;
+		return (1);
+	}
+	return (0);
+}
+
 int	do_cd(t_mshell *mshell)
 {
 	char	*path;
@@ -137,7 +156,10 @@ int	do_cd(t_mshell *mshell)
 	if (!path)
 		return (error_manager("cd", path, strerror(errno)),
 			exit_builtin(mshell, backup), 1);
+	change_enval(mshell, "OLDPWD", path);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
+	if (cd_tilde(mshell))
+		return (exit_builtin(mshell, backup));
 	if (!cd_args_checker(mshell))
 		return (dprintf(2, "minishell: cd: too many arguments\n"),
 			exit_builtin(mshell, backup), 1);
@@ -145,9 +167,12 @@ int	do_cd(t_mshell *mshell)
 		return (exit_builtin(mshell, backup), 1);
 	join_pwd_to_directory(mshell, path);
 	free(path);
+	path = NULL;
 	if (chdir(mshell->built->cd_chdir) == -1)
-		return (error_manager("cd", path, strerror(errno)),
+		return (error_manager("cd", path, strerror(errno)), \
 			exit_builtin(mshell, backup), 0);
+	change_enval(mshell, "PWD", getcwd(path, 0));
+	free(path);
 	if (mshell->built->builtin_p == -42)
 		return (exit_builtin(mshell, backup), 1);
 	terminate(mshell);

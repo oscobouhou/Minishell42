@@ -14,7 +14,7 @@
 
 NAME 			= minishell
 
-CC 				= gcc -g3 -Wall -Wextra -Werror -MMD # -fsanitize=address
+CC 				= gcc -Wall -Wextra -Werror -MMD # -fsanitize=address
 
 OBJ				= $(SRCS:.c=.o)
 
@@ -83,10 +83,11 @@ SRCS 			= main/main.c \
 				  srcs/builtins/do_exit.c \
 				  srcs/builtins/do_unset.c \
 				  srcs/builtins/do_exprt.c \
-				  srcs/builtins/echo_utils.c \
 				  srcs/builtins/center_builtins.c \
 				  srcs/builtins/export/manage_env.c \
 				  srcs/builtins/export/manage_expt.c \
+				  srcs/builtins/built_utils/env_utils.c \
+				  srcs/builtins/built_utils/echo_utils.c \
 
 SRCH_INCLDS 	= -Iincld
 

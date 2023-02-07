@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:38:21 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 18:45:44 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:13:36 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,6 @@
 
 // // Reset
 // Color_Off="\[\033[0m\]"       # Text Reset
-
-// Black=        # Black
-// Red=          # Red
-// Green=        # Green
-// Yellow=       # Yellow
-// Blue=         # Blue
-// Purple=       # Purple
-// Cyan=         # Cyan
-// White=        # White
 
 // // # Bold
 // BBlack="\[\033[1;30m\]"       # Black

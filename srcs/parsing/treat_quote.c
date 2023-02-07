@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:46:21 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 06:21:43 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/07 00:32:28 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	treat_quote(t_mshell *mshell, int *i)
 		if (mshell->rdline_outp[*i] == SINGLE_QUOTE
 			|| mshell->rdline_outp[*i] == DOUBLE_QUOTE)
 			if (!search_next_quote(mshell, mshell->rdline_outp[*i], i))
-				return (ft_putstr_fd(\
-				"minishell: syntax error near unexpected token'", 2), 0);
+				return (ft_putstr_fd(2, \
+				"minishell: syntax error near unexpected token'"), 0);
 		++(*i);
 	}
 	mshell->tkn->type = WORD;

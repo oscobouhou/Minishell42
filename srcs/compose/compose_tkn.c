@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:32:02 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 17:12:57 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:57:08 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,36 @@ char	*remove_quotes(char *str)
 	return (res);
 }
 
+int	closed_quotes(t_mshell *mshell, int *i, int qt)
+{
+	(*i)++;
+	while (mshell->rdline_outp[*i])
+	{
+		if (mshell->rdline_outp[*i] == qt)
+			return (1);
+		(*i)++;
+	}
+	return (0);
+}
+
+int	check_closed_quotes(t_mshell *mshell)
+{
+	int	i;
+
+	i = 0;
+	while (mshell->rdline_outp[i])
+	{
+		if (mshell->rdline_outp[i] == DOUBLE_QUOTE)
+			if (!closed_quotes(mshell, &i, DOUBLE_QUOTE))
+				return (0);
+		if (mshell->rdline_outp[i] == SINGLE_QUOTE)
+			if (!closed_quotes(mshell, &i, SINGLE_QUOTE))
+				return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	center_quotes(t_mshell *mshell)
 {
 	t_tkn	*head;
@@ -72,6 +102,8 @@ int	center_quotes(t_mshell *mshell)
 int	compose_and_launch_command(t_mshell *mshell, char **env)
 {
 	mshell->tkn = mshell->head_tkn;
+	if (!check_closed_quotes(mshell))
+		return (0);
 	if (!center_expand(mshell))
 		return (0);
 	if (!init_t_token(mshell))
@@ -80,7 +112,6 @@ int	compose_and_launch_command(t_mshell *mshell, char **env)
 		return (free_tokens(mshell), 0);
 	if (!center_review(mshell))
 		return (free_tokens(mshell), 0);
-	// print_tokens(mshell);
 	if (!center_quotes(mshell))
 		return (free_tokens(mshell), 0);
 	if (!center_exec(mshell, env))
