@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 03:12:22 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 22:32:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	execmd(t_mshell *mshell, char **env)
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	handle_tube(mshell);
 	if (!enable_redirections(mshell))
-		return (exit(1), 0);
+		return (terminate(mshell), exit(1), 0);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	scan_builtin(mshell);
 	command_child_execve(mshell);
@@ -167,6 +167,7 @@ int	center_exec(t_mshell *mshell, char **env)
 		if (!controler(mshell))
 			break ;
 		mshell->exec = mshell->exec->next;
+		mshell->heredoc = mshell->heredoc->next;
 		mshell->exec->no_cmd = -42;
 	}
 	mshell->exec = mshell->head_exec;

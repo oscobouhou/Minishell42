@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:00:19 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 07:01:09 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:43:56 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	pipe_review(t_mshell *mshell, int *cmd_cnt)
 			mshell->tkn = mshell->tkn->next;
 		}
 		*cmd_cnt = 0;
+		make_new_heredoc(mshell);
 		if (mshell->tkn->next->type == WORD)
 		{
 			*cmd_cnt += 1;

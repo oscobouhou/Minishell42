@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 12:54:43 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 19:00:02 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,90 +39,97 @@ your device\n"
 // @ ------------------------ # structures # ------------------------ @ //
 typedef struct s_env
 {
-	char			*envar;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
+	char				*envar;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
+
+typedef struct s_heredoc
+{
+	int					pipe_heredoc[2];
+	struct s_heredoc	*next;
+}						t_heredoc;
 
 typedef struct s_expd
 {
-	int				old_expd_len;
-	int				new_expd_len;
-	int				n_types;
-	char			**types;
-	char			*expander;
-	char			*update_tkn;
-}					t_expd;
+	int					old_expd_len;
+	int					new_expd_len;
+	int					n_types;
+	char				**types;
+	char				*expander;
+	char				*update_tkn;
+}						t_expd;
 
 typedef struct s_built
 {
-	int				builtin_p;
-	int				echo_flag;
-	int				echo_args_len;
-	char			*cd_arg;
-	char			*cd_chdir;
-	char			**echo_arg;
-}					t_built;
+	int					builtin_p;
+	int					echo_flag;
+	int					echo_args_len;
+	char				*cd_arg;
+	char				*cd_chdir;
+	char				**echo_arg;
+}						t_built;
 
 typedef struct s_expt
 {
-	char			*exptvar;
-	char			*value;
-	struct s_expt	*next;
-}					t_expt;
+	char				*exptvar;
+	char				*value;
+	struct s_expt		*next;
+}						t_expt;
 
 typedef struct s_tkn
 {
-	int				type;
-	int				pipe_fd_hrdoc[2];
-	char			*tkn;
-	struct s_tkn	*next;
-}					t_tkn;
+	int					type;
+	int					pipe_fd_hrdoc[2];
+	char				*tkn;
+	struct s_tkn		*next;
+}						t_tkn;
 
 typedef struct s_exec
 {
-	int				*fd;
-	int				n_fd;
-	int				fd_in;
-	int				fd_out;
-	int				no_cmd;
-	int				no_redirs;
-	int				p_listener;
-	pid_t			pid;
-	t_tkn			*start_exec_head;
-	t_tkn			*start_exec;
-	struct s_exec	*next;
-}					t_exec;
+	int					*fd;
+	int					n_fd;
+	int					fd_in;
+	int					fd_out;
+	int					no_cmd;
+	int					no_redirs;
+	int					p_listener;
+	pid_t				pid;
+	t_tkn				*start_exec_head;
+	t_tkn				*start_exec;
+	struct s_exec		*next;
+}						t_exec;
 
 typedef struct s_execve
 {
-	char				*cmd;
-	char				**paths;
-	char				**cmd_args;
+char					*cmd;
+char					**paths;
+char					**cmd_args;
 }						t_execve;
 
 typedef struct s_mshell
 {
-	int				no_env;
-	int				empty_cmd;
-	int				exit_status;
-	int				old_expd__hrdoc;
-	int				pipe_fd[2];
-	int				pipe_fd_hrdoc[2];
-	char			*rdline_outp;
-	uint64_t		exprtc;
-	uint64_t		envc;
-	t_tkn			*tkn;
-	t_tkn			*head_tkn;
-	t_exec			*exec;
-	t_exec			*head_exec;
-	t_env			*env;
-	t_expt			*expt;
-	t_expd			*expd;
-	t_built			*built;
-	t_execve		*execve;
-	char			**exec_env;
-}					t_mshell;
+	int					no_env;
+	int					empty_cmd;
+	int					exit_status;
+	int					old_expd__hrdoc;
+	int					pipe_fd[2];
+	char				*rdline_outp;
+	uint64_t			exprtc;
+	uint64_t			envc;
+	char				**exec_env;
+	t_heredoc			*hd_heredoc;	
+	t_heredoc			*heredoc;
+	t_tkn				*tkn;
+	t_tkn				*head_tkn;
+	t_exec				*exec;
+	t_exec				*head_exec;
+	t_env				*env;
+	t_expt				*expt;
+	t_expd				*expd;
+	t_built				*built;
+	t_execve			*execve;
+}						t_mshell;
 // @ --------------------------- # enums # -------------------------- @ //
 enum e_tokens
 {
@@ -178,10 +185,12 @@ enum e_env_len
 t_mshell			*init_mshell(char **env);
 int					init_exec(t_mshell *mshell);
 int					init_built(t_mshell *mshell);
+int					init_heredoc(t_mshell *mshell);
 int					init_t_token(t_mshell *mshell);
 int					init_builtins(t_mshell *mshell);
 int					init_expansion(t_mshell *mshell);
 int					new_node_export(t_mshell *mshell);
+int					make_new_heredoc(t_mshell *mshell);
 int					init_sort_export(t_mshell *mshell);
 int					init_execve(t_mshell *mshell, char **env);
 int					obtain_env_content(t_env **lst, char *env);
@@ -305,6 +314,7 @@ int					center_hrdoc_delim_treatment(t_mshell *mshell, \
 int					center_expand(t_mshell *mshell);
 int					check_expander(t_mshell *mshell);
 int					cut_types_expd(t_mshell *mshell);
+int					new_command_line(t_mshell *mshell);
 int					find_types_len_expd(t_mshell *mshell);
 char				*join_types_expanded(t_mshell *mshell);
 int					manage_expands_in_types(t_mshell *mshell);
@@ -348,6 +358,7 @@ int					free_built(t_mshell *mshell);
 void				free_exprt(t_mshell *mshell);
 int					free_execve(t_mshell *mshell);
 void				free_tokens(t_mshell *mshell);
+int					free_heredoc(t_mshell *mshell);
 void				free_actualise(t_env *actualise);
 void				free_env_sorter(t_env *env_sorter);
 void				builtin_fork_exit(t_mshell *mshell);

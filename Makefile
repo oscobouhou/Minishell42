@@ -67,6 +67,7 @@ SRCS 			= main/main.c \
 				  srcs/inits/init_execve.c \
 				  srcs/inits/init_export.c \
 				  srcs/inits/init_mshell.c \
+				  srcs/inits/init_heredoc.c \
 				  srcs/inits/init_expansion.c \
 				  srcs/parsing/parser.c \
 				  srcs/parsing/parse_paths.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   center_review.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 13:16:37 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 06:05:12 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/07 18:44:23 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ int	center_review(t_mshell *mshell)
 		}
 	}
 	mshell->tkn = mshell->head_tkn;
+	mshell->heredoc = mshell->hd_heredoc;
 	return (1);
 }

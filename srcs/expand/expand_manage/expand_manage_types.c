@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:14:51 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/06 16:32:53 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:38:21 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	skip_hexpander_hrdoc(t_mshell *mshell, int n_tp, int *i)
 	|| (mshell->expd->types[n_tp][*i] == 32)))
 		(*i)++;
 	tmp_i = 0;
-	while (mshell->expd->types[n_tp][*i] &&
+	while (mshell->expd->types[n_tp][*i] && \
 		check_printable_char(mshell->expd->types[n_tp][*i]))
 		(*i)++;
 	return (*i - tmp_i);
@@ -182,9 +182,7 @@ int	hrdoc_scannner(t_mshell *mshell, int n_tp)
 int	sort_expander_in_dq(t_mshell *mshell, int n_tp, int *i)
 {
 	if (cut_expander(mshell, n_tp, *i) != -42)
-	{
 		check_expander(mshell);
-	}
 	treat_export_exit_status(mshell, n_tp, *i);
 	if (mshell->expd->types[n_tp][*i + 1] == SINGLE_QUOTE \
 		|| mshell->expd->types[n_tp][*i + 1] == DOUBLE_QUOTE)

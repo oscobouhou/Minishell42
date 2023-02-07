@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 00:47:33 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 07:53:34 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:28:04 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	write_expander_after_cut(t_mshell *mshell, int tmp_i, int n_tp, int i)
 		&& mshell->expd->types[n_tp][i] != SINGLE_QUOTE \
 		&& mshell->expd->types[n_tp][i] != DOUBLE_QUOTE \
 		&& mshell->expd->types[n_tp][i] != EXPAND \
-			&& mshell->expd->types[n_tp][i] != BACKSLSH)
+		&& mshell->expd->types[n_tp][i] != BACKSLSH \
+		&& mshell->expd->types[n_tp][i] != ' ' \
+		&& (!(mshell->expd->types[n_tp][i] >= 9 \
+		&& mshell->expd->types[n_tp][i] <= 13)))
 	{
 		mshell->expd->expander[j] = mshell->expd->types[n_tp][i];
 		j++;
@@ -41,7 +44,10 @@ int	cut_expander(t_mshell *mshell, int n_tp, int i)
 		&& mshell->expd->types[n_tp][i] != SINGLE_QUOTE \
 		&& mshell->expd->types[n_tp][i] != DOUBLE_QUOTE \
 		&& mshell->expd->types[n_tp][i] != EXPAND \
-			&& mshell->expd->types[n_tp][i] != BACKSLSH)
+		&& mshell->expd->types[n_tp][i] != BACKSLSH \
+		&& mshell->expd->types[n_tp][i] != ' ' \
+		&& (!(mshell->expd->types[n_tp][i] >= 9 \
+		&& mshell->expd->types[n_tp][i] <= 13)))
 		i++;
 	if (i == tmp_i)
 		return (-42);

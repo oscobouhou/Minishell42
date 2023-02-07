@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 23:52:40 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:38:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	new_command_line(t_mshell *mshell)
 {
+	if (mshell->hd_heredoc)
+		free_heredoc(mshell);
 	if (mshell->built)
 		free_built(mshell);
 	if (mshell->expd)
@@ -33,6 +35,8 @@ int	init_process_utils(t_mshell *mshell, char **env)
 	if (!init_built(mshell))
 		return (0);
 	if (!init_expansion(mshell))
+		return (0);
+	if (!init_heredoc(mshell))
 		return (0);
 	if (!init_execve(mshell, env))
 		return (0);
