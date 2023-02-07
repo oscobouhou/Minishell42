@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:18 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 04:59:12 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/07 12:19:42 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int	do_unset(t_mshell *mshell)
 	}
 	close_fd(mshell);
 	re_establish_stdin_out(backup);
-	builtin_fork_exit(mshell);
 	mshell->exit_status = 0;
 	return (1);
 }

@@ -6,11 +6,23 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:07:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/04 13:42:04 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:35:07 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	unforked_builtin_redir_treat(t_mshell *mshell, int *backup)
+{
+	backup[0] = -42;
+	backup[1] = -42;
+	if (mshell->built->builtin_p == -42)
+	{
+		bckup_stdin_out(backup);
+		enable_redirections(mshell);
+	}
+	return (1);
+}
 
 int	re_establish_stdin_out(int *backup)
 {
@@ -28,10 +40,15 @@ int	bckup_stdin_out(int *backup)
 	return (1);
 }
 
-int	exit_builtin(t_mshell *mshell, int *backup)
+int	exit_builtin(t_mshell *mshell, int *backup, int exit_code)
 {
+	if (mshell->built->builtin_p == 42)
+	{
+		terminate(mshell);
+		exit(exit_code);
+	}
 	close_file_fd(mshell);
 	re_establish_stdin_out(backup);
-	mshell->exit_status = 0;
+	mshell->exit_status = exit_code;
 	return (1);
 }

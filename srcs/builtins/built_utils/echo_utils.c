@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 05:01:41 by dkermia           #+#    #+#             */
-/*   Updated: 2023/02/05 05:02:18 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/07 12:13:12 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,4 @@ int	scan_echo_args(t_mshell *mshell)
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	mshell->built->echo_args_len = c;
 	return (1);
-}
-
-void	builtin_fork_exit(t_mshell *mshell)
-{
-	if (mshell->built->builtin_p == 42)
-	{
-		exit(0);
-	}
 }

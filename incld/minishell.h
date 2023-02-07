@@ -6,13 +6,16 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 00:25:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:54:43 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 // @ ------------------------ # Defines # --------------------------- @ //
+# define WRITE_ERR "minishell: echo: write error: No space left on \
+your device\n"
+# define CD_ERR_ARG "minishell: cd: too many arguments\n"
 # define SINGLE_QUOTE 	39			// 		defines: '
 # define DOUBLE_QUOTE	34			// 		defines: "
 # define PIPE_LINE	124				//		defines: |
@@ -186,33 +189,53 @@ int					begin_command(t_mshell *mshell, char **env);
 int					dup_env(t_env **lst, char **env, uint64_t *count);
 int					init_env_sorter(t_mshell *mshell, t_env **env_sorter);
 // @ ------------------------ # builtins # -------------------------- @ //
-char				*new_str(char *input);
+// #  STD BUILT
+int					bckup_stdin_out(int *backup);
+int					re_establish_stdin_out(int *backup);
+int					exit_builtin(t_mshell *mshell, int *backup, int exit_code);
+int					unforked_builtin_redir_treat(t_mshell *mshell, int *backup);
+// #  CD
 int					do_cd(t_mshell *mshell);
+int					cd_home(t_mshell *mshell);
+int					cd_tilde(t_mshell *mshell);
+int					copy_cd_arg(t_mshell *mshell);
+int					absolute_path(t_mshell *mshell);
+int					cd_args_checker(t_mshell *mshell);
+int					cd_join_pwd_to_directory(t_mshell *mshell, char *path);
+int					assembling_pwdir__cd(t_mshell *mshell, char *path, int i,
+					int j); \
+// # ENV
+char				*new_str(char *input);
 int					do_env(t_mshell *mshell);
-int					do_pwd(t_mshell *mshell);
+char				*catch_enval(t_mshell *mshell, char *envar);
+int					change_enval(t_mshell *mshell, char *envar, char *replace);
+// # ECHO
 int					do_echo(t_mshell *mshell);
+int					scan_echo_args(t_mshell *mshell);
+int					count_echo_args(t_mshell *mshell);
+int					print_echo_args(t_mshell *mshell);
+int					copy_echo_arg(t_mshell *mshell, int *c);
+int					verif_flags(t_mshell *mshell, int *flag);
+int					echo_printer(char *to_print, t_mshell *mshell);
+// 
+int					do_pwd(t_mshell *mshell);
 int					do_exit(t_mshell *mshell);
 int					do_unset(t_mshell *mshell);
 int					do_exprt(t_mshell *mshell);
 t_env				*create_env_node(char *var);
 int					check_arg(char *current_arg);
 t_expt				*create_expt_node(char *var);
-int					scan_echo_args(t_mshell *mshell);
-int					count_echo_args(t_mshell *mshell);
 void				builtin_fork_exit(t_mshell *mshell);
 int					copy_echo_arg(t_mshell *mshell, int *c);
 int					verif_flags(t_mshell *mshell, int *flag);
 t_expt				*search_exprt_pos(char *val, t_expt *head);
 int					center_builtins(t_mshell *mshell, int type);
-char				*catch_enval(t_mshell *mshell, char *envar);
 void				append_to_env(t_env **head, t_env *new_node);
 int					add_new_envar(char **to_add, t_mshell *mshell);
 int					manage_env(char **to_export, t_mshell *mshell);
 int					add_new_exptar(char **to_add, t_mshell *mshell);
 int					manage_expt(char **to_export, t_mshell *mshell);
 void				append_to_expt(t_expt **head, t_expt *new_node);
-int					unforked_builtin_redir_treat(t_mshell *mshell, int *backup);
-int					change_enval(t_mshell *mshell, char *envar, char *replace);
 // @ -------------------------- # token # --------------------------- @ //
 int					redirs_review(t_mshell *mshell);
 int					center_review(t_mshell *mshell);
@@ -255,7 +278,6 @@ char				*ft_substr(char *s, int start, size_t len);
 char				*ft_strjoin(char *s1, char *s2, int upend);
 // @ -------------------------- # exec # ---------------------------- @ //
 int					popen_tube(t_mshell *mshell);
-int					bckup_stdin_out(int *backup);
 int					pclose_tube(t_mshell *mshell);
 int					handle_tube(t_mshell *mshell);
 int					find_access(t_mshell *mshell);
@@ -268,14 +290,12 @@ int					seek_cmd_args(t_mshell *mshell);
 int					close_pipe_fds(t_mshell *mshell);
 int					set_pos_to_cmd(t_mshell *mshell);
 int					search_next_pipe(t_mshell *mshell);
-int					re_establish_stdin_out(int *backup);
 int					enable_redirections(t_mshell *mshell);
 int					copy_cmd_arg(t_mshell *mshell, int *i);
 int					make_expand_in_hrdoc(t_mshell *mshell);
 int					build_commands_chains(t_mshell *mshell);
 int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
-int					exit_builtin(t_mshell *mshell, int *backup);
 int					copy_first_cmd_arg(t_mshell *mshell, int *i);
 int					join_cmd_for_access(t_mshell *mshell, int *i);
 int					execute_hrdoc(t_mshell *mshell, int expander);
