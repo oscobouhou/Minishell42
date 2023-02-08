@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 23:51:35 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 00:03:26 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ int					cd_tilde(t_mshell *mshell);
 int					copy_cd_arg(t_mshell *mshell);
 int					absolute_path(t_mshell *mshell);
 int					cd_args_checker(t_mshell *mshell);
+int					special_cd(t_mshell *mshell, char *path, int *backup);
 int					cd_join_pwd_to_directory(t_mshell *mshell, char *path);
 int					assembling_pwdir__cd(t_mshell *mshell, char *path, int i, \
 					int j);

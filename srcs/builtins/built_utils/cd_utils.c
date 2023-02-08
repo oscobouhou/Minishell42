@@ -6,11 +6,24 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:58:42 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 11:33:26 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 00:03:11 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	special_cd(t_mshell *mshell, char *path, int *backup)
+{
+	if (cd_home(mshell))
+		return (free(path), exit_builtin(mshell, backup, 0), 1);
+	if (!cd_args_checker(mshell))
+		return (free(path), write(2, CD_ERR_ARG, 35), \
+			exit_builtin(mshell, backup, 1), 1);
+	if (absolute_path(mshell))
+		return (exit_builtin(mshell, backup, 0), 1);
+	cd_join_pwd_to_directory(mshell, path);
+	return (0);
+}
 
 int	assembling_pwdir__cd(t_mshell *mshell, char *path, int i, int j)
 {

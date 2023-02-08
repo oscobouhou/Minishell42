@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 11:23:10 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 00:02:49 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,8 @@ int	do_cd(t_mshell *mshell)
 			exit_builtin(mshell, backup, 1), 1);
 	change_enval(mshell, "OLDPWD", path);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	if (cd_home(mshell))
-		return (free(path), exit_builtin(mshell, backup, 0), 1);
-	if (!cd_args_checker(mshell))
-		return (free(path), write(2, CD_ERR_ARG, 35), \
-			exit_builtin(mshell, backup, 1), 1);
-	if (absolute_path(mshell))
-		return (exit_builtin(mshell, backup, 0), 1);
-	cd_join_pwd_to_directory(mshell, path);
+	if (special_cd(mshell, path, backup))
+		return (1);
 	if (chdir(mshell->built->cd_chdir) == -1)
 		return (error_manager("cd", mshell->built->cd_chdir, strerror(errno)), \
 			free(path), exit_builtin(mshell, backup, 1), 0);

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 23:46:39 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 00:15:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ int	execmd(t_mshell *mshell, char **env)
 	(void)env;
 }
 
+int	close_parent_process(t_mshell *mshell)
+{
+	close_heredocs(mshell);
+	mshell->exec = mshell->head_exec;
+	close_pipe_fds(mshell);
+	mshell->exec = mshell->head_exec;
+	return (1);
+}
+
 int	center_exec(t_mshell *mshell, char **env)
 {
 	int	backup[2];
@@ -72,10 +81,7 @@ int	center_exec(t_mshell *mshell, char **env)
 		mshell->heredoc = mshell->heredoc->next;
 		mshell->exec->no_cmd = -42;
 	}
-	close_heredocs(mshell);
-	mshell->exec = mshell->head_exec;
-	close_pipe_fds(mshell);
-	mshell->exec = mshell->head_exec;
+	close_parent_process(mshell);
 	wait_pids(mshell);
 	retrieve_signals();
 	mshell->exec = mshell->head_exec;

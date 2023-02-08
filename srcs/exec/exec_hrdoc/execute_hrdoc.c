@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 23:28:55 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 00:26:35 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,36 @@ int	eof_err_heredoc(t_mshell *mshell, int l)
 	return (1);
 }
 
+int	open_heredoc_tube(t_mshell *mshell, int *p)
+{
+	if (mshell->heredoc->pipe_heredoc[0] != -42)
+		close(mshell->heredoc->pipe_heredoc[0]);
+	*p = pipe(mshell->heredoc->pipe_heredoc);
+	if (*p == -1)
+		return (dprintf(2, "\tpipe: creation failure\n"), 0);
+	return (1);
+}
+
+int	eof_heredoc(char *usr_input, t_mshell *mshell, int line)
+{
+	if (!check_eof(usr_input))
+	{
+		close(mshell->heredoc->pipe_heredoc[1]);
+		return (eof_err_heredoc(mshell, line), 1);
+	}
+	return (0);
+}
+
+int	delimiter_detected(char *usr_input, t_mshell *mshell)
+{
+	if (!ft_strcmp(usr_input, mshell->tkn->tkn))
+	{
+		close(mshell->heredoc->pipe_heredoc[1]);
+		return (1);
+	}
+	return (0);
+}
+
 int	execute_hrdoc(t_mshell *mshell, int expander)
 {
 	char	*usr_input;
@@ -75,26 +105,15 @@ int	execute_hrdoc(t_mshell *mshell, int expander)
 
 	p = -42;
 	line = 0;
-	if (mshell->heredoc->pipe_heredoc[0] != -42)
-		close(mshell->heredoc->pipe_heredoc[0]);
-	p = pipe(mshell->heredoc->pipe_heredoc);
-	if (p == -1)
-		return (dprintf(2, "\tpipe: creation failure\n"));
+	if (!open_heredoc_tube(mshell, &p))
+		return (0);
 	while (1)
 	{
 		usr_input = readline("> ");
-		if (!check_eof(usr_input))
-		{
-			close(mshell->heredoc->pipe_heredoc[1]);
-			return (eof_err_heredoc(mshell, line), 1);
-		}
-		if (!ft_strcmp(usr_input, mshell->tkn->tkn))
-		{
-			if (usr_input)
-				free(usr_input);
-			close(mshell->heredoc->pipe_heredoc[1]);
-			break ;
-		}
+		if (eof_heredoc(usr_input, mshell, line))
+			return (1);
+		if (delimiter_detected(usr_input, mshell))
+			return (free(usr_input), 1);
 		if (expander == -42)
 			hrdoc_expander(&usr_input, mshell);
 		write(mshell->heredoc->pipe_heredoc[1], usr_input, \
