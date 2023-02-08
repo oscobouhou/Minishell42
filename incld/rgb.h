@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:38:21 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/06 14:13:36 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:15:04 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define RGB_H
 
 // # REGULAR COLORS # //
-#define BLACK_REGULAR "\[\033[0;30m\]"
-#define RED_REGULAR "\[\033[0;31m\]"
-#define GREEN_REGULAR "\[\033[0;32m\]"
-#define YELLOW_REGULAR "\[\033[0;33m\]"
-#define BLUE_REGULAR "\[\033[0;34m\]"
-#define PURPLE_REGULAR "\[\033[0;35m\]"
-#define CYAN_REGULAR "\[\033[0;36m\]"
-#define WHITE_REGULAR "\[\033[0;37m\]"
+# define BLACK_REGULAR "\[\033[0;30m\]"
+# define RED_REGULAR "\[\033[0;31m\]"
+# define GREEN_REGULAR "\[\033[0;32m\]"
+# define YELLOW_REGULAR "\[\033[0;33m\]"
+# define BLUE_REGULAR "\[\033[0;34m\]"
+# define PURPLE_REGULAR "\[\033[0;35m\]"
+# define CYAN_REGULAR "\[\033[0;36m\]"
+# define WHITE_REGULAR "\[\033[0;37m\]"
 // # BOLD COLORS # //
 # include "minishell.h"
 

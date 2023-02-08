@@ -3,44 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:09:33 by dkermia           #+#    #+#             */
-/*   Updated: 2023/02/05 05:49:38 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/08 11:21:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-int	set_pos_to_cmd(t_mshell *mshell)
-{
-	if (mshell->exec->start_exec->type != -1)
-	{
-		while (mshell->exec->start_exec && \
-		mshell->exec->start_exec->type != _CMD)
-		{
-			if (!mshell->exec->start_exec->next)
-				return (mshell->exec->no_cmd = 42, \
-				mshell->exec->start_exec = mshell->exec->start_exec_head, 0);
-			mshell->exec->start_exec = mshell->exec->start_exec->next;
-		}
-	}
-	return (1);
-}
-
-void	ft_putstr(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		ft_putchar(str[i]);
-}
 
 int	ft_strcmp(char *s1, char *s2)
 {

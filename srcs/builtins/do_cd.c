@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 12:55:37 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:23:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	absolute_path(t_mshell *mshell)
 	return (0);
 }
 
-int cd_tilde(t_mshell *mshell)
+int	cd_tilde(t_mshell *mshell)
 {
 	t_env	*head;
 	char	*tmp;
@@ -54,7 +54,7 @@ int	cd_home(t_mshell *mshell)
 			return (cd_tilde(mshell), 1);
 	return (0);
 }
-	
+
 int	do_cd(t_mshell *mshell)
 {
 	char	*path;

@@ -26,7 +26,9 @@ SRCS 			= main/main.c \
 				  srcs/libft/libft_3.c \
 				  srcs/libft/libft_4.c \
 				  srcs/libft/libft_5.c \
+				  srcs/libft/libft_6.c \
 				  srcs/signals/signals.c \
+				  srcs/signals/child_signals.c \
 				  srcs/compose/compose_tkn.c \
 				  srcs/exec/exec_exit/exit_status.c \
 				  srcs/exec/exec_build/build_commands.c \
@@ -69,6 +71,8 @@ SRCS 			= main/main.c \
 				  srcs/inits/init_mshell.c \
 				  srcs/inits/init_heredoc.c \
 				  srcs/inits/init_expansion.c \
+				  srcs/inits/no_env/no_env_init.c \
+				  srcs/inits/no_env/no_env_utils.c \
 				  srcs/parsing/parser.c \
 				  srcs/parsing/parse_paths.c \
 				  srcs/parsing/treat_pipe.c \
@@ -76,6 +80,7 @@ SRCS 			= main/main.c \
 				  srcs/parsing/treat_space.c \
 				  srcs/parsing/treat_quote.c \
 				  srcs/parsing/treat_export.c \
+				  srcs/parsing/quote_remover.c \
 				  srcs/parsing/treat_printable.c \
 				  srcs/builtins/do_cd.c \
 				  srcs/builtins/do_env.c \

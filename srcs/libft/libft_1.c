@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:45:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 18:22:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:21:51 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,3 @@ char	*ft_convert_to_str(int n, int i)
 		str[0] = '-';
 	return (str);
 }
-
-

@@ -6,13 +6,13 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:06 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 12:46:42 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:23:30 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int echo_printer(char *to_print, t_mshell *mshell)
+int	echo_printer(char *to_print, t_mshell *mshell)
 {
 	if (write(mshell->exec->fd_out, to_print, ft_strlen(to_print)) == -1)
 	{

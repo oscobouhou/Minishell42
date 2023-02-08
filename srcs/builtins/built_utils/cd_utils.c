@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:58:42 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 12:15:59 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:33:26 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	cd_join_pwd_to_directory(t_mshell *mshell, char *path)
 	assembling_pwdir__cd(mshell, path, i, j);
 	return (1);
 }
+
 int	copy_cd_arg(t_mshell *mshell)
 {
 	int	i;

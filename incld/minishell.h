@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 19:00:02 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:40:41 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ typedef struct s_exec
 
 typedef struct s_execve
 {
-char					*cmd;
-char					**paths;
-char					**cmd_args;
+	char				*cmd;
+	char				**paths;
+	char				**cmd_args;
 }						t_execve;
 
 typedef struct s_mshell
@@ -185,17 +185,24 @@ enum e_env_len
 t_mshell			*init_mshell(char **env);
 int					init_exec(t_mshell *mshell);
 int					init_built(t_mshell *mshell);
-int					init_heredoc(t_mshell *mshell);
 int					init_t_token(t_mshell *mshell);
+int					init_heredoc(t_mshell *mshell);
 int					init_builtins(t_mshell *mshell);
 int					init_expansion(t_mshell *mshell);
+int					copy_underscore(t_mshell *mshell);
+int					set_default_env(t_mshell *mshell);
 int					new_node_export(t_mshell *mshell);
 int					make_new_heredoc(t_mshell *mshell);
 int					init_sort_export(t_mshell *mshell);
+int					set_default_export(t_mshell *mshell);
+int					set_default_envars(t_mshell *mshell);
+int					fill_default_export(t_mshell *mshell);
+int					copy_shlvl(t_mshell *mshell, char *shlvl);
 int					init_execve(t_mshell *mshell, char **env);
 int					obtain_env_content(t_env **lst, char *env);
 int					begin_command(t_mshell *mshell, char **env);
 int					dup_env(t_env **lst, char **env, uint64_t *count);
+int					copy_pwd(t_mshell *mshell, char *pwd_var, char *pwd);
 int					init_env_sorter(t_mshell *mshell, t_env **env_sorter);
 // @ ------------------------ # builtins # -------------------------- @ //
 // #  STD BUILT
@@ -211,8 +218,8 @@ int					copy_cd_arg(t_mshell *mshell);
 int					absolute_path(t_mshell *mshell);
 int					cd_args_checker(t_mshell *mshell);
 int					cd_join_pwd_to_directory(t_mshell *mshell, char *path);
-int					assembling_pwdir__cd(t_mshell *mshell, char *path, int i,
-					int j); \
+int					assembling_pwdir__cd(t_mshell *mshell, char *path, int i, \
+					int j);
 // # ENV
 char				*new_str(char *input);
 int					do_env(t_mshell *mshell);
@@ -257,6 +264,7 @@ int					tokenizer(t_mshell *mshell, int strt, int end);
 // @ ------------------------ # signals # --------------------------- @ //
 void				stop_signals(void);
 void				handle_sigint(void);
+void				handle_sigquit(void);
 void				manage_signals(void);
 void				sig_handler(int signum);
 int					check_eof(char *rdline_outp);
@@ -266,7 +274,7 @@ void				what_token(int token);
 int					compose_and_launch_command(t_mshell *mhsell, char **env);
 // @ ------------------------- # libft # ---------------------------- @ //
 char				*ft_itoa(int n);
-int 				ft_nbrlen(int n);
+int					ft_nbrlen(int n);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 void				ft_putchar(char c);
@@ -290,7 +298,6 @@ int					popen_tube(t_mshell *mshell);
 int					pclose_tube(t_mshell *mshell);
 int					handle_tube(t_mshell *mshell);
 int					find_access(t_mshell *mshell);
-void				print_tokens(t_mshell *mshell);
 int					scan_builtin(t_mshell *mshell);
 char				*exit_status(t_mshell *mshell);
 int					close_file_fd(t_mshell *mshell);
@@ -333,16 +340,21 @@ void				cutitintypes(t_mshell *mshell, int *tmp_i, int \
 					*n_tp, int *i);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
+char				*remove_quotes(char *str);
+char				*init_rm_quotes(char *str);
 int					parse_paths(t_mshell *mshell);
 int					sort_export(t_mshell *mshell);
 int					parse_output(t_mshell *mshell);
+int					center_quotes(t_mshell *mshell);
 int					check_printable_char(char print);
 int					treat_pipe(t_mshell *mshell, int *i);
+int					check_closed_quotes(t_mshell *mshell);
 int					treat_quote(t_mshell *mshell, int *i);
 int					treat_space(t_mshell *mshell, int *i);
 int					treat_redir(t_mshell *mshell, int *i);
 int					treat_printable(t_mshell *mshell, int *i);
 int					copy_env_content(t_env *dest, t_env *src);
+int					closed_quotes(t_mshell *mshell, int *i, int qt);
 int					copy_env_sorter_content(t_expt *dest, t_env *src);
 int					search_next_quote(t_mshell *mshell, char quote, int *q);
 int					copy_and_suppress_env_node(t_mshell *mshell, \

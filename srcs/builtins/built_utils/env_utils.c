@@ -6,15 +6,15 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:17:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 03:26:23 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:33:48 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    *new_str(char *input)
+char	*new_str(char *input)
 {
-	char    *new;
+	char	*new;
 	int		i;
 
 	if (!input)
