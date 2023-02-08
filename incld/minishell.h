@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 11:40:41 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 19:11:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,6 +261,7 @@ void				word_review(t_mshell *mshell, int *cmd_cnt);
 int					pipe_review(t_mshell *mshell, int *cmd_cnt);
 int					hrdoc_review(t_mshell *mshell, int *cmd_cnt);
 int					tokenizer(t_mshell *mshell, int strt, int end);
+int					review_nxt_after_pipe(t_mshell *mshell, int *cmd_cnt);
 // @ ------------------------ # signals # --------------------------- @ //
 void				stop_signals(void);
 void				handle_sigint(void);
@@ -295,26 +296,43 @@ char				*ft_substr(char *s, int start, size_t len);
 char				*ft_strjoin(char *s1, char *s2, int upend);
 // @ -------------------------- # exec # ---------------------------- @ //
 int					popen_tube(t_mshell *mshell);
+int					hrdoc_rdir(t_mshell *mshell);
 int					pclose_tube(t_mshell *mshell);
 int					handle_tube(t_mshell *mshell);
 int					find_access(t_mshell *mshell);
 int					scan_builtin(t_mshell *mshell);
 char				*exit_status(t_mshell *mshell);
+int					new_exec_line(t_mshell *mshell);
 int					close_file_fd(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
 int					seek_cmd_args(t_mshell *mshell);
 int					close_pipe_fds(t_mshell *mshell);
 int					set_pos_to_cmd(t_mshell *mshell);
+int					append(t_mshell *mshell, int *fd);
+int					rdir_l(t_mshell *mshell, int *fd);
+int					rdir_r(t_mshell *mshell, int *fd);
 int					search_next_pipe(t_mshell *mshell);
 int					enable_redirections(t_mshell *mshell);
 int					copy_cmd_arg(t_mshell *mshell, int *i);
 int					make_expand_in_hrdoc(t_mshell *mshell);
 int					build_commands_chains(t_mshell *mshell);
+int					cut_types_expd__hrdoc(t_mshell *mshell);
 int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
+int					find_types_len_expd__hrdoc(t_mshell *mshell);
 int					copy_first_cmd_arg(t_mshell *mshell, int *i);
 int					join_cmd_for_access(t_mshell *mshell, int *i);
 int					execute_hrdoc(t_mshell *mshell, int expander);
+int					skip_pipe_token(t_mshell *mshell, t_tkn *skip);
+int					init_cut_types_expander__hrdoc(t_mshell *mshell);
+void				cutitintypes_heredoc(t_mshell *mshell, int *tmp_i, \
+					int *n_tp, int *i);
+int					treat_double_quote_expand_cut__hrdoc(t_mshell *mshell, \
+					int *i, int *tmp_i, int *n_tp);
+int					treat_single_quote_expand_cut__hrdoc(t_mshell *mshell, \
+					int *i, int *tmp_i, int *n_tp);
+int					treat_out_quote_expand_cut__hrdoc(t_mshell *mshell, \
+					int *i, int *tmp_i, int *n_tp);
 int					center_hrdoc_delim_treatment(t_mshell *mshell, \
 					int *expander);
 // @ ------------------------- # expand # --------------------------- @ //
@@ -324,20 +342,34 @@ int					cut_types_expd(t_mshell *mshell);
 int					new_command_line(t_mshell *mshell);
 int					find_types_len_expd(t_mshell *mshell);
 char				*join_types_expanded(t_mshell *mshell);
+int					scan_herdoc(t_mshell *mshell, int n_tp);
+int					init_cut_types_expander(t_mshell *mshell);
 int					manage_expands_in_types(t_mshell *mshell);
+int					hrdoc_scannner(t_mshell *mshell, int n_tp);
 int					make_expansion(t_mshell *mshell, char *input);
 int					manage_expands_oq(t_mshell *mshell, int n_tp);
+int					update_type(t_mshell *mshell, int *i, int n_tp);
+int					single_dollar_in_dq(t_mshell *mshell, int n_tp);
 int					update_type(t_mshell *mshell, int *i, int n_tp);
 int					cut_expander(t_mshell *mshell, int n_tp, int i);
 int					manage_expands_in_sq(t_mshell *mshell, int n_tp);
 int					manage_expands_in_dq(t_mshell *mshell, int n_tp);
 int					remove_closing_quotes_dq(t_mshell *mshell, int n_tp);
+int					get_all_content_from_string(t_mshell *mshell, int n_tp);
+int					skip_hexpander_hrdoc(t_mshell *mshell, int n_tp, int *i);
+int					treat_export_exit_status(t_mshell *mshell, int n_tp, int i);
+void				cutitintypes(t_mshell *mshell, int *tmp_i, \
+					int *n_tp, int *i);
+int					check_update_string_with_expand(t_mshell *mshell, \
+					int n_tp, int *i);
+int					update_type_expanded(t_mshell *mshell, int *ptr, \
+					int n_tp, char **update);
+int					update_type_no_expand(t_mshell *mshell, int *ptr, \
+					int n_tp, char **update);
 int					alloc_new_token_for_join(t_mshell *mshell, int *i0, \
 					int *n_tp, int *i1);
-int					alloc_new_token_for_join(t_mshell *mshell, int *i0, \
-					int *n_tp, int *i1);
-void				cutitintypes(t_mshell *mshell, int *tmp_i, int \
-					*n_tp, int *i);
+int					close_string_after_expand_update(t_mshell *mshell, \
+					int *ptr, char **update, int n_tp);
 // @ ------------------------- # parser # ---------------------------- @ //
 int					sort_kinds(char read);
 char				*remove_quotes(char *str);

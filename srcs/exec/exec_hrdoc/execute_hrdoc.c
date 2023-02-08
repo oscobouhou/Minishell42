@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 11:03:50 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 23:19:33 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*join_types_expanded__hrdoc(t_mshell *mshell)
 	while (mshell->expd->types[n_tp])
 	{
 		joinit_heredoc(mshell, &new_token, n_tp, &i1);
-		if (mshell->expd->types[n_tp])
+		if (mshell->expd->types[n_tp][0])
 			free(mshell->expd->types[n_tp]);
 		n_tp++;
 	}
@@ -155,54 +155,66 @@ int	make_expands_types__hrdoc(t_mshell *mshell, int n_tp)
 	return (1);
 }
 
-int	types_expd_cut__hrdoc(t_mshell *mshell, char *usr_input, int n_tp)
+int	types_expd_cut_expander__hrdoc(t_mshell *mshell, char *usr_input, \
+	int *n_tp, int *i)
 {
-	int	tmp_i;
-	int	i;
 	int	j;
 
-	i = 0;
-	tmp_i = 0;
-	while (usr_input[i])
+	i[1] = i[0];
+	i[0] += 1;
+	while (usr_input[i[0]] && usr_input[i[0]] != DOUBLE_QUOTE \
+		&& usr_input[i[0]] != SINGLE_QUOTE && usr_input[i[0]] != EXPAND \
+		&& usr_input[i[0]] != '\n' && usr_input[i[0]] != ' ')
+		i[0]++;
+	mshell->expd->types[*n_tp] = malloc(sizeof(char) * (i[0] - i[1]) + 1);
+	if (!mshell->expd->types[*n_tp])
+		return (0);
+	j = 0;
+	while (usr_input[i[1]] && i[1] < i[0])
 	{
-		if (usr_input[i] == EXPAND)
-		{
-			tmp_i = i;
-			i += 1;
-			while (usr_input[i] && usr_input[i] != DOUBLE_QUOTE
-				&& usr_input[i] != SINGLE_QUOTE && usr_input[i] != EXPAND
-				&& usr_input[i] != '\n' && usr_input[i] != ' ')
-				i++;
-			mshell->expd->types[n_tp] = malloc(sizeof(char) * (i - tmp_i) + 1);
-			if (!mshell->expd->types[n_tp])
-				return (0);
-			j = 0;
-			while (usr_input[tmp_i] && tmp_i < i)
-			{
-				mshell->expd->types[n_tp][j] = usr_input[tmp_i];
-				tmp_i++;
-				j++;
-			}
-			mshell->expd->types[n_tp][j] = '\0';
-			n_tp++;
-		}
-		else if (usr_input[i] != EXPAND)
-		{
-			while (usr_input[i] && usr_input[i] != EXPAND)
-				i++;
-			mshell->expd->types[n_tp] = malloc(sizeof(char) * (i - tmp_i) + 1);
-			if (!mshell->expd->types[n_tp])
-				return (0);
-			j = 0;
-			while (usr_input[tmp_i] && tmp_i < i)
-			{
-				mshell->expd->types[n_tp][j] = usr_input[tmp_i];
-				tmp_i++;
-				j++;
-			}
-			mshell->expd->types[n_tp][j] = '\0';
-			n_tp++;
-		}
+		mshell->expd->types[*n_tp][j] = usr_input[i[1]];
+		i[1]++;
+		j++;
+	}
+	mshell->expd->types[*n_tp][j] = '\0';
+	(*n_tp)++;
+	return (1);
+}
+
+int	types_expd_cut_usr_input__hrdoc(t_mshell *mshell, char *usr_input, \
+	int *n_tp, int *i)
+{
+	int	j;
+
+	while (usr_input[i[0]] && usr_input[i[0]] != EXPAND)
+		i[0]++;
+	mshell->expd->types[*n_tp] = malloc(sizeof(char) * (i[0] - i[1]) + 1);
+	if (!mshell->expd->types[*n_tp])
+		return (0);
+	j = 0;
+	while (usr_input[i[1]] && i[1] < i[0])
+	{
+		mshell->expd->types[*n_tp][j] = usr_input[i[1]];
+		i[1]++;
+		j++;
+	}
+	mshell->expd->types[*n_tp][j] = '\0';
+	(*n_tp)++;
+	return (1);
+}
+
+int	types_expd_cut__hrdoc(t_mshell *mshell, char *usr_input, int n_tp)
+{
+	int	i[2];
+
+	i[0] = 0;
+	i[1] = 0;
+	while (usr_input[i[0]])
+	{
+		if (usr_input[i[0]] == EXPAND)
+			types_expd_cut_expander__hrdoc(mshell, usr_input, &n_tp, i);
+		else if (usr_input[i[0]] != EXPAND)
+			types_expd_cut_usr_input__hrdoc(mshell, usr_input, &n_tp, i);
 	}
 	return (1);
 }
@@ -276,7 +288,8 @@ int	execute_hrdoc(t_mshell *mshell, int expander)
 		}
 		if (expander == -42)
 			hrdoc_expander(&usr_input, mshell);
-		write(mshell->heredoc->pipe_heredoc[1], usr_input, ft_strlen(usr_input));
+		write(mshell->heredoc->pipe_heredoc[1], usr_input, \
+		ft_strlen(usr_input));
 		write(mshell->heredoc->pipe_heredoc[1], "\n", 1);
 		line++;
 		free(usr_input);
