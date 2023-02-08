@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 19:11:20 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 23:51:35 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ void				stop_signals(void);
 void				handle_sigint(void);
 void				handle_sigquit(void);
 void				manage_signals(void);
+void				retrieve_signals(void);
 void				sig_handler(int signum);
 int					check_eof(char *rdline_outp);
 void				sig_fork_handler(int signum);
@@ -295,6 +296,8 @@ int					search_lowest(char *val, t_env *env);
 char				*ft_substr(char *s, int start, size_t len);
 char				*ft_strjoin(char *s1, char *s2, int upend);
 // @ -------------------------- # exec # ---------------------------- @ //
+int					wait_pids(t_mshell *mshell);
+int					controler(t_mshell *mshell);
 int					popen_tube(t_mshell *mshell);
 int					hrdoc_rdir(t_mshell *mshell);
 int					pclose_tube(t_mshell *mshell);
@@ -306,33 +309,59 @@ int					new_exec_line(t_mshell *mshell);
 int					close_file_fd(t_mshell *mshell);
 int					make_new_exec(t_mshell *mshell);
 int					seek_cmd_args(t_mshell *mshell);
+int					close_heredocs(t_mshell *mshell);
 int					close_pipe_fds(t_mshell *mshell);
 int					set_pos_to_cmd(t_mshell *mshell);
 int					append(t_mshell *mshell, int *fd);
 int					rdir_l(t_mshell *mshell, int *fd);
 int					rdir_r(t_mshell *mshell, int *fd);
 int					search_next_pipe(t_mshell *mshell);
+int					heredoc_controler(t_mshell *mshell);
+int					start_cmd_pipeline(t_mshell *mshell);
 int					enable_redirections(t_mshell *mshell);
 int					copy_cmd_arg(t_mshell *mshell, int *i);
 int					make_expand_in_hrdoc(t_mshell *mshell);
 int					build_commands_chains(t_mshell *mshell);
 int					cut_types_expd__hrdoc(t_mshell *mshell);
+int					alloc__hrdoc_for_join(t_mshell *mshell);
+int					lens_types_expd__hrdoc(char *usr_input);
+int					unforked(t_mshell *mshell, int *backup);
+int					start_exec(t_mshell *mshell, int *backup);
 int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
 int					find_types_len_expd__hrdoc(t_mshell *mshell);
 int					copy_first_cmd_arg(t_mshell *mshell, int *i);
+int					no_cmd_no_pipe(t_mshell *mshell, int *backup);
+char				*join_types_expanded__hrdoc(t_mshell *mshell);
 int					join_cmd_for_access(t_mshell *mshell, int *i);
 int					execute_hrdoc(t_mshell *mshell, int expander);
 int					skip_pipe_token(t_mshell *mshell, t_tkn *skip);
 int					init_cut_types_expander__hrdoc(t_mshell *mshell);
+int					gather_usr_input(char *content, t_mshell *mshell);
+void				exit_process(int err, char *tkn, t_mshell *mshell);
+int					hrdoc_expander(char **usr_input, t_mshell *mshell);
+int					make_expands_types__hrdoc(t_mshell *mshell, int n_tp);
+int					joinit_heredoc(t_mshell *mshell, char **new_token, \
+					int n_tp, int *i1);
+int					types_expd_cut_usr_input__hrdoc(t_mshell *mshell, \
+					char *usr_input, int *n_tp, int *i);
+int					types_expd_cut_expander__hrdoc(t_mshell *mshell, \
+					char *usr_input, int *n_tp, int *i);
 void				cutitintypes_heredoc(t_mshell *mshell, int *tmp_i, \
 					int *n_tp, int *i);
+int					dup_expander___hrdoc(t_mshell *mshell, char *exptval, \
+					int n_tp);
 int					treat_double_quote_expand_cut__hrdoc(t_mshell *mshell, \
 					int *i, int *tmp_i, int *n_tp);
 int					treat_single_quote_expand_cut__hrdoc(t_mshell *mshell, \
 					int *i, int *tmp_i, int *n_tp);
 int					treat_out_quote_expand_cut__hrdoc(t_mshell *mshell, \
 					int *i, int *tmp_i, int *n_tp);
+int					lens_types_expd__hrdoc(char *usr_input);
+int					check_expander__hrdoc(char *expander, t_mshell *mshell, \
+					int n_tp);
+int					types_expd_cut__hrdoc(t_mshell *mshell, char *usr_input, \
+					int n_tp);
 int					center_hrdoc_delim_treatment(t_mshell *mshell, \
 					int *expander);
 // @ ------------------------- # expand # --------------------------- @ //

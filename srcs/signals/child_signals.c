@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 11:34:33 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 13:08:31 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 23:41:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void	handle_sigquit(void)
 {
 	dprintf(2, "Quit (core dumped)\n");
+}
+void	retrieve_signals(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sig_handler);
 }
 
 void	sig_fork_handler(int signum)

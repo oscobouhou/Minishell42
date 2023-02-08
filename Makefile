@@ -37,14 +37,18 @@ SRCS 			= main/main.c \
 				  srcs/exec/exec_redirs/apply_redirs.c \
 				  srcs/exec/exec_builtin/builtin_std.c \
 				  srcs/exec/exec_builtin/exec_builtin.c \
-				  srcs/exec/exec_center/center_exec.c \
 				  srcs/exec/exec_center/arg_seeker.c \
+				  srcs/exec/exec_center/exec_tools.c \
+				  srcs/exec/exec_center/center_exec.c \
 				  srcs/exec/exec_center/find_access.c \
 				  srcs/exec/exec_center/pipe_handler.c \
+				  srcs/exec/exec_center/exec_control.c \
 				  srcs/exec/exec_hrdoc/execute_hrdoc.c \
 				  srcs/exec/exec_hrdoc/expand_heredoc/treat_hrdoc_delim.c \
 				  srcs/exec/exec_hrdoc/expand_heredoc/expand_heredoc_utils_0.c \
 				  srcs/exec/exec_hrdoc/expand_heredoc/expand_heredoc_utils_1.c \
+				  srcs/exec/exec_hrdoc/expand_heredoc/expand_heredoc_utils_2.c \
+				  srcs/exec/exec_hrdoc/expand_heredoc/expand_heredoc_utils_3.c \
 				  srcs/token/tokenizer.c \
 				  srcs/token/word_review.c \
 				  srcs/token/pipe_review.c \
