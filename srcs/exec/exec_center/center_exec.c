@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 22:32:39 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:10:44 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,30 @@ int	controler(t_mshell *mshell)
 	return (1);
 }
 
+int	close_heredocs(t_mshell *mshell)
+{
+	t_heredoc	*head;
+
+	head = mshell->hd_heredoc;
+	while (mshell->heredoc)
+	{
+		if (mshell->heredoc->pipe_heredoc[0] != -42)
+			close(mshell->heredoc->pipe_heredoc[0]);
+		if (mshell->heredoc->pipe_heredoc[1] != -42)
+			close(mshell->heredoc->pipe_heredoc[1]);
+		mshell->heredoc = mshell->heredoc->next;
+	}
+	mshell->heredoc = head;
+	return (1);
+}
+
+int	heredoc_controler(t_mshell *mshell)
+{
+	if (mshell->heredoc->pipe_heredoc[0] != -42)
+		close(mshell->heredoc->pipe_heredoc[0]);
+	return (1);
+}
+
 int	center_exec(t_mshell *mshell, char **env)
 {
 	int	backup[2];
@@ -166,10 +190,12 @@ int	center_exec(t_mshell *mshell, char **env)
 			execmd(mshell, env);
 		if (!controler(mshell))
 			break ;
+		heredoc_controler(mshell);
 		mshell->exec = mshell->exec->next;
 		mshell->heredoc = mshell->heredoc->next;
 		mshell->exec->no_cmd = -42;
 	}
+	close_heredocs(mshell);
 	mshell->exec = mshell->head_exec;
 	close_pipe_fds(mshell);
 	mshell->exec = mshell->head_exec;

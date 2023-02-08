@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 22:08:51 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:03:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ int	hrdoc_expander(char **usr_input, t_mshell *mshell)
 int	eof_err_heredoc(t_mshell *mshell, int l)
 {
 	char	*line;
+
 	line = ft_itoa(l);
 	ft_putstr_fd(2, "minishell: warning: here-document at line ");
 	ft_putstr_fd(2, line);
