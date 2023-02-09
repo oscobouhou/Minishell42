@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:18 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 12:19:42 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 10:56:24 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void	remove_env(char *to_rm, t_mshell *mshell)
 		env = env->next;
 	}
 	if (!prev)
+	{
 		mshell->env = env->next;
+	}
 	else
 		prev->next = env->next;
 	free(env->envar);

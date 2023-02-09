@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:58:33 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 13:08:28 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 14:13:35 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	handle_sigint(void)
 
 void	stop_signals(void)
 {
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, &sig_fork_handler);
 	signal(SIGQUIT, &sig_fork_handler);
 }
 

@@ -6,11 +6,13 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 00:15:39 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 14:13:04 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	glo_exit;
 
 void	command_child_execve(t_mshell *mshell)
 {
@@ -27,7 +29,7 @@ void	command_child_execve(t_mshell *mshell)
 
 int	execmd(t_mshell *mshell, char **env)
 {
-	signal(SIGINT, &sig_fork_handler);
+	// signal(SIGINT, &sig_fork_handler);
 	set_pos_to_cmd(mshell);
 	if (mshell->no_env != -42)
 	{

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 00:03:26 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 14:11:54 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,9 @@ enum e_env_len
 	VALUE,
 	ARG
 };
+
+extern int glo_exit;
+
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
 int					init_exec(t_mshell *mshell);
@@ -270,6 +273,7 @@ void				handle_sigquit(void);
 void				manage_signals(void);
 void				retrieve_signals(void);
 void				sig_handler(int signum);
+void				handle_sigint_fork(void);
 int					check_eof(char *rdline_outp);
 void				sig_fork_handler(int signum);
 // @ ------------------------- # compose # -------------------------- @ //

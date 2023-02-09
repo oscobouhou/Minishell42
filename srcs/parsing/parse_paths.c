@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:51:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 02:52:49 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:54:42 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,21 @@ int	cut_paths(t_mshell *mshell, int start, int *end, int *n_pth)
 	mshell->execve->paths[*n_pth][i + 1] = '\0';
 	(*n_pth)++;
 	(*end) += 1;
+	return (1);
+}
+
+int	no_path(t_mshell *mshell)
+{
+	t_env	*head;
+
+	head = mshell->env; 
+	while (mshell->env)
+	{
+		if (!ft_strcmp(mshell->env->envar, "PATH"))
+			return (mshell->env = head, 0);
+		mshell->env = mshell->env->next;
+	}
+	mshell->env = head;
 	return (1);
 }
 
@@ -80,6 +95,11 @@ int	parse_paths(t_mshell *mshell)
 
 	n_pth = 0;
 	head = mshell->env;
+	if (no_path(mshell))
+	{
+		dprintf(2, "NO PATH\n");
+		return (1);
+	}
 	while (mshell->env->next)
 	{
 		if (!ft_strcmp("PATH", mshell->env->envar))
