@@ -6,23 +6,34 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:42:50 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 23:57:37 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:28:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	cmd_err_message(char *cmd)
+{
+	if (!ft_strlen(cmd))
+		ft_putstr_fd(2, "minishell: : command not found\n");
+	else
+	{
+		ft_putstr_fd(2, "minishell: ");
+		ft_putstr_fd(2, cmd);
+		ft_putstr_fd(2, ": command not found\n");
+	}
+}
+
 void	exit_process(int err, char *tkn, t_mshell *mshell)
 {
-	perror(tkn);
+	cmd_err_message(mshell->exec->start_exec->tkn);
 	if (mshell->exec->no_redirs != -42)
 		close_file_fd(mshell);
 	terminate(mshell);
 	if (err == ENOENT)
-	{
 		exit(127);
-	}
 	exit (1);
+	(void)tkn;
 }
 
 int	close_file_fd(t_mshell *mshell)

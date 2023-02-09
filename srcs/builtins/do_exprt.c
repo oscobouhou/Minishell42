@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_exprt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:12 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 05:29:38 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/09 22:22:50 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	do_exprt_split_args(char *args, t_mshell *mshell)
 	return (1);
 }
 
-int	do_exprt(t_mshell *mshell)
+int	do_exqwwdqprt(t_mshell *mshell)
 {
 	t_tkn	*args;
 
@@ -159,5 +159,82 @@ int	do_exprt(t_mshell *mshell)
 			return (0);
 		args = args->next;
 	}
+	return (1);
+}
+
+//_____________________________________________________________________________
+//| //|				NEW_VERSION
+//| //|
+int	declare_export(t_mshell *mshell)
+{
+	t_expt	*head;
+
+	head = mshell->expt;
+	while (mshell->expt->next)
+	{
+		ft_putstr_fd(1, "declare -x ");
+		ft_putstr_fd(1, mshell->expt->exptvar);
+		ft_putstr_fd(1, "=");
+		ft_putstr_fd(1, mshell->expt->value);
+		ft_putstr_fd(1, "\n");
+		mshell->expt = mshell->expt->next;
+	}
+	mshell->expt = head;
+	return (1);
+}
+
+int	set_arg_tab(t_mshell *mshell)
+{
+	int	i;
+
+	i = 0;
+	mshell->exec->start_exec = mshell->exec->start_exec->next;
+	while (mshell->exec->start_exec)
+	{
+		mshell->exec->start_exec = mshell->exec->start_exec->next;
+		i++;
+	}
+	mshell->built->export_arg = malloc(sizeof(char *) * (i + 1));
+	if (!mshell->built->export_arg)
+		return (0);
+	mshell->built->export_args_len = i;
+	mshell->exec->start_exec = mshell->exec->start_exec_head;
+	return (1);
+}
+
+int	cut_args_in_tab(t_mshell *mshell)
+{
+	int	i;
+
+	i = 0;
+	mshell->exec->start_exec = mshell->exec->start_exec->next;
+	while (mshell->exec->start_exec)
+	{
+		mshell->built->export_arg[i] = new_str(mshell->exec->start_exec->tkn);
+		mshell->exec->start_exec = mshell->exec->start_exec->next;
+		i++;
+	}
+	mshell->built->export_arg[i] = NULL;
+	mshell->exec->start_exec = mshell->exec->start_exec_head;
+	return (1);
+}
+
+int	treat_export_args(t_mshell *mshell)
+{
+	(void)mshell;
+	return (1);
+}
+
+int	do_exprt(t_mshell *mshell)
+{
+	if (!mshell->exec->start_exec->next)
+		declare_export(mshell);
+	set_arg_tab(mshell);
+	cut_args_in_tab(mshell);
+	// while (mshell->built->export_arg[i])
+	// {
+	// 	treat_export_arg();
+	// 	i++;
+	// }
 	return (1);
 }

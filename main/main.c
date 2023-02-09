@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:00:00 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 11:17:47 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 21:51:08 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ int	main(int ac, char **av, char **env)
 		add_history(mshell->rdline_outp);
 		mshell->empty_cmd = 0;
 		if (ft_strlen(mshell->rdline_outp))
-			if (!compose_and_launch_command(mshell, env))
-				dprintf(2, "minishell: launch cmd error'\n");
+			compose_and_launch_command(mshell, env);
 		new_command_line(mshell);
 	}
 	return (0);

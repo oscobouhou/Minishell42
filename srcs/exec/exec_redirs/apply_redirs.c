@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:01:13 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 13:03:33 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 21:05:30 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	hrdoc_rdir(t_mshell *mshell)
 
 int	append(t_mshell *mshell, int *fd)
 {
+	if (!ft_strcmp(mshell->exec->start_exec->next->tkn, "/dev/stdout"))
+		return (1);
 	mshell->exec->fd[*fd] = open(mshell->exec->start_exec->next->tkn,
 			O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (mshell->exec->fd[*fd] == -1)
@@ -57,6 +59,8 @@ int	rdir_l(t_mshell *mshell, int *fd)
 
 int	rdir_r(t_mshell *mshell, int *fd)
 {
+	if (!ft_strcmp(mshell->exec->start_exec->next->tkn, "/dev/stdout"))
+		return (1);
 	mshell->exec->fd[*fd] = open(mshell->exec->start_exec->next->tkn,
 			O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (mshell->exec->fd[*fd] == -1)

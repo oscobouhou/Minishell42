@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 14:11:54 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/09 21:47:01 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ typedef struct s_built
 	int					builtin_p;
 	int					echo_flag;
 	int					echo_args_len;
+	int					export_args_len;
 	char				*cd_arg;
 	char				*cd_chdir;
 	char				**echo_arg;
+	char				**export_arg;
 }						t_built;
 
 typedef struct s_expt

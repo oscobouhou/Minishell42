@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:10 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 05:03:03 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/09 18:00:53 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	do_exit(t_mshell *mshell)
 	if (!arg)
 	{
 		dprintf(2, "exit\n");
+		terminate(mshell);
 		exit(0);
 	}
 	if (!exit_numeric_char(mshell))
