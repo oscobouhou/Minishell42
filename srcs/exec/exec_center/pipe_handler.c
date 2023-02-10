@@ -6,11 +6,25 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 03:37:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 03:21:32 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:38:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	absolute_cmd_exec(char *tkn)
+{
+	int	i;
+
+	i = 0;
+	while (tkn[i])
+	{
+		if (tkn[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	close_pipe_fds(t_mshell *mshell)
 {

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:51:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 13:54:42 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:31:01 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	no_path(t_mshell *mshell)
 {
 	t_env	*head;
 
-	head = mshell->env; 
+	head = mshell->env;
 	while (mshell->env)
 	{
 		if (!ft_strcmp(mshell->env->envar, "PATH"))
@@ -96,10 +96,7 @@ int	parse_paths(t_mshell *mshell)
 	n_pth = 0;
 	head = mshell->env;
 	if (no_path(mshell))
-	{
-		dprintf(2, "NO PATH\n");
 		return (1);
-	}
 	while (mshell->env->next)
 	{
 		if (!ft_strcmp("PATH", mshell->env->envar))

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:12 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 22:22:50 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:47:26 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,26 @@ int	cut_args_in_tab(t_mshell *mshell)
 	return (1);
 }
 
+
+int	treat_export_arg(t_mshell *mshell)
+{
+	(void)mshell;
+	return (1);
+}
+
+int	fill_environement(t_mshell *mshell)
+{
+	int	i;
+
+	i = 0;
+	while (mshell->built->export_arg[i])
+	{
+		treat_export_arg(mshell);
+		i++;
+	}
+	return (1);
+}
+
 int	treat_export_args(t_mshell *mshell)
 {
 	(void)mshell;
@@ -231,10 +251,10 @@ int	do_exprt(t_mshell *mshell)
 		declare_export(mshell);
 	set_arg_tab(mshell);
 	cut_args_in_tab(mshell);
-	// while (mshell->built->export_arg[i])
-	// {
-	// 	treat_export_arg();
-	// 	i++;
-	// }
+	fill_environement(mshell);
+
+
+
+	
 	return (1);
 }

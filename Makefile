@@ -45,6 +45,7 @@ SRCS 			= main/main.c \
 				  srcs/exec/exec_center/pipe_handler.c \
 				  srcs/exec/exec_center/exec_control.c \
 				  srcs/exec/exec_hrdoc/execute_hrdoc.c \
+				  srcs/exec/exec_hrdoc/heredoc_utils.c \
 				  srcs/exec/exec_hrdoc/expand_heredoc/treat_hrdoc_delim.c \
 				  srcs/exec/exec_hrdoc/expand_heredoc/expand_heredoc_utils_0.c \
 				  srcs/exec/exec_hrdoc/expand_heredoc/expand_heredoc_utils_1.c \

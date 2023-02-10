@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 08:20:46 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:48:26 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct s_built
 	char				*cd_chdir;
 	char				**echo_arg;
 	char				**export_arg;
+	char				*export_var;
+	char				*export_value;
 }						t_built;
 
 typedef struct s_expt
@@ -184,7 +186,7 @@ enum e_env_len
 	ARG
 };
 
-extern int g_exit;
+extern int	g_exit;
 
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
@@ -307,10 +309,12 @@ int					search_lowest(char *val, t_env *env);
 char				*ft_substr(char *s, int start, size_t len);
 char				*ft_strjoin(char *s1, char *s2, int upend);
 // @ -------------------------- # exec # ---------------------------- @ //
+void				cmd_err_message(char *cmd);
 int					wait_pids(t_mshell *mshell);
 int					controler(t_mshell *mshell);
 int					popen_tube(t_mshell *mshell);
 int					hrdoc_rdir(t_mshell *mshell);
+int					absolute_cmd_exec(char *tkn);
 int					pclose_tube(t_mshell *mshell);
 int					handle_tube(t_mshell *mshell);
 int					find_access(t_mshell *mshell);
@@ -337,6 +341,7 @@ int					cut_types_expd__hrdoc(t_mshell *mshell);
 int					alloc__hrdoc_for_join(t_mshell *mshell);
 int					lens_types_expd__hrdoc(char *usr_input);
 int					unforked(t_mshell *mshell, int *backup);
+int					eof_err_heredoc(t_mshell *mshell, int l);
 int					start_exec(t_mshell *mshell, int *backup);
 int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
@@ -351,7 +356,9 @@ int					init_cut_types_expander__hrdoc(t_mshell *mshell);
 int					gather_usr_input(char *content, t_mshell *mshell);
 void				exit_process(int err, char *tkn, t_mshell *mshell);
 int					hrdoc_expander(char **usr_input, t_mshell *mshell);
+int					delimiter_detected(char *usr_input, t_mshell *mshell);
 int					make_expands_types__hrdoc(t_mshell *mshell, int n_tp);
+int					eof_heredoc(char *usr_input, t_mshell *mshell, int line);
 int					joinit_heredoc(t_mshell *mshell, char **new_token, \
 					int n_tp, int *i1);
 int					types_expd_cut_usr_input__hrdoc(t_mshell *mshell, \

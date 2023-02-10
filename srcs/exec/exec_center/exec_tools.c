@@ -6,23 +6,11 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:42:50 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 19:28:50 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:32:34 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	cmd_err_message(char *cmd)
-{
-	if (!ft_strlen(cmd))
-		ft_putstr_fd(2, "minishell: : command not found\n");
-	else
-	{
-		ft_putstr_fd(2, "minishell: ");
-		ft_putstr_fd(2, cmd);
-		ft_putstr_fd(2, ": command not found\n");
-	}
-}
 
 void	exit_process(int err, char *tkn, t_mshell *mshell)
 {

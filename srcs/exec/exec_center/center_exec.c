@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 07:58:52 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 09:42:09 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ void	command_child_execve(t_mshell *mshell)
 {
 	if (mshell->exec->no_cmd == -42 && mshell->execve->cmd)
 	{
-		if (mshell->exec->start_exec->tkn[0] == '/')
-			if (access(mshell->exec->start_exec->tkn, X_OK | F_OK))
-				execve(mshell->exec->start_exec->tkn, mshell->execve->cmd_args,
-					mshell->exec_env);
 		execve(mshell->execve->cmd, mshell->execve->cmd_args, mshell->exec_env);
 		exit_process(errno, mshell->tkn->tkn, mshell);
 	}
@@ -47,6 +43,9 @@ int	execmd(t_mshell *mshell, char **env)
 		return (terminate(mshell), exit(1), 0);
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
 	scan_builtin(mshell);
+	if (absolute_cmd_exec(mshell->exec->start_exec->tkn))
+		execve(mshell->exec->start_exec->tkn, mshell->execve->cmd_args, \
+			mshell->exec_env);
 	command_child_execve(mshell);
 	if (mshell->exec->no_redirs != -42)
 		close_file_fd(mshell);
