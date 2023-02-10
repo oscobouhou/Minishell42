@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 10:50:34 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 12:01:12 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,9 @@ typedef struct s_mshell
 	t_exec				*exec;
 	t_exec				*head_exec;
 	t_env				*env;
+	t_env				*head_env;
 	t_expt				*expt;
+	t_expt				*head_expt;
 	t_expd				*expd;
 	t_built				*built;
 	t_execve			*execve;

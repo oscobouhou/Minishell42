@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 19:52:04 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 11:26:06 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 11:59:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	begin_command(t_mshell *mshell, char **env)
 		mshell->exec_env = copy_env_in_tab(mshell);
 		if (!mshell->exec_env)
 			return (0);
+		mshell->head_env = mshell->env;
+		mshell->head_expt = mshell->expt;
 	}
 	else
 	{
@@ -31,6 +33,8 @@ int	begin_command(t_mshell *mshell, char **env)
 		mshell->exec_env = copy_env_in_tab(mshell);
 		if (!mshell->exec_env)
 			return (0);
+		mshell->head_env = mshell->env;
+		mshell->head_expt = mshell->expt;
 	}
 	return (1);
 }
