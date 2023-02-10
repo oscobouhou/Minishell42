@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 09:48:26 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 10:50:34 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,14 @@ int					echo_printer(char *to_print, t_mshell *mshell);
 int					do_pwd(t_mshell *mshell);
 int					do_exit(t_mshell *mshell);
 int					do_unset(t_mshell *mshell);
+// # EXPORT
 int					do_exprt(t_mshell *mshell);
+int					replace_export_value(t_mshell *mshell);
+int					replace_env_value(t_mshell *mshell);
+int					export_new_var_value_export(t_mshell *mshell);
+int					export_new_var_value_env(t_mshell *mshell);
+int					create_new_var_export(t_mshell *mshell);
+//
 t_env				*create_env_node(char *var);
 int					check_arg(char *current_arg);
 t_expt				*create_expt_node(char *var);

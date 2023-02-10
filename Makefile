@@ -111,6 +111,7 @@ SRCS 			= main/main.c \
 				  srcs/builtins/built_utils/cd_utils.c \
 				  srcs/builtins/built_utils/env_utils.c \
 				  srcs/builtins/built_utils/echo_utils.c \
+				  srcs/builtins/built_utils/export_utils.c \
 
 SRCH_INCLDS 	= -Iincld
 
