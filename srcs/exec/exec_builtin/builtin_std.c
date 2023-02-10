@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:07:41 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 12:35:07 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 08:00:59 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ int	exit_builtin(t_mshell *mshell, int *backup, int exit_code)
 	}
 	close_file_fd(mshell);
 	re_establish_stdin_out(backup);
-	mshell->exit_status = exit_code;
+	g_exit = exit_code;
 	return (1);
 }

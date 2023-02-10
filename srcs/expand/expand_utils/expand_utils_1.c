@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 12:47:49 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 12:48:21 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 07:56:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	treat_export_exit_status(t_mshell *mshell, int n_tp, int i)
 			free(mshell->expd->expander);
 			mshell->expd->expander = NULL;
 		}
-		mshell->expd->expander = ft_itoa(mshell->exit_status);
+		mshell->expd->expander = ft_itoa(g_exit);
 		mshell->expd->old_expd_len = 1;
 		mshell->expd->new_expd_len = ft_strlen(mshell->expd->expander);
 	}

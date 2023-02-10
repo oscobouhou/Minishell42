@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 21:47:01 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 08:20:46 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ enum e_env_len
 	ARG
 };
 
-extern int glo_exit;
+extern int g_exit;
 
 // @ -------------------------- # init # ---------------------------- @ //
 t_mshell			*init_mshell(char **env);
@@ -267,17 +267,21 @@ void				word_review(t_mshell *mshell, int *cmd_cnt);
 int					pipe_review(t_mshell *mshell, int *cmd_cnt);
 int					hrdoc_review(t_mshell *mshell, int *cmd_cnt);
 int					tokenizer(t_mshell *mshell, int strt, int end);
+int					suppress_heredoc_token(t_mshell *mshell, t_tkn *tmp);
 int					review_nxt_after_pipe(t_mshell *mshell, int *cmd_cnt);
 // @ ------------------------ # signals # --------------------------- @ //
 void				stop_signals(void);
 void				handle_sigint(void);
 void				handle_sigquit(void);
 void				manage_signals(void);
+void				handle_sigint_hd(void);
 void				retrieve_signals(void);
 void				sig_handler(int signum);
 void				handle_sigint_fork(void);
+void				stop_signals_heredoc(void);
 int					check_eof(char *rdline_outp);
 void				sig_fork_handler(int signum);
+void				sig_heredoc_handler(int signum);
 // @ ------------------------- # compose # -------------------------- @ //
 void				what_token(int token);
 int					compose_and_launch_command(t_mshell *mhsell, char **env);

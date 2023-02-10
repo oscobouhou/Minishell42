@@ -6,11 +6,22 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 18:42:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 08:48:04 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	suppress_heredoc_token(t_mshell *mshell, t_tkn *tmp)
+{
+	mshell->tkn = tmp;
+	tmp = mshell->tkn->next->next;
+	free(mshell->tkn->next->tkn);
+	free(mshell->tkn->next);
+	mshell->tkn->next = tmp;
+	mshell->tkn->type = HRDOC_RDIR;
+	return (1);
+}
 
 int	gather_content_from_delim(t_mshell *mshell)
 {
@@ -48,13 +59,14 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 			return (0);
 		mshell->tkn = mshell->tkn->next;
 		center_hrdoc_delim_treatment(mshell, &expander);
-		execute_hrdoc(mshell, expander);
-		mshell->tkn = tmp;
-		tmp = mshell->tkn->next->next;
-		free(mshell->tkn->next->tkn);
-		free(mshell->tkn->next);
-		mshell->tkn->next = tmp;
-		mshell->tkn->type = HRDOC_RDIR;
+		stop_signals_heredoc();
+		if (!execute_hrdoc(mshell, expander))
+		{
+			close_heredocs(mshell);
+			return (retrieve_signals(), 0);
+		}
+		retrieve_signals();
+		suppress_heredoc_token(mshell, tmp);
 		if (mshell->tkn->next->tkn
 			&& mshell->tkn->next->type == WORD && *cmd_cnt == 0)
 			return (mshell->tkn->next->type = _CMD, *cmd_cnt += 1, 1);

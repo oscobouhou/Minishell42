@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 00:02:49 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 08:08:24 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	cd_tilde(t_mshell *mshell)
 	char	*tmp;
 
 	head = mshell->env;
-	if (!mshell->exec->start_exec->next)
+	if (!mshell->exec->start_exec->next \
+		|| !ft_strcmp(mshell->exec->start_exec->next->tkn, "~"))
 	{
 		tmp = catch_enval(mshell, "HOME");
 		if (chdir(tmp) == -1)
@@ -49,9 +50,6 @@ int	cd_home(t_mshell *mshell)
 {
 	if (cd_tilde(mshell))
 		return (1);
-	if (mshell->exec->start_exec->next && !mshell->exec->start_exec->next->next)
-		if (!ft_strcmp(mshell->exec->start_exec->next->tkn, "~"))
-			return (cd_tilde(mshell), 1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 00:26:35 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 08:46:15 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int	execute_hrdoc(t_mshell *mshell, int expander)
 	while (1)
 	{
 		usr_input = readline("> ");
+		if (g_exit == -42)
+			return (g_exit = 130, 0);
 		if (eof_heredoc(usr_input, mshell, line))
 			return (1);
 		if (delimiter_detected(usr_input, mshell))

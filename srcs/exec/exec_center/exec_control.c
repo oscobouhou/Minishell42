@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:39:15 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 14:14:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 07:59:55 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,7 @@ int	wait_pids(t_mshell *mshell)
 			break ;
 		mshell->exec = mshell->exec->next;
 	}
-	mshell->exit_status = WEXITSTATUS(status);
-	if (glo_exit == 131)
-		mshell->exit_status = glo_exit;
-	if (glo_exit == 130)
-	{
-		// write(1, "\n", 1);
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
-		mshell->exit_status = glo_exit;
-	}
-	// printf("WEXITSTATUS = %d\n", WEXITSTATUS(status));
+	g_exit = WEXITSTATUS(status);
 	return (1);
 }
 

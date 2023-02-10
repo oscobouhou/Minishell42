@@ -29,6 +29,7 @@ SRCS 			= main/main.c \
 				  srcs/libft/libft_6.c \
 				  srcs/signals/signals.c \
 				  srcs/signals/child_signals.c \
+				  srcs/signals/heredoc_signals.c \
 				  srcs/compose/compose_tkn.c \
 				  srcs/exec/exec_exit/exit_status.c \
 				  srcs/exec/exec_build/command_chain.c \
