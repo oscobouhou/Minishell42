@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 14:26:58 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:30:17 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_mshell
 	int					no_env;
 	int					empty_cmd;
 	int					exit_status;
+	int					dup_heredoc;
 	int					old_expd__hrdoc;
 	int					pipe_fd[2];
 	char				*rdline_outp;
@@ -308,6 +309,7 @@ void				handle_sigint_fork(void);
 void				stop_signals_heredoc(void);
 int					check_eof(char *rdline_outp);
 void				sig_fork_handler(int signum);
+int					sigint_exit(t_mshell *mshell);
 void				sig_heredoc_handler(int signum);
 // @ ------------------------- # compose # -------------------------- @ //
 void				what_token(int token);
@@ -370,6 +372,7 @@ int					eof_err_heredoc(t_mshell *mshell, int l);
 int					start_exec(t_mshell *mshell, int *backup);
 int					center_exec(t_mshell *mshell, char **env);
 int					set_end_of_command_chain(t_mshell *mshell);
+int					exec_heredoc(t_mshell *mshell, int expander);
 int					find_types_len_expd__hrdoc(t_mshell *mshell);
 int					copy_first_cmd_arg(t_mshell *mshell, int *i);
 int					no_cmd_no_pipe(t_mshell *mshell, int *backup);
@@ -484,6 +487,7 @@ int					free_cmd_args_execve(t_mshell *mshell);
 // @ -------------------------- # error # ---------------------------- @ //
 void				syntax_error(char *tkn);
 int					open_error(t_mshell *mshell);
+int					export_numeric_error(t_mshell *mshell);
 int					error_manager(char *process, char *tkn, char *error);
 // @ ---------------------------- ### -------------------------------- @ //
 #endif

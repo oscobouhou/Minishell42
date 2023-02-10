@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:41:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 13:34:46 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:34:21 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	create_new_var_export(t_mshell *mshell)
 	if (!new_node)
 		return (0);
 	new_node->exptvar = new_str(mshell->built->export_var);
+	new_node->value = NULL;
 	new_node->next = mshell->expt;
 	mshell->head_expt = new_node;
 	mshell->expt = mshell->head_expt;

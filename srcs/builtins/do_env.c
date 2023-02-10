@@ -6,11 +6,32 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:08 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 13:46:08 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:33:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	declare_export(t_mshell *mshell)
+{
+	t_expt	*head;
+
+	head = mshell->expt;
+	while (mshell->expt->next)
+	{
+		ft_putstr_fd(1, "declare -x ");
+		ft_putstr_fd(1, mshell->expt->exptvar);
+		if (mshell->expt->value)
+		{
+			ft_putstr_fd(1, "=");
+			ft_putstr_fd(1, mshell->expt->value);
+		}
+		ft_putstr_fd(1, "\n");
+		mshell->expt = mshell->expt->next;
+	}
+	mshell->expt = head;
+	return (1);
+}
 
 void	print_env(t_mshell *mshell)
 {

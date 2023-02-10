@@ -6,11 +6,20 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 14:19:30 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:06:23 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	stop_heredoc(t_mshell *mshell, char **usr_input, int line)
+{
+	if (eof_heredoc(*usr_input, mshell, line))
+		return (1);
+	if (delimiter_detected(*usr_input, mshell))
+		return (free((*usr_input)), 1);
+	return (0);
+}
 
 int	types_expd_cut__hrdoc(t_mshell *mshell, char *usr_input, int n_tp)
 {
@@ -72,15 +81,14 @@ int	execute_hrdoc(t_mshell *mshell, int expander)
 	line = 0;
 	if (!open_heredoc_tube(mshell, &p))
 		return (0);
+	mshell->dup_heredoc = dup(STDIN_FILENO);
 	while (1)
 	{
 		usr_input = readline("> ");
-		if (g_exit == -42)
-			return (g_exit = 130, 0);
-		if (eof_heredoc(usr_input, mshell, line))
+		if (sigint_exit(mshell))
+			return (0);
+		if (stop_heredoc(mshell, &usr_input, line))
 			return (1);
-		if (delimiter_detected(usr_input, mshell))
-			return (free(usr_input), 1);
 		if (expander == -42)
 			hrdoc_expander(&usr_input, mshell);
 		write(mshell->heredoc->pipe_heredoc[1], usr_input, \

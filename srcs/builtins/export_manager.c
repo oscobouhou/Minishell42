@@ -6,29 +6,11 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 13:35:38 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 13:37:23 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:33:05 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	declare_export(t_mshell *mshell)
-{
-	t_expt	*head;
-
-	head = mshell->expt;
-	while (mshell->expt->next)
-	{
-		ft_putstr_fd(1, "declare -x ");
-		ft_putstr_fd(1, mshell->expt->exptvar);
-		ft_putstr_fd(1, "=");
-		ft_putstr_fd(1, mshell->expt->value);
-		ft_putstr_fd(1, "\n");
-		mshell->expt = mshell->expt->next;
-	}
-	mshell->expt = head;
-	return (1);
-}
 
 int	check_existing(t_mshell *mshell)
 {
@@ -66,10 +48,27 @@ int	check_export_assignement(t_mshell *mshell, char *to_expt)
 	return (cut_expt_var(mshell, to_expt, i), 0);
 }
 
+int	non_alpha(char *export)
+{
+	int	i;
+
+	i = 0;
+	while (export[i])
+	{
+		if (export[i] >= '0' && export[i] <= '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	treat_export_arg(t_mshell *mshell, int i)
 {
 	if (check_export_assignement(mshell, mshell->built->export_arg[i]))
 	{
+		if (!non_alpha(mshell->built->export_var))
+			if (export_numeric_error(mshell))
+				return (1);
 		if (check_existing(mshell))
 		{
 			replace_export_value(mshell);
@@ -83,6 +82,9 @@ int	treat_export_arg(t_mshell *mshell, int i)
 			return (1);
 		}
 	}
+	if (!non_alpha(mshell->built->export_var))
+		if (export_numeric_error(mshell))
+			return (1);
 	if (!check_existing(mshell))
 		create_new_var_export(mshell);
 	return (1);
@@ -95,10 +97,13 @@ int	fill_environement(t_mshell *mshell)
 	i = 0;
 	while (mshell->built->export_arg[i])
 	{
-		treat_export_arg(mshell, i);
-		free(mshell->built->export_var);
+		if (!treat_export_arg(mshell, i))
+			export_numeric_error(mshell);
+		if (mshell->built->export_var)
+			free(mshell->built->export_var);
 		mshell->built->export_var = NULL;
-		free(mshell->built->export_value);
+		if (mshell->built->export_value)
+			free(mshell->built->export_value);
 		mshell->built->export_value = NULL;
 		i++;
 	}

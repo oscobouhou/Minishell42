@@ -6,11 +6,19 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 16:18:22 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 14:27:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:29:55 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	export_numeric_error(t_mshell *mshell)
+{
+	ft_putstr_fd(2, "minishell: export: `");
+	ft_putstr_fd(2, mshell->built->export_var);
+	ft_putstr_fd(2, "': not a valid identifier\n");
+	return (1);
+}
 
 int	error_manager(char *process, char *tkn, char *error)
 {

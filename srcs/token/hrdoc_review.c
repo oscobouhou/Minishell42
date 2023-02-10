@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 14:03:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 08:48:04 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:04:36 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,22 @@ int	gather_content_from_delim(t_mshell *mshell)
 	return (1);
 }
 
+int	exec_heredoc(t_mshell *mshell, int expander)
+{
+	if (!execute_hrdoc(mshell, expander))
+	{
+		close_heredocs(mshell);
+		dup2(mshell->dup_heredoc, STDIN_FILENO);
+		close(mshell->dup_heredoc);
+		dprintf(1, "\n");
+		return (retrieve_signals(), 0);
+	}
+	dup2(mshell->dup_heredoc, STDIN_FILENO);
+	close(mshell->dup_heredoc);
+	retrieve_signals();
+	return (1);
+}
+
 int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 {
 	int		expander;
@@ -60,12 +76,8 @@ int	hrdoc_review(t_mshell *mshell, int *cmd_cnt)
 		mshell->tkn = mshell->tkn->next;
 		center_hrdoc_delim_treatment(mshell, &expander);
 		stop_signals_heredoc();
-		if (!execute_hrdoc(mshell, expander))
-		{
-			close_heredocs(mshell);
-			return (retrieve_signals(), 0);
-		}
-		retrieve_signals();
+		if (!exec_heredoc(mshell, expander))
+			return (0);
 		suppress_heredoc_token(mshell, tmp);
 		if (mshell->tkn->next->tkn
 			&& mshell->tkn->next->type == WORD && *cmd_cnt == 0)
