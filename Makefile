@@ -105,10 +105,12 @@ SRCS 			= main/main.c \
 				  srcs/builtins/do_exit.c \
 				  srcs/builtins/do_unset.c \
 				  srcs/builtins/do_exprt.c \
+				  srcs/builtins/export_manager.c \
 				  srcs/builtins/center_builtins.c \
 				  srcs/builtins/export/manage_env.c \
 				  srcs/builtins/built_utils/cd_utils.c \
 				  srcs/builtins/built_utils/env_utils.c \
+				  srcs/builtins/built_utils/exit_utils.c \
 				  srcs/builtins/built_utils/echo_utils.c \
 				  srcs/builtins/built_utils/export_utils.c \
 

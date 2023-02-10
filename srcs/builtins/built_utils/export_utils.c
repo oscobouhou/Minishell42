@@ -6,13 +6,13 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:41:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 12:10:00 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:34:46 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int replace_export_value(t_mshell *mshell)
+int	replace_export_value(t_mshell *mshell)
 {
 	t_expt	*head;
 
@@ -33,7 +33,7 @@ int replace_export_value(t_mshell *mshell)
 	return (0);
 }
 
-int replace_env_value(t_mshell *mshell)
+int	replace_env_value(t_mshell *mshell)
 {
 	t_env	*head;
 
@@ -53,12 +53,13 @@ int replace_env_value(t_mshell *mshell)
 	mshell->env = head;
 	return (0);
 }
-int export_new_var_value_export(t_mshell *mshell)
+
+int	export_new_var_value_export(t_mshell *mshell)
 {
 	t_expt	*new_node;
 
 	new_node = malloc(sizeof(t_expt));
-	new_node->exptvar = new_str(mshell->built->export_var); 
+	new_node->exptvar = new_str(mshell->built->export_var);
 	new_node->value = new_str(mshell->built->export_value);
 	new_node->next = mshell->expt;
 	mshell->head_expt = new_node;
@@ -66,12 +67,12 @@ int export_new_var_value_export(t_mshell *mshell)
 	return (1);
 }
 
-int export_new_var_value_env(t_mshell *mshell)
+int	export_new_var_value_env(t_mshell *mshell)
 {
 	t_env	*new_node;
 
 	new_node = malloc(sizeof(t_env));
-	new_node->envar = new_str(mshell->built->export_var); 
+	new_node->envar = new_str(mshell->built->export_var);
 	new_node->value = new_str(mshell->built->export_value);
 	new_node->next = mshell->env;
 	mshell->head_env = new_node;
@@ -79,7 +80,7 @@ int export_new_var_value_env(t_mshell *mshell)
 	return (1);
 }
 
-int create_new_var_export(t_mshell *mshell)
+int	create_new_var_export(t_mshell *mshell)
 {
 	t_expt	*new_node;
 

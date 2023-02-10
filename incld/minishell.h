@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 12:01:12 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:11:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,15 +245,31 @@ int					verif_flags(t_mshell *mshell, int *flag);
 int					echo_printer(char *to_print, t_mshell *mshell);
 // 
 int					do_pwd(t_mshell *mshell);
+// # EXIT
 int					do_exit(t_mshell *mshell);
+int					exit_numeric_char(t_mshell *mshell);
+int					exit_types(t_mshell *mshell, int arg);
+int					do_exit_too_many_arg(t_mshell *mshell);
+int					do_exit_numeric_error(t_mshell *mshell);
+int					count_number_args_exit(t_mshell *mshell);
+//
 int					do_unset(t_mshell *mshell);
 // # EXPORT
 int					do_exprt(t_mshell *mshell);
-int					replace_export_value(t_mshell *mshell);
+int					set_arg_tab(t_mshell *mshell);
+int					declare_export(t_mshell *mshell);
+int					check_existing(t_mshell *mshell);
+int					cut_args_in_tab(t_mshell *mshell);
+int					fill_environement(t_mshell *mshell);
 int					replace_env_value(t_mshell *mshell);
-int					export_new_var_value_export(t_mshell *mshell);
-int					export_new_var_value_env(t_mshell *mshell);
+int					replace_export_value(t_mshell *mshell);
 int					create_new_var_export(t_mshell *mshell);
+int					treat_export_arg(t_mshell *mshell, int i);
+int					export_new_var_value_env(t_mshell *mshell);
+int					export_new_var_value_export(t_mshell *mshell);
+int					cut_expt_var(t_mshell *mshell, char *to_expt, int i);
+int					cut_expt_value(t_mshell *mshell, char *to_expt, int i);
+int					check_export_assignement(t_mshell *mshell, char *to_expt);
 //
 t_env				*create_env_node(char *var);
 int					check_arg(char *current_arg);

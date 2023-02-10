@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkermia <dkermia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:08 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/05 05:02:50 by dkermia          ###   ########.fr       */
+/*   Updated: 2023/02/10 13:46:08 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int	do_env(t_mshell *mshell)
 		exit(0);
 	}
 	re_establish_stdin_out(backup);
-	mshell->exit_status = 0;
+	g_exit = 0;
 	return (1);
 }

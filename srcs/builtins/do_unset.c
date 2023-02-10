@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:51:18 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/09 10:56:24 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:47:39 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ int	do_unset(t_mshell *mshell)
 	}
 	close_fd(mshell);
 	re_establish_stdin_out(backup);
-	mshell->exit_status = 0;
+	g_exit = 0;
 	return (1);
 }
