@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 03:37:03 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 09:38:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:26:19 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	popen_tube(t_mshell *mshell)
 	if (mshell->exec->next)
 	{
 		if (pipe(mshell->pipe_fd) == -1)
-			return (dprintf(2, "\tpipe: open failure\n"));
+			return (ft_putstr_fd(2, "\tpipe: open failure\n"), 0);
 		mshell->exec->next->fd_in = mshell->pipe_fd[0];
 		mshell->exec->fd_out = mshell->pipe_fd[1];
 	}

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:32:48 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 09:28:18 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:19:30 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	open_heredoc_tube(t_mshell *mshell, int *p)
 		close(mshell->heredoc->pipe_heredoc[0]);
 	*p = pipe(mshell->heredoc->pipe_heredoc);
 	if (*p == -1)
-		return (dprintf(2, "\tpipe: creation failure\n"), 0);
+		return (ft_putstr_fd(2, "\tpipe: creation failure\n"), 0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:39:15 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 07:59:55 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:26:10 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	start_cmd_pipeline(t_mshell *mshell)
 	popen_tube(mshell);
 	mshell->exec->pid = fork();
 	if (mshell->exec->pid == -1)
-		return (dprintf(2, "\tfork: child failure\n"));
+		return (ft_putstr_fd(2, "\tfork: child failure\n"), 0);
 	return (1);
 }
 

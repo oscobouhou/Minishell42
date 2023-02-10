@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:43:56 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/02 14:12:14 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:32:26 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,3 @@ int	tokenizer(t_mshell *mshell, int strt, int end)
 		return (0);
 	return (1);
 }
-// dprintf(2, "%s\n  type:  %d\n", mshell->tkn->tkn, mshell->tkn->type);

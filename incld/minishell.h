@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:57:45 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 14:11:39 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:26:58 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -482,7 +482,8 @@ int					free_paths_execve(t_mshell *mshell);
 int					free_built_echo_tab(t_mshell *mshell);
 int					free_cmd_args_execve(t_mshell *mshell);
 // @ -------------------------- # error # ---------------------------- @ //
-int					error_manager(char *process, char *tkn, char *error);
 void				syntax_error(char *tkn);
+int					open_error(t_mshell *mshell);
+int					error_manager(char *process, char *tkn, char *error);
 // @ ---------------------------- ### -------------------------------- @ //
 #endif

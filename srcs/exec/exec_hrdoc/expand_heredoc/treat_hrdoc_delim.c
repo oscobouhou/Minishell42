@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:48:15 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/08 19:13:15 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:19:36 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	center_hrdoc_delim_treatment(t_mshell *mshell, int *expander)
 	int		n_tp;
 
 	n_tp = 0;
-	dprintf(2, "%s\n", mshell->tkn->tkn);
 	mshell->expd->n_types = find_types_len_expd__hrdoc(mshell);
 	cut_types_expd__hrdoc(mshell);
 	while (mshell->expd->types[n_tp])
@@ -108,7 +107,6 @@ int	center_hrdoc_delim_treatment(t_mshell *mshell, int *expander)
 		n_tp++;
 	}
 	dlim = join_types_expanded(mshell);
-	dprintf(2, "%s\n", dlim);
 	free(mshell->tkn->tkn);
 	mshell->tkn->tkn = NULL;
 	mshell->tkn->tkn = dlim;

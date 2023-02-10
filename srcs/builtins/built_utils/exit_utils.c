@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:07:42 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 14:08:09 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:18:57 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	exit_numeric_char(t_mshell *mshell)
 int	do_exit_too_many_arg(t_mshell *mshell)
 {
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	dprintf(2, "exit\nminishell: exit: too many arguments\n");
+	ft_putstr_fd(2, "exit\nminishell: exit: too many arguments\n");
 	if (mshell->built->builtin_p == 42)
 	{
 		terminate(mshell);
@@ -47,7 +47,7 @@ int	do_exit_too_many_arg(t_mshell *mshell)
 int	do_exit_numeric_error(t_mshell *mshell)
 {
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
-	dprintf(2, "exit\nminishell: exit: numeric argument required\n");
+	ft_putstr_fd(2, "exit\nminishell: exit: numeric argument required\n");
 	terminate(mshell);
 	exit(2);
 	return (1);

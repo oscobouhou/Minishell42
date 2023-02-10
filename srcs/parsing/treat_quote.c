@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:46:21 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/07 00:32:28 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:32:09 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	treat_quote(t_mshell *mshell, int *i)
 
 	tmp_i = *i;
 	if (!search_next_quote(mshell, mshell->rdline_outp[*i], i))
-		return (dprintf(2, "error\n"), 0);
+		return (ft_putstr_fd(2, "minishell: unclosed quotes\n"), 0);
 	++(*i);
 	while (mshell->rdline_outp[*i]
 		&& check_printable_char(mshell->rdline_outp[*i]))

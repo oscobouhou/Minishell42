@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 11:34:33 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 07:52:12 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:32:20 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle_sigint_fork(void)
 
 void	handle_sigquit(void)
 {
-	dprintf(2, "Quit (core dumped)\n");
+	ft_putstr_fd(2, "Quit (core dumped)\n");
 	g_exit = 131;
 }
 

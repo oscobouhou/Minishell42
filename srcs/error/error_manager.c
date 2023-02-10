@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 16:18:22 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 09:32:49 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:27:18 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,14 @@ void	cmd_err_message(char *cmd)
 		ft_putstr_fd(2, cmd);
 		ft_putstr_fd(2, ": command not found\n");
 	}
+}
+
+int	open_error(t_mshell *mshell)
+{
+	ft_putstr_fd(2, "minishell: ");
+	ft_putstr_fd(2, mshell->exec->start_exec->next->tkn);
+	ft_putstr_fd(2, ": ");
+	ft_putstr_fd(2, strerror(errno));
+	ft_putstr_fd(2, "\n");
+	return (1);
 }
