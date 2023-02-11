@@ -6,7 +6,7 @@
 /*   By: oboutarf <oboutarf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 16:41:14 by oboutarf          #+#    #+#             */
-/*   Updated: 2023/02/10 09:42:09 by oboutarf         ###   ########.fr       */
+/*   Updated: 2023/02/11 13:37:01 by oboutarf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,24 @@ void	command_child_execve(t_mshell *mshell)
 	}
 }
 
+int	search_path_var(t_mshell *mshell)
+{
+	while (mshell->env->next)
+	{
+		if (!ft_strcmp(mshell->env->envar, "PATH"))
+			return (mshell->env = mshell->head_env, 1);
+		mshell->env = mshell->env->next;
+	}
+	return (mshell->env = mshell->head_env, 0);
+}
+
 int	execmd(t_mshell *mshell, char **env)
 {
 	set_pos_to_cmd(mshell);
 	if (mshell->no_env != -42)
 	{
-		find_access(mshell);
+		if (search_path_var(mshell))
+			find_access(mshell);
 		seek_cmd_args(mshell);
 	}
 	mshell->exec->start_exec = mshell->exec->start_exec_head;
